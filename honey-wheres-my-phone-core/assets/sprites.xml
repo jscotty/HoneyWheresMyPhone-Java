@@ -1,0 +1,4 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Button_Play_Idle.png" x="0" y="0" width="414" height="151"/>
+	<SubTexture name="Button_Play_Pressed.png" x="0" y="157" width="414" height="151"/>
+</TextureAtlas>
