@@ -21,6 +21,7 @@ public class SceneManager {
 	 * @param scene
 	 */
 	public static void loadScene(Scene scene){
+		scenes.peek().dispose();
 		scenes.push(scene);
 		scenes.peek().init();
 	}

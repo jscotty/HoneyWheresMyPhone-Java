@@ -17,7 +17,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create () {
 		//initialize
-		Gdx.graphics.setDisplayMode(WIDTH, HEIGHT, false);
+		Gdx.graphics.setDisplayMode(Main.WIDTH, Main.HEIGHT, false);
 		Gdx.graphics.setTitle("Honey? where's my phone?");
 		batch = new SpriteBatch();
 		sceneManager = new SceneManager();

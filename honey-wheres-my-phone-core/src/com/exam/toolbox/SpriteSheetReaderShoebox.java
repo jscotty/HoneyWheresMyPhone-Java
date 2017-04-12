@@ -40,6 +40,8 @@ public class SpriteSheetReaderShoebox {
 	    	//atlas/spritesheet texture nor xml file not found!!!
 	    	System.out.println(e.getStackTrace());
 	    }
+		if(desiredTexture==null)
+	    	System.out.println("Failed to read xml file or find given name.");
 		return desiredTexture;
 	}
 	
@@ -47,7 +49,7 @@ public class SpriteSheetReaderShoebox {
 	 * Reads XML file and generates TextureRegion from atlas/Spritesheet.
 	 * @param atlas path (.xml and .png are predefined)
 	 * @param spriteName
-	 * @return
+	 * @return texture region of given sprite name in atlas.
 	 */
 	public static TextureRegion getTextureFromAtlas(String atlas, String spriteName){
 		TextureRegion desiredTexture = null; // desired texture
@@ -76,4 +78,5 @@ public class SpriteSheetReaderShoebox {
 	    }
 		return desiredTexture;
 	}
+	
 }

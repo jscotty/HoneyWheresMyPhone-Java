@@ -5,6 +5,10 @@ import com.exam.entity.Entity;
 import com.exam.toolbox.SpriteType;
 
 public class GUITexture extends Entity {
+	
+	public GUITexture(float x, float y) {
+		super(x, y);
+	}
 	/**
 	 * Constructor with given texture.
 	 * @param texture
