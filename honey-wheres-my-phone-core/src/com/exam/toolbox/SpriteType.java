@@ -1,6 +1,23 @@
 package com.exam.toolbox;
 
 public enum SpriteType {
+
+	//props
+	PROPS_ARM("props/Sheet_Props", "Player_Arm.png"),
+	PROPS_BOOK("props/Sheet_Props", "Prop_Book.png"),
+	PROPS_CHARGER("props/Sheet_Props", "Prop_Charger.png"),
+	PROPS_EYE_SHADOW("props/Sheet_Props", "Prop_EyeShadow.png"),
+	PROPS_LIPSTICK("props/Sheet_Props", "Prop_Lipstick.png"),
+	PROPS_MIRROR("props/Sheet_Props", "Prop_Mirror.png"),
+	PROPS_PENTY("props/Sheet_Props", "Prop_Penty.png"),
+	PROPS_TAMPON("props/Sheet_Props", "Prop_Tampon.png"),
+	PROPS_WALLER("props/Sheet_Props", "Prop_Wallet.png"),
+	PROPS_BLUSH("props/Sheet_Props", "Prop_blush.png"),
+	
+	//backgrounds
+	BACKGOUND_PLYAY_01("", "background/Background_Play_01.png"),
+	
+	// buttons
 	BUTTON_ACCEPT_PRESSED("buttons/Sheet_Buttons", "Button_Accept_Clicked.png"),
 	BUTTON_ACCEPT_IDLE("buttons/Sheet_Buttons", "Button_Accept_Idle.png"),
 

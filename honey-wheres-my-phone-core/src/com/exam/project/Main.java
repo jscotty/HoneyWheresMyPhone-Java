@@ -11,8 +11,8 @@ public class Main extends ApplicationAdapter {
 	//screen width and height
 	public static final int WIDTH = 720, HEIGHT = 1280;
 	
-	SceneManager sceneManager;
-	SpriteBatch batch;
+	private SceneManager sceneManager;
+	private SpriteBatch batch;
 	
 	@Override
 	public void create () {
@@ -27,7 +27,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void render () {
 		// main rendering
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(1, 1,1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
 		sceneManager.render(batch); // rendering current active scene.

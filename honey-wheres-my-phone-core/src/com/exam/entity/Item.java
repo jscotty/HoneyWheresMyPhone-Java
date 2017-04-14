@@ -12,5 +12,4 @@ public class Item extends Entity {
 	public void update() {
 		super.update();
 	}
-
 }

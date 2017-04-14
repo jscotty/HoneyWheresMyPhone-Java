@@ -1,15 +1,21 @@
 package com.exam.renderers;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.exam.entity.Entity;
 
 public class EntityRenderer implements Renderer {
 
+	private Stage stage;
 	private List<Entity> entities; // using list for easy removing entities in the middle.
+	
+	public EntityRenderer(Stage stage) {
+		this.stage = stage;
+	}
 	
 	@Override
 	public void Init() {
@@ -31,20 +37,26 @@ public class EntityRenderer implements Renderer {
 	public void processEntity(Entity entity){
 		entities.add(entity);
 		entities.sort(entity);
+		stage.addActor(entity);
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
+		stage.act();
+		stage.draw();
+		
+		update();
+	}
+	
+	private void update(){
 		for (Entity entity : entities) {
 			entity.update();
-			entity.draw(batch);
 		}
-		
 	}
 
 	@Override
 	public void dispose() {
-		
+		stage.dispose();
 	}
 	
 	

@@ -28,20 +28,21 @@ public class GUIRenderer implements Renderer {
 	}
 	
 	public void processGUITexture(GUITexture guiTexture){
-		guis.add(guiTexture);
-		guis.sort(guiTexture);
+		stage.addActor(guiTexture);
+		
 	}
 
 	@Override
 	public void render(SpriteBatch batch) {
-		renderGUITextures(batch);
 		stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
+		renderGUITextures(batch);
 	}
 	
 	private void renderGUITextures(SpriteBatch batch){
 		if(guis.size()==0)return;
 		for (GUITexture guiTexture : guis) {
+			guiTexture.update();
 			guiTexture.getSprite().draw(batch);
 		}
 	}

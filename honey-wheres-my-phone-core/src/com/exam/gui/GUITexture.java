@@ -1,10 +1,10 @@
 package com.exam.gui;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.exam.entity.Entity;
+import com.exam.project.ObjectBase;
 import com.exam.toolbox.SpriteType;
 
-public class GUITexture extends Entity {
+public class GUITexture extends ObjectBase {
 	
 	public GUITexture(float x, float y) {
 		super(x, y);

@@ -1,6 +1,7 @@
 package com.exam.entity;
 
 import com.badlogic.gdx.Gdx;
+import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 
 public class Hook extends Entity {
@@ -21,7 +22,8 @@ public class Hook extends Entity {
 	
 	private void moveWithInput(){
 		if(!Gdx.input.isButtonPressed(0)) return;
-		x = Gdx.input.getX();
+		position.x = (float)(Gdx.input.getX()/(float)Main.WIDTH)*100;
+		calculatePosition();
 	}
 
 }
