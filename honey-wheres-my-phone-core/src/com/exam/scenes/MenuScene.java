@@ -82,6 +82,7 @@ public class MenuScene extends Scene{
 	@Override
 	public void dispose() {
 		uiRenderer.dispose();
+		stage.clear();
 	}
 
 }

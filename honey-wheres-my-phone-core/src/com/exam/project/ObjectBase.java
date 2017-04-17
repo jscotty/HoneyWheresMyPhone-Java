@@ -19,9 +19,7 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 	private Texture texture = null;
 	private TextureRegion textureRegion = null; // always using texture region for rendering.
 	private Sprite sprite;
-
-	protected float x = 0;
-	protected float y = 0;
+	
 	protected Vector2 position = new Vector2(0,0);
 	protected float originX = 0.5f;
 	protected float originY = 0.5f;
@@ -125,33 +123,6 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 	 */
 	public void update(){ 
 		
-	}
-	
-	public void translatePosition(float x, float y){
-		this.x += x;
-		this.y += y;
-		calculatePosition();
-	}
-	
-	public void moveToTarget(ObjectBase target, float speed){
-		Vector2 targetPos = target.getPosition();
-		Vector2 myPos = new Vector2(position.x, position.y);
-		
-		//normalize
-		
-		Vector2 result = new Vector2(0,0);
-
-	    result.x = targetPos.x - myPos.x;
-	    result.y = targetPos.y - myPos.y;
-
-	    double magnitude = MathTools.magnitude(result);
-	    result.nor();
-	    
-	    if(magnitude < 1) return;
-	    position.x += result.x*speed;
-	    position.y += result.y*speed;
-		
-		calculatePosition();
 	}
 	
 	@Override

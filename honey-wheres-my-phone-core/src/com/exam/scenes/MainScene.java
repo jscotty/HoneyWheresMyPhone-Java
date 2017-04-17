@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.exam.entity.Background;
 import com.exam.entity.Hook;
 import com.exam.gui.GUIButton;
+import com.exam.managers.ItemManager;
 import com.exam.renderers.EntityRenderer;
 import com.exam.renderers.GUIRenderer;
 import com.exam.toolbox.SpriteType;
@@ -19,6 +20,7 @@ public class MainScene extends Scene {
 	private Hook hook;
 	private EntityRenderer entityRenderer;
 	private GUIRenderer guiRenderer;
+	private ItemManager itemManager;
 	private GUIButton quitButton;
 	private Background background;
 	
@@ -28,12 +30,13 @@ public class MainScene extends Scene {
 	 */
 	public MainScene(SceneManager sceneManager) {
 		super(sceneManager);
+		
 	}
 
 	@Override
 	public void init() {
 		stage = new Stage(new ScreenViewport());
-		hook = new Hook("hand.png", 50, 80);
+		hook = new Hook(SpriteType.PROPS_ARM,50, 80);
 
 		entityRenderer = new EntityRenderer(stage);
 		guiRenderer = new GUIRenderer(stage);
@@ -71,6 +74,7 @@ public class MainScene extends Scene {
 	@Override
 	public void dispose() {
 		entityRenderer.dispose();
+		stage.clear();
 	}
 	
 }
