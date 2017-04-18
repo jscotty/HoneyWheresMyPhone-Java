@@ -41,6 +41,6 @@ public class GUITexture extends ObjectBase {
 
 	@Override
 	public void update() {
-		
+		super.update();
 	}
 }

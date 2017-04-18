@@ -66,8 +66,6 @@ public class MenuScene extends Scene{
 	@Override
 	public void render(SpriteBatch batch) {
 		uiRenderer.render(batch);
-		background.getSprite().setV(count);
-		count+=0.001f;
 	}
 	
 	private void addButtonListeners(){

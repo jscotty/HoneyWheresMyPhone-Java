@@ -47,6 +47,7 @@ public class GUIButton extends GUITexture {
 		button.setPosition(getX(), getY());
 		button.getStyle().imageDown = texturePressed;
 		button.getStyle().imageUp = textureIdle;
+		System.out.println(getX() + " " + getY());
 	}
 	
 	public void centerButton(){

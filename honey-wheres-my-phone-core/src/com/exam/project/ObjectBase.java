@@ -2,15 +2,14 @@ package com.exam.project;
 
 import java.util.Comparator;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.exam.toolbox.MathTools;
 import com.exam.toolbox.SpriteSheetReaderShoebox;
 import com.exam.toolbox.SpriteType;
 
@@ -18,7 +17,7 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 
 	private Texture texture = null;
 	private TextureRegion textureRegion = null; // always using texture region for rendering.
-	private Sprite sprite;
+	protected Sprite sprite;
 	
 	protected Vector2 position = new Vector2(0,0);
 	protected float originX = 0.5f;
@@ -166,13 +165,13 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 	 * @return x position
 	 */
 	public float getX() {
-		return ((position.x/100)*Main.WIDTH) - (getWidth()*originX);
+		return ((position.x/100)*Gdx.graphics.getWidth()) - (getWidth()*originX);
 	}
 	/**
 	 * @return y position
 	 */
 	public float getY() {
-		return ((position.y/100)*Main.HEIGHT) - (getHeight()*originY);
+		return ((position.y/100)*Gdx.graphics.getHeight()) - (getHeight()*originY);
 	}
 	
 	public Vector2 getPosition(){

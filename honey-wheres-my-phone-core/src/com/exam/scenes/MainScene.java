@@ -43,10 +43,12 @@ public class MainScene extends Scene {
 		background = (Background) new Background(SpriteType.BACKGOUND_PLYAY_01.getSpriteName(), 0, 0).setObjectOrigin(0, 0);
 		entityRenderer.Init();
 		guiRenderer.Init();
+		quitButton = new GUIButton(SpriteType.BUTTON_QUIT_IDLE,  SpriteType.BUTTON_QUIT_PRESSED, 90, 80);
+
+		quitButton.centerButton();
 
 		entityRenderer.processEntity(background);
 		entityRenderer.processEntity(hook);
-		quitButton = new GUIButton(SpriteType.BUTTON_QUIT_IDLE,  SpriteType.BUTTON_QUIT_PRESSED, 90, 90);
 
 		guiRenderer.processGUIButton(quitButton);
 
@@ -69,6 +71,7 @@ public class MainScene extends Scene {
 	public void render(SpriteBatch batch) {
 		entityRenderer.render(batch);
 		guiRenderer.render(batch);
+		background.scroll(1);
 	}
 
 	@Override
