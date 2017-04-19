@@ -36,7 +36,6 @@ public class EntityRenderer implements Renderer {
 	
 	public void processEntity(Entity entity){
 		entities.add(entity);
-		entities.sort(entity);
 		stage.addActor(entity);
 	}
 

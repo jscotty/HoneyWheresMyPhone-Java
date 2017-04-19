@@ -7,9 +7,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.exam.entity.Background;
+import com.exam.entity.Entity;
 import com.exam.entity.Hook;
 import com.exam.gui.GUIButton;
+import com.exam.gui.GUITexture;
 import com.exam.managers.ItemManager;
+import com.exam.project.ObjectBase;
 import com.exam.renderers.EntityRenderer;
 import com.exam.renderers.GUIRenderer;
 import com.exam.toolbox.SpriteType;
@@ -21,8 +24,8 @@ public class MainScene extends Scene {
 	private EntityRenderer entityRenderer;
 	private GUIRenderer guiRenderer;
 	private ItemManager itemManager;
-	private GUIButton quitButton;
 	private Background background;
+	private Entity backgroundOverlay;
 	
 	/**
 	 * Initialization
@@ -40,17 +43,15 @@ public class MainScene extends Scene {
 
 		entityRenderer = new EntityRenderer(stage);
 		guiRenderer = new GUIRenderer(stage);
-		background = (Background) new Background(SpriteType.BACKGOUND_PLYAY_01.getSpriteName(), 0, 0).setObjectOrigin(0, 0);
+		background = (Background) new Background(SpriteType.BACKGOUND_PLYAY_01, 0, 0).setObjectOrigin(0, 0);
+		backgroundOverlay = (Entity) new Entity(SpriteType.BACKGOUND_PLYAY_01_OVERLAY, 0, 0).setObjectOrigin(0, 0);
 		entityRenderer.Init();
 		guiRenderer.Init();
-		quitButton = new GUIButton(SpriteType.BUTTON_QUIT_IDLE,  SpriteType.BUTTON_QUIT_PRESSED, 90, 80);
-
-		quitButton.centerButton();
 
 		entityRenderer.processEntity(background);
+		entityRenderer.processEntity(backgroundOverlay);
 		entityRenderer.processEntity(hook);
 
-		guiRenderer.processGUIButton(quitButton);
 
 		addButtonListeners();
 		
@@ -58,13 +59,11 @@ public class MainScene extends Scene {
 		
 	}
 	
+	/**
+	 * add events to buttons
+	 */
 	private void addButtonListeners(){
-		quitButton.getButton().addListener(new ClickListener(){
-	        @Override
-	        public void clicked(InputEvent event, float x, float y) {
-	        	Gdx.app.exit();
-	        }
-	    });
+		
 	}
 
 	@Override

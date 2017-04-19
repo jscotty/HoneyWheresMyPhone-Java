@@ -1,5 +1,6 @@
-package com.exam.entity;
+package com.exam.items;
 
+import com.exam.entity.Entity;
 import com.exam.toolbox.SpriteType;
 
 public class Item extends Entity {

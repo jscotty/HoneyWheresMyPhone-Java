@@ -11,11 +11,12 @@ public enum SpriteType {
 	PROPS_MIRROR("props/Sheet_Props", "Prop_Mirror.png"),
 	PROPS_PENTY("props/Sheet_Props", "Prop_Penty.png"),
 	PROPS_TAMPON("props/Sheet_Props", "Prop_Tampon.png"),
-	PROPS_WALLER("props/Sheet_Props", "Prop_Wallet.png"),
+	PROPS_WALLET("props/Sheet_Props", "Prop_Wallet.png"),
 	PROPS_BLUSH("props/Sheet_Props", "Prop_blush.png"),
 	
 	//backgrounds
-	BACKGOUND_PLYAY_01("", "background/Background_Play_01.png"),
+	BACKGOUND_PLYAY_01("bg01", "Background_Play_01.png"),
+	BACKGOUND_PLYAY_01_OVERLAY("bg01", "Background_OverLay.png"),
 	
 	// buttons
 	BUTTON_ACCEPT_PRESSED("buttons/Sheet_Buttons", "Button_Accept_Clicked.png"),

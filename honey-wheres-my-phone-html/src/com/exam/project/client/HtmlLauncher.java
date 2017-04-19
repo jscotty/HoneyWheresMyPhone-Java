@@ -9,7 +9,7 @@ public class HtmlLauncher extends GwtApplication {
 
         @Override
         public GwtApplicationConfiguration getConfig () {
-                return new GwtApplicationConfiguration(720, 1280);
+                return new GwtApplicationConfiguration(720/2, 1280/2);
         }
 
         @Override

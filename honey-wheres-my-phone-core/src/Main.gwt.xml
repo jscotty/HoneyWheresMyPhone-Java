@@ -7,4 +7,7 @@
 	<source path="com/exam/renderers" />
 	<source path="com/exam/gui" />
 	<source path="com/exam/toolbox" />
+	<source path="com/exam/tween" />
+	<source path="com/exam/items" />
+	<source path="com/exam/managers" />
 </module>

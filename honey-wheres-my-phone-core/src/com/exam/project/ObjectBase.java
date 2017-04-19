@@ -26,10 +26,13 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 	protected float scaleY = 1;
 	protected float rotation = 0;
 	protected Integer layer = 1; // to make it comparable for comparator implementation.
+
+	private float scaleXFactor = 0;
+	private float scaleYFactor = 0;
 	
 	
 	/**
-	 * Invisible entity.
+	 * Invisible object.
 	 * @param x position in percentage 0-100%
 	 * @param y position in percentage 0-100%
 	 */
@@ -37,6 +40,7 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 		this.position.x = x;
 		this.position.y = y;
 		setZIndex(layer);
+		calculateScale();
 		calculatePosition();
 	}
 	
@@ -54,6 +58,7 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 		
 		this.sprite = new Sprite(textureRegion);
 		setZIndex(layer);
+		calculateScale();
 		calculatePosition();
 	}
 	
@@ -65,14 +70,13 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 	 */
 	public ObjectBase(String texturePath, float x, float y){
 		this.texture = new Texture(texturePath);
-
-		texture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		this.textureRegion = new TextureRegion(texture);
+		
 		this.position.x = x;
 		this.position.y = y;
 		
 		this.sprite = new Sprite(texture);
 		setZIndex(layer);
+		calculateScale();
 		calculatePosition();
 	}
 
@@ -90,26 +94,51 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 		
 		this.sprite = new Sprite(textureRegion);
 		setZIndex(layer);
+		calculateScale();
 		calculatePosition();
 	}
 	
+	/** set layer for rendering ordering.
+	 * @param layer
+	 * @return
+	 */
 	public ObjectBase setLayer(int layer){
 		this.layer = layer;
 		setZIndex(layer);
 		return this;
 	}
 	
+	/** set object scale
+	 * Automatically calculates new position
+	 * @param x scale
+	 * @param y scale
+	 * @return this
+	 */
 	public ObjectBase setObjectScale(float x, float y){
 		this.scaleX = x;
 		this.scaleY = y;
+		calculateScale();
+		calculatePosition();
 		return this;
 	}
 	
+	/** set object rotation
+	 * Automatically calculates new position
+	 * @param rotation
+	 * @return this
+	 */
 	public ObjectBase setObjectRotation(float rotation){
 		this.rotation = rotation;
+		calculatePosition();
 		return this;
 	}
 	
+	/** set object origin position to center or change the positon calculations
+	 * Automatically calculates new position
+	 * @param x origin position
+	 * @param y origin position
+	 * @return this
+	 */
 	public ObjectBase setObjectOrigin(float x, float y){
 		this.originX = x;
 		this.originY = y;
@@ -136,6 +165,14 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 		sprite.setRotation(rotation);
 		sprite.setScale(scaleX, scaleY);
 		sprite.setOrigin(originX, originY);
+	}
+	
+	private void calculateScale(){
+		scaleXFactor =  (float)Gdx.graphics.getWidth()/  (float)Main.WIDTH;
+		scaleYFactor =   (float)Gdx.graphics.getHeight()/  (float)Main.HEIGHT;
+
+		scaleX = scaleX * scaleXFactor;
+		scaleY = scaleY * scaleYFactor;
 	}
 
 	@Override
@@ -203,11 +240,11 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 	}
 	
 	public float getWidth(){
-		return textureRegion.getRegionWidth()*scaleX;
+		return sprite.getWidth()*scaleX;
 	}
 	
 	public float getHeight(){
-		return textureRegion.getRegionHeight()*scaleY;
+		return sprite.getHeight()*scaleY;
 	}
 	public Sprite getSprite(){
 		return sprite;

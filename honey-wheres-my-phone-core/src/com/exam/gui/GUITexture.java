@@ -6,6 +6,10 @@ import com.exam.toolbox.SpriteType;
 
 public class GUITexture extends ObjectBase {
 	
+	/** invisible GUITexture
+	 * @param x position
+	 * @param y position
+	 */
 	public GUITexture(float x, float y) {
 		super(x, y);
 	}

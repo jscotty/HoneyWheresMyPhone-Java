@@ -3,7 +3,7 @@ package com.exam.managers;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.exam.entity.Item;
+import com.exam.items.Item;
 
 public class ItemManager extends Singleton {
 	

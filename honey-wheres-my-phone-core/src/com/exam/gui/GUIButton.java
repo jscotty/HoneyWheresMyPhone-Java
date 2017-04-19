@@ -1,5 +1,6 @@
 package com.exam.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -44,15 +45,22 @@ public class GUIButton extends GUITexture {
 		this.textureIdle = new TextureRegionDrawable(SpriteSheetReaderShoebox.getTextureFromAtlas(buttonIdle));
 		this.texturePressed= new TextureRegionDrawable(SpriteSheetReaderShoebox.getTextureFromAtlas(buttonPressed));
 		button = new ImageButton(textureIdle);
+		button.setTransform(true);
 		button.setPosition(getX(), getY());
+		button.setScale(scaleX, scaleY);
 		button.getStyle().imageDown = texturePressed;
 		button.getStyle().imageUp = textureIdle;
-		System.out.println(getX() + " " + getY());
 	}
 	
-	public void centerButton(){
+	@Override
+	public ObjectBase setObjectScale(float x, float y) {
+		super.setObjectScale(x, y);
+		button.setTransform(true);
+		button.setScale(scaleX, scaleY);
+		button.setPosition(getX(), getY());
+		return this;
 	}
-
+	
 	@Override
 	public void update() {
 		super.update();
@@ -64,19 +72,11 @@ public class GUIButton extends GUITexture {
 	
 	@Override
 	public float getX() {
-		return ((position.x/100)*Main.WIDTH) - (button.getWidth()*originX);
+		return ((position.x/100)*Gdx.graphics.getWidth()) - ((button.getWidth()*scaleX)*originX);
 	}
 	
 	@Override
 	public float getY() {
-		return ((position.y/100)*Main.HEIGHT) - (button.getHeight()*originY);
-	}
-	
-	private float calculateXPosition(){
-		return ((position.x/100)*Main.WIDTH) - (button.getWidth()*originX);
-	}
-	
-	private float calculateYPosition(){
-		return ((position.y/100)*Main.HEIGHT) - (button.getHeight()*originY);
+		return ((position.y/100)*Gdx.graphics.getHeight()) - ((button.getHeight()*scaleY)*originY);
 	}
 }
