@@ -8,35 +8,35 @@ import com.exam.scenes.SceneManager;
 
 public class Main extends ApplicationAdapter {
 
-	//screen width and height
-	public static final int WIDTH = 720, HEIGHT = 1280;
-	
-	private SceneManager sceneManager;
-	private SpriteBatch batch;
-	
-	@Override
-	public void create () {
-		//initialize
-		Gdx.graphics.setDisplayMode(Main.WIDTH/2, Main.HEIGHT/2, false);
-		Gdx.graphics.setTitle("Honey? where's my phone?");
-		batch = new SpriteBatch();
-		sceneManager = new SceneManager();
-		sceneManager.init();
-	}
+    //screen width and height
+    public static final int WIDTH = 720, HEIGHT = 1280;
 
-	@Override
-	public void render () {
-		// main rendering
-		Gdx.gl.glClearColor(1, 1,1, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		batch.begin();
-		sceneManager.render(batch); // rendering current active scene.
-		batch.end();
-	}
-	
-	@Override
-	public void dispose(){
-		// When closing application
-		sceneManager.dispose();
-	}
+    private SceneManager _sceneManager;
+    private SpriteBatch _batch;
+
+    @Override
+    public void create() {
+	//initialize
+	Gdx.graphics.setDisplayMode(Main.WIDTH / 2, Main.HEIGHT / 2, false);
+	Gdx.graphics.setTitle("Honey? where's my phone?");
+	_batch = new SpriteBatch();
+	_sceneManager = new SceneManager();
+	_sceneManager.init();
+    }
+
+    @Override
+    public void render() {
+	// main rendering
+	Gdx.gl.glClearColor(1, 1, 1, 1);
+	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	_batch.begin();
+	_sceneManager.render(_batch); // rendering current active scene.
+	_batch.end();
+    }
+
+    @Override
+    public void dispose() {
+	// When closing application
+	_sceneManager.dispose();
+    }
 }

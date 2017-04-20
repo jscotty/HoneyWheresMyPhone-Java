@@ -7,49 +7,48 @@ import com.exam.toolbox.SpriteType;
 
 public class Entity extends ObjectBase {
 
-	public Entity(float x, float y){
-		super(x,y);
-	}
-	
-	public Entity(String spritePath, float x, float y){
-		super(spritePath, x, y);
-	}
-	
-	public Entity(SpriteType type, float x, float y) {
-		super(type, x, y);
-	}
-	
+    public Entity(float x, float y) {
+	super(x, y);
+    }
 
-	
-	public void translatePosition(float x, float y){
-		this.position.x += x;
-		this.position.y += y;
-		calculatePosition();
-	}
-	
-	public void moveToTarget(ObjectBase target, float speed){
-		Vector2 targetPos = target.getPosition();
-		Vector2 myPos = new Vector2(position.x, position.y);
-		
-		//normalize
-		
-		Vector2 result = new Vector2(0,0);
+    public Entity(String spritePath, float x, float y) {
+	super(spritePath, x, y);
+    }
 
-	    result.x = targetPos.x - myPos.x;
-	    result.y = targetPos.y - myPos.y;
+    public Entity(SpriteType type, float x, float y) {
+	super(type, x, y);
+    }
 
-	    double magnitude = MathTools.magnitude(result);
-	    result.nor();
-	    
-	    if(magnitude < 1) return;
-	    position.x += result.x*speed;
-	    position.y += result.y*speed;
-		
-		calculatePosition();
-	}
+    public void translatePosition(float x, float y) {
+	this.pPosition.x += x;
+	this.pPosition.y += y;
+	calculatePosition();
+    }
 
-	@Override
-	public void update() {
-		super.update();
-	}
+    public void moveToTarget(ObjectBase target, float speed) {
+	Vector2 tTargetPos = target.getPosition();
+	Vector2 tMyPos = new Vector2(pPosition.x, pPosition.y);
+
+	// normalize
+
+	Vector2 tResult = new Vector2(0, 0);
+
+	tResult.x = tTargetPos.x - tMyPos.x;
+	tResult.y = tTargetPos.y - tMyPos.y;
+
+	double tMagnitude = MathTools.magnitude(tResult);
+	tResult.nor();
+
+	if (tMagnitude < 1)
+	    return;
+	pPosition.x += tResult.x * speed;
+	pPosition.y += tResult.y * speed;
+
+	calculatePosition();
+    }
+
+    @Override
+    public void update() {
+	super.update();
+    }
 }

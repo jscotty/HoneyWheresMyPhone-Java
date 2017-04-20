@@ -4,7 +4,6 @@ import java.util.Comparator;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -15,238 +14,243 @@ import com.exam.toolbox.SpriteType;
 
 public class ObjectBase extends Actor implements Comparator<Actor> {
 
-	private Texture texture = null;
-	private TextureRegion textureRegion = null; // always using texture region for rendering.
-	protected Sprite sprite;
-	
-	protected Vector2 position = new Vector2(0,0);
-	protected float originX = 0.5f;
-	protected float originY = 0.5f;
-	protected float scaleX = 1;
-	protected float scaleY = 1;
-	protected float rotation = 0;
-	protected Integer layer = 1; // to make it comparable for comparator implementation.
+    private Texture _texture = null;
+    private TextureRegion _textureRegion = null; // always using texture region for rendering.
+    protected Sprite _sprite;
 
-	private float scaleXFactor = 0;
-	private float scaleYFactor = 0;
-	
-	
-	/**
-	 * Invisible object.
-	 * @param x position in percentage 0-100%
-	 * @param y position in percentage 0-100%
-	 */
-	public ObjectBase(float x, float y){
-		this.position.x = x;
-		this.position.y = y;
-		setZIndex(layer);
-		calculateScale();
-		calculatePosition();
-	}
-	
-	/**
-	 * Constructor with given texture.
-	 * @param texture
-	 * @param x position in percentage 0-100%
-	 * @param y position in percentage 0-100%
-	 */
-	public ObjectBase(Texture texture, float x, float y){
-		this.texture = texture;
-		this.textureRegion = new TextureRegion(texture);
-		this.position.x = x;
-		this.position.y = y;
-		
-		this.sprite = new Sprite(textureRegion);
-		setZIndex(layer);
-		calculateScale();
-		calculatePosition();
-	}
-	
-	/**
-	 * Constructor with given texture path for generating texture.
-	 * @param texturePath
-	 * @param x position in percentage 0-100%
-	 * @param y position in percentage 0-100%
-	 */
-	public ObjectBase(String texturePath, float x, float y){
-		this.texture = new Texture(texturePath);
-		
-		this.position.x = x;
-		this.position.y = y;
-		
-		this.sprite = new Sprite(texture);
-		setZIndex(layer);
-		calculateScale();
-		calculatePosition();
-	}
+    protected Vector2 pPosition = new Vector2(0, 0);
+    protected float pOriginX = 0.5f;
+    protected float pOriginY = 0.5f;
+    protected float pScaleX = 1;
+    protected float pScaleY = 1;
+    protected float pRotation = 0;
+    protected Integer pLayer = 1; // to make it comparable for comparator implementation.
 
-	
-	/**
-	 * Constructor with given type for region generation.
-	 * @param spriteType
-	 * @param x position in percentage 0-100%
-	 * @param y position in percentage 0-100%
-	 */
-	public ObjectBase(SpriteType type, float x, float y){
-		this.textureRegion = SpriteSheetReaderShoebox.getTextureFromAtlas(type);
-		this.position.x = x;
-		this.position.y = y;
-		
-		this.sprite = new Sprite(textureRegion);
-		setZIndex(layer);
-		calculateScale();
-		calculatePosition();
-	}
-	
-	/** set layer for rendering ordering.
-	 * @param layer
-	 * @return
-	 */
-	public ObjectBase setLayer(int layer){
-		this.layer = layer;
-		setZIndex(layer);
-		return this;
-	}
-	
-	/** set object scale
-	 * Automatically calculates new position
-	 * @param x scale
-	 * @param y scale
-	 * @return this
-	 */
-	public ObjectBase setObjectScale(float x, float y){
-		this.scaleX = x;
-		this.scaleY = y;
-		calculateScale();
-		calculatePosition();
-		return this;
-	}
-	
-	/** set object rotation
-	 * Automatically calculates new position
-	 * @param rotation
-	 * @return this
-	 */
-	public ObjectBase setObjectRotation(float rotation){
-		this.rotation = rotation;
-		calculatePosition();
-		return this;
-	}
-	
-	/** set object origin position to center or change the positon calculations
-	 * Automatically calculates new position
-	 * @param x origin position
-	 * @param y origin position
-	 * @return this
-	 */
-	public ObjectBase setObjectOrigin(float x, float y){
-		this.originX = x;
-		this.originY = y;
-		calculatePosition();
-		return this;
-	}
-	
-	/**
-	 * Update entity.
-	 */
-	public void update(){ 
-		
-	}
-	
-	@Override
-	public void draw(Batch batch, float parentAlpha) {
-		//batch.draw(sprite, getX(),getY());
-		sprite.draw(batch);
-	}
-	
-	protected void calculatePosition(){
-		if(sprite==null)return;
-		sprite.setPosition(getX(), getY());
-		sprite.setRotation(rotation);
-		sprite.setScale(scaleX, scaleY);
-		sprite.setOrigin(originX, originY);
-	}
-	
-	private void calculateScale(){
-		scaleXFactor =  (float)Gdx.graphics.getWidth()/  (float)Main.WIDTH;
-		scaleYFactor =   (float)Gdx.graphics.getHeight()/  (float)Main.HEIGHT;
+    private float pScaleXFactor = 0;
+    private float pScaleYFactor = 0;
 
-		scaleX = scaleX * scaleXFactor;
-		scaleY = scaleY * scaleYFactor;
-	}
+    /**
+     * Invisible object.
+     * @param x position in percentage 0-100%
+     * @param y position in percentage 0-100%
+     */
+    public ObjectBase(float x, float y) {
+	this.pPosition.x = x;
+	this.pPosition.y = y;
+	setZIndex(pLayer);
+	calculateScale();
+	calculatePosition();
+    }
 
-	@Override
-	public int compare(Actor arg0, Actor arg1) {
-		if (arg0.getZIndex() < arg1.getZIndex()) {
-            return -1;
-        } else if (arg0.getZIndex() == arg1.getZIndex()) {
-            return 0;
-        } else {
-            return 1;
-        }
-	}
+    /**
+     * Constructor with given texture.
+     * @param texture
+     * @param x position in percentage 0-100%
+     * @param y position in percentage 0-100%
+     */
+    public ObjectBase(Texture texture, float x, float y) {
+	this._texture = texture;
+	this._textureRegion = new TextureRegion(texture);
+	this.pPosition.x = x;
+	this.pPosition.y = y;
 
-	/**
-	 * @return texture (In case not using an atlas/spritesheet)
-	 */
-	public Texture getTexture() {
-		return texture;
-	}
-	/**
-	 * @return atlas/spritesheet texture region
-	 */
-	public TextureRegion getTextureRegion() {
-		return textureRegion;
-	}
-	/**
-	 * @return x position
-	 */
-	public float getX() {
-		return ((position.x/100)*Gdx.graphics.getWidth()) - (getWidth()*originX);
-	}
-	/**
-	 * @return y position
-	 */
-	public float getY() {
-		return ((position.y/100)*Gdx.graphics.getHeight()) - (getHeight()*originY);
-	}
-	
-	public Vector2 getPosition(){
-		return position;
-	}
+	this._sprite = new Sprite(_textureRegion);
+	setZIndex(pLayer);
+	calculateScale();
+	calculatePosition();
+    }
 
-	public float getScaleX() {
-		return scaleX;
-	}
+    /**
+     * Constructor with given texture path for generating texture.
+     * @param texturePath
+     * @param x position in percentage 0-100%
+     * @param y position in percentage 0-100%
+     */
+    public ObjectBase(String texturePath, float x, float y) {
+	this._texture = new Texture(texturePath);
 
-	public float getScaleY() {
-		return scaleY;
-	}
+	this.pPosition.x = x;
+	this.pPosition.y = y;
 
-	public float getRotation() {
-		return rotation;
-	}
+	this._sprite = new Sprite(_texture);
+	setZIndex(pLayer);
+	calculateScale();
+	calculatePosition();
+    }
 
-	public Integer getLayer() {
-		return layer;
-	}
+    /**
+     * Constructor with given type for region generation.
+     * @param spriteType
+     * @param x position in percentage 0-100%
+     * @param y position in percentage 0-100%
+     */
+    public ObjectBase(SpriteType type, float x, float y) {
+	this._textureRegion = SpriteSheetReaderShoebox.getTextureFromAtlas(type);
+	this.pPosition.x = x;
+	this.pPosition.y = y;
 
-	public float getOriginX() {
-		return originX;
-	}
+	this._sprite = new Sprite(_textureRegion);
+	setZIndex(pLayer);
+	calculateScale();
+	calculatePosition();
+    }
 
-	public float getOriginY() {
-		return originY;
+    /**
+     * set layer for rendering ordering.
+     * @param layer
+     * @return
+     */
+    public ObjectBase setLayer(int layer) {
+	this.pLayer = layer;
+	setZIndex(layer);
+	return this;
+    }
+
+    /**
+     * set object scale Automatically calculates new position
+     * @param x scale
+     * @param y scale
+     * @return this
+     */
+    public ObjectBase setObjectScale(float x, float y) {
+	this.pScaleX = x;
+	this.pScaleY = y;
+	calculateScale();
+	calculatePosition();
+	return this;
+    }
+
+    /**
+     * set object rotation Automatically calculates new position
+     * @param rotation
+     * @return this
+     */
+    public ObjectBase setObjectRotation(float rotation) {
+	this.pRotation = rotation;
+	calculatePosition();
+	return this;
+    }
+
+    /**
+     * set object origin position to center or change the positon calculations
+     * Automatically calculates new position
+     * @param x origin position
+     * @param y origin position
+     * @return this
+     */
+    public ObjectBase setObjectOrigin(float x, float y) {
+	this.pOriginX = x;
+	this.pOriginY = y;
+	calculatePosition();
+	return this;
+    }
+
+    /**
+     * Update entity.
+     */
+    public void update() {
+
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+	//batch.draw(sprite, getX(),getY());
+	_sprite.draw(batch);
+    }
+
+    protected void calculatePosition() {
+	if (_sprite == null)
+	    return;
+	_sprite.setPosition(getX(), getY());
+	_sprite.setRotation(pRotation);
+	_sprite.setScale(pScaleX, pScaleY);
+	_sprite.setOrigin(pOriginX, pOriginY);
+    }
+
+    private void calculateScale() {
+	pScaleXFactor = (float) Gdx.graphics.getWidth() / (float) Main.WIDTH;
+	pScaleYFactor = (float) Gdx.graphics.getHeight() / (float) Main.HEIGHT;
+
+	pScaleX = pScaleX * pScaleXFactor;
+	pScaleY = pScaleY * pScaleYFactor;
+    }
+
+    @Override
+    public int compare(Actor arg0, Actor arg1) {
+	if (arg0.getZIndex() < arg1.getZIndex()) {
+	    return -1;
+	} else if (arg0.getZIndex() == arg1.getZIndex()) {
+	    return 0;
+	} else {
+	    return 1;
 	}
-	
-	public float getWidth(){
-		return sprite.getWidth()*scaleX;
-	}
-	
-	public float getHeight(){
-		return sprite.getHeight()*scaleY;
-	}
-	public Sprite getSprite(){
-		return sprite;
-	}
+    }
+
+    /**
+     * @return texture (In case not using an atlas/spritesheet)
+     */
+    public Texture getTexture() {
+	return _texture;
+    }
+
+    /**
+     * @return atlas/spritesheet texture region
+     */
+    public TextureRegion getTextureRegion() {
+	return _textureRegion;
+    }
+
+    /**
+     * @return x position
+     */
+    public float getX() {
+	return ((pPosition.x / 100) * Gdx.graphics.getWidth()) - (getWidth() * pOriginX);
+    }
+
+    /**
+     * @return y position
+     */
+    public float getY() {
+	return ((pPosition.y / 100) * Gdx.graphics.getHeight()) - (getHeight() * pOriginY);
+    }
+
+    public Vector2 getPosition() {
+	return pPosition;
+    }
+
+    public float getScaleX() {
+	return pScaleX;
+    }
+
+    public float getScaleY() {
+	return pScaleY;
+    }
+
+    public float getRotation() {
+	return pRotation;
+    }
+
+    public Integer getLayer() {
+	return pLayer;
+    }
+
+    public float getOriginX() {
+	return pOriginX;
+    }
+
+    public float getOriginY() {
+	return pOriginY;
+    }
+
+    public float getWidth() {
+	return _sprite.getWidth() * pScaleX;
+    }
+
+    public float getHeight() {
+	return _sprite.getHeight() * pScaleY;
+    }
+
+    public Sprite getSprite() {
+	return _sprite;
+    }
 }
