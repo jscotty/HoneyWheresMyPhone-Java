@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.exam.gui.GUIButton;
 import com.exam.gui.GUITexture;
 import com.exam.renderers.GUIRenderer;
@@ -41,7 +40,7 @@ public class MenuScene extends Scene {
 
     @Override
     public void init() {
-	_stage = new Stage(new ScreenViewport());
+	_stage = pSceneManager.getStage();
 	_tweenManager = new TweenManager();
 	Tween.registerAccessor(GUIButton.class, new GUIButtonAccessor());
 
@@ -64,51 +63,37 @@ public class MenuScene extends Scene {
 
 	startAnimation();
 	addButtonListeners();
-
-	Gdx.input.setInputProcessor(_stage);
     }
 
     private void startAnimation() {
+	System.out.println("e");
 	float time = 0.3f;
 	Tween.set(_startButton, AccessorReferences.SCALE).target(0).start(_tweenManager);
-	Tween.to(_startButton, AccessorReferences.SCALE, time).target(1.3f).start(_tweenManager);
 	Tween.to(_startButton, AccessorReferences.SCALE, 0.1f).target(1f).delay(time).start(_tweenManager);
 
 	Tween.set(_upgradeButton, AccessorReferences.SCALE).target(0).start(_tweenManager);
-	Tween.to(_upgradeButton, AccessorReferences.SCALE, time).target(1.3f).delay(time).start(_tweenManager);
 	Tween.to(_upgradeButton, AccessorReferences.SCALE, 0.1f).target(1f).delay(time * 2).start(_tweenManager);
 
 	Tween.set(_trophiesButton, AccessorReferences.SCALE).target(0).start(_tweenManager);
-	Tween.to(_trophiesButton, AccessorReferences.SCALE, time).target(1.3f).delay(time * 2).start(_tweenManager);
 	Tween.to(_trophiesButton, AccessorReferences.SCALE, 0.1f).target(1f).delay(time * 3).start(_tweenManager);
     }
 
     private void endAnimation() {
 	float time = 0.2f;
 	Tween.set(_startButton, AccessorReferences.SCALE).target(1).start(_tweenManager);
-	Tween.to(_startButton, AccessorReferences.SCALE, 0.1f).target(1.3f).start(_tweenManager);
 	Tween.to(_startButton, AccessorReferences.SCALE, time).target(0f).delay(time).start(_tweenManager);
 
 	Tween.set(_upgradeButton, AccessorReferences.SCALE).target(1).start(_tweenManager);
-	Tween.to(_upgradeButton, AccessorReferences.SCALE, 0.1f).target(1.3f).delay(time).start(_tweenManager);
 	Tween.to(_upgradeButton, AccessorReferences.SCALE, time).target(0f).delay(time * 2).start(_tweenManager);
 
 	Tween.set(_trophiesButton, AccessorReferences.SCALE).target(1).start(_tweenManager);
-	Tween.to(_trophiesButton, AccessorReferences.SCALE, 0.1f).target(1.3f).delay(time * 2).start(_tweenManager);
-	Tween.to(_trophiesButton, AccessorReferences.SCALE, time).target(-0.1f).delay(time * 3).setCallback(new TweenCallback() {
+	Tween.to(_trophiesButton, AccessorReferences.SCALE, time).target(0).delay(time * 3).setCallback(new TweenCallback() {
 
 	    @Override
 	    public void onEvent(int arg0, BaseTween<?> arg1) {
 		SceneManager.loadScene(new MainScene(pSceneManager));
 	    }
 	}).start(_tweenManager);
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-	_uiRenderer.render(batch);
-	_tweenManager.update(Gdx.graphics.getDeltaTime());
-
     }
 
     private void addButtonListeners() {
@@ -118,12 +103,59 @@ public class MenuScene extends Scene {
 		endAnimation();
 	    }
 	});
+	_upgradeButton.getButton().addListener(new ClickListener() {
+	    @Override
+	    public void clicked(InputEvent event, float x, float y) {
+		SceneManager.loadScene(new UpgradeScene(pSceneManager));
+	    }
+	});
+    }
+
+    @Override
+    public void render(SpriteBatch batch) {
+	_uiRenderer.render(batch);
+	_tweenManager.update(Gdx.graphics.getDeltaTime());
+
     }
 
     @Override
     public void dispose() {
 	_uiRenderer.dispose();
 	_stage.clear();
+    }
+
+    @Override
+    public void show() {
+	System.out.println("show");
+    }
+
+    @Override
+    public void render(float delta) {
+	System.out.println("render");
+    }
+
+    @Override
+    public void resize(int width, int height) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void pause() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void resume() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void hide() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

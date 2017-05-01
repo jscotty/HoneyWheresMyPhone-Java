@@ -1,8 +1,9 @@
 package com.exam.scenes;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public abstract class Scene {
+public abstract class Scene implements Screen{
 
     protected SceneManager pSceneManager; // all scenes can acces scenemanager.
 

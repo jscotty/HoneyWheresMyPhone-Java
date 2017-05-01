@@ -40,8 +40,6 @@ public class EntityRenderer implements IRenderer {
 
     @Override
     public void render(SpriteBatch batch) {
-	_stage.act();
-	_stage.draw();
 
 	update();
     }

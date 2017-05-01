@@ -30,12 +30,12 @@ allprojects {
     }
 }
 
-project(":desktop") {
+project(":honey-wheres-my-phone-desktop") {
     apply plugin: "java"
 
 
     dependencies {
-        compile project(":core")
+        compile project(":honey-wheres-my-phone-core")
         compile "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
         compile "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
@@ -43,13 +43,13 @@ project(":desktop") {
     }
 }
 
-project(":html") {
+project(":honey-wheres-my-phone-html") {
     apply plugin: "gwt"
     apply plugin: "war"
 
 
     dependencies {
-        compile project(":core")
+        compile project(":honey-wheres-my-phone-core")
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx:$gdxVersion:sources"
         compile "com.badlogicgames.gdx:gdx-backend-gwt:$gdxVersion:sources"
@@ -58,7 +58,7 @@ project(":html") {
     }
 }
 
-project(":core") {
+project(":honey-wheres-my-phone-core") {
     apply plugin: "java"
 
 

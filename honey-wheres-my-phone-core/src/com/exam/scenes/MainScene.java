@@ -31,11 +31,11 @@ public class MainScene extends Scene {
 
     @Override
     public void init() {
-	_stage = new Stage(new ScreenViewport());
+	_stage = pSceneManager.getStage();
 	_hook = new Hook(SpriteType.PROPS_ARM, 50, 80);
 
-	_entityRenderer = new EntityRenderer(_stage);
-	_guiRenderer = new GUIRenderer(_stage);
+	_entityRenderer = new EntityRenderer(pSceneManager.getStage());
+	_guiRenderer = new GUIRenderer(pSceneManager.getStage());
 	_background = (Background) new Background(SpriteType.BACKGOUND_PLYAY_01, 0, 0).setObjectOrigin(0, 0);
 	_backgroundOverlay = (Entity) new Entity(SpriteType.BACKGOUND_PLYAY_01_OVERLAY, 0, 0).setObjectOrigin(0, 0);
 	_entityRenderer.init();
@@ -47,7 +47,6 @@ public class MainScene extends Scene {
 
 	addButtonListeners();
 
-	Gdx.input.setInputProcessor(_stage);
 
     }
 
@@ -69,6 +68,42 @@ public class MainScene extends Scene {
     public void dispose() {
 	_entityRenderer.dispose();
 	_stage.clear();
+    }
+
+    @Override
+    public void show() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void render(float delta) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void resize(int width, int height) {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void pause() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void resume() {
+	// TODO Auto-generated method stub
+	
+    }
+
+    @Override
+    public void hide() {
+	// TODO Auto-generated method stub
+	
     }
 
 }

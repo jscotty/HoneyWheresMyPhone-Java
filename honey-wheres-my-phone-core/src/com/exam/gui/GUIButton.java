@@ -14,25 +14,6 @@ public class GUIButton extends GUITexture {
     private TextureRegionDrawable _texturePressed = null;
     private ImageButton _button;
 
-    /**
-     * Constructor with given texture.
-     * @param texture
-     * @param x position
-     * @param y position
-     */
-    public GUIButton(Texture texture, float x, float y) {
-	super(texture, x, y);
-    }
-
-    /**
-     * Constructor with given texture path for generating texture.
-     * @param texturePath
-     * @param x position
-     * @param y position
-     */
-    public GUIButton(String texturePath, float x, float y) {
-	super(texturePath, x, y);
-    }
 
     /**
      * Constructor with given type for region generation.
@@ -60,10 +41,10 @@ public class GUIButton extends GUITexture {
 	_button.setPosition(getX(), getY());
 	return this;
     }
-
+    
     @Override
-    public void update() {
-	super.update();
+    public void act(float delta) {
+        super.act(delta);
     }
 
     public ImageButton getButton() {

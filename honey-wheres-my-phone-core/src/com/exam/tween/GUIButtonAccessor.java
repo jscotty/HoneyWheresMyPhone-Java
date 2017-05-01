@@ -28,8 +28,6 @@ public class GUIButtonAccessor implements TweenAccessor<GUIButton> {
 	    button.getButton().setColor(button.getButton().getColor().r, button.getButton().getColor().g, button.getButton().getColor().b, newValues[0]);
 	    break;
 	case AccessorReferences.SCALE:
-
-	    System.out.println(newValues[0]);
 	    button.setObjectScale(newValues[0], newValues[0]);
 	    break;
 	default:

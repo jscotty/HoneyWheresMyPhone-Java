@@ -48,7 +48,7 @@ public class Entity extends ObjectBase {
     }
 
     @Override
-    public void update() {
-	super.update();
+    public void act(float delta) {
+        super.act(delta);
     }
 }

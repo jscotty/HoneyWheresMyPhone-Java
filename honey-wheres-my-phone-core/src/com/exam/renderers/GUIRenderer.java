@@ -34,8 +34,6 @@ public class GUIRenderer implements IRenderer {
 
     @Override
     public void render(SpriteBatch batch) {
-	_stage.act(Gdx.graphics.getDeltaTime());
-	_stage.draw();
 	renderGUITextures(batch);
     }
 

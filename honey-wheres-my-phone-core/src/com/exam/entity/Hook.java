@@ -14,16 +14,16 @@ public class Hook extends Entity {
 	super(type, x, y);
     }
 
-    @Override
-    public void update() {
-	super.update();
-	moveWithInput();
+   @Override
+    public void act(float delta) {
+        super.act(delta);
+        moveWithInput();
     }
 
     private void moveWithInput() {
 	if (!Gdx.input.isButtonPressed(0))
 	    return;
-	pPosition.x = (float) (Gdx.input.getX() / (float) Main.WIDTH) * 100;
+	pPosition.x = (float) (Gdx.input.getX() / (float) Gdx.graphics.getWidth()) * 100;
 	calculatePosition();
     }
 

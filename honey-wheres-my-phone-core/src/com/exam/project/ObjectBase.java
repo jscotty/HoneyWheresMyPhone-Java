@@ -151,6 +151,11 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
     public void update() {
 
     }
+    
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
