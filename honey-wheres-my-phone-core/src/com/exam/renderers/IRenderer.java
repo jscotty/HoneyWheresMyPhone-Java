@@ -10,10 +10,9 @@ public interface IRenderer {
     public void init();
 
     /**
-     * Render system.
-     * @param sprite batch
+     * Updating render systems
      */
-    public void render(SpriteBatch batch);
+    public void render();
 
     /**
      * Dispose renderer system.

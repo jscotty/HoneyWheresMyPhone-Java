@@ -28,20 +28,4 @@ public abstract class Scene implements Screen{
     public void AddSceneManager(SceneManager sceneManager) {
 	this.pSceneManager = sceneManager;
     }
-
-    /**
-     * Initialize scene
-     */
-    public abstract void init();
-
-    /**
-     * Render scene
-     * @param sprite batch
-     */
-    public abstract void render(SpriteBatch batch);
-
-    /**
-     * Dispose scene
-     */
-    public abstract void dispose();
 }

@@ -23,22 +23,6 @@ public class UpgradeScene extends Scene {
     public UpgradeScene(SceneManager sceneManager){
 	super(sceneManager);
     }
-    
-    @Override
-    public void init() {
-	_stage = pSceneManager.getStage();
-	_guiRenderer = new GUIRenderer(pSceneManager.getStage());
-	_backButton = new GUIButton(SpriteType.BUTTON_REPLAY_IDLE, SpriteType.BUTTON_REPLAY_PRESSED, 10, 10);
-	_background = (GUITexture) new GUITexture(SpriteType.BACKGOUND_PLYAY_01, 0, 0).setObjectOrigin(0, 0);
-	_backgroundOverlay = (GUITexture) new GUITexture(SpriteType.BACKGOUND_PLYAY_01_OVERLAY, 0, 0).setObjectOrigin(0, 0);
-
-	_guiRenderer.processGUITexture(_background);
-	_guiRenderer.processGUITexture(_backgroundOverlay);
-	_guiRenderer.processGUIButton(_backButton);
-	
-	addButtonListeners();
-	
-    }
 
     private void addButtonListeners() {
 	_backButton.getButton().addListener(new ClickListener() {
@@ -50,26 +34,23 @@ public class UpgradeScene extends Scene {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
-	_guiRenderer.render(batch);
-    }
-
-    @Override
-    public void dispose() {
-	_guiRenderer.dispose();
-	_stage.clear();
-    }
-
-    @Override
     public void show() {
-	// TODO Auto-generated method stub
+	_stage = pSceneManager.getStage();
+	_guiRenderer = new GUIRenderer(pSceneManager.getStage());
+	_backButton = new GUIButton(SpriteType.BUTTON_REPLAY_IDLE, SpriteType.BUTTON_REPLAY_PRESSED, 10, 10);
+	_background = (GUITexture) new GUITexture(SpriteType.BACKGOUND_PLYAY_01, 0, 0).setObjectOrigin(0, 0);
+	_backgroundOverlay = (GUITexture) new GUITexture(SpriteType.BACKGOUND_PLYAY_01_OVERLAY, 0, 0).setObjectOrigin(0, 0);
+
+	_guiRenderer.processGUITexture(_background);
+	_guiRenderer.processGUITexture(_backgroundOverlay);
+	_guiRenderer.processGUIButton(_backButton);
 	
+	addButtonListeners();
     }
 
     @Override
     public void render(float delta) {
-	// TODO Auto-generated method stub
-	
+	_guiRenderer.render();
     }
 
     @Override
@@ -94,6 +75,11 @@ public class UpgradeScene extends Scene {
     public void hide() {
 	// TODO Auto-generated method stub
 	
+    }
+
+    @Override
+    public void dispose() {
+	_guiRenderer.dispose();
     }
 
 }

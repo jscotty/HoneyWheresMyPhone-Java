@@ -23,6 +23,8 @@ public class GUIButton extends GUITexture {
      */
     public GUIButton(SpriteType buttonIdle, SpriteType buttonPressed, float x, float y) {
 	super(x, y);
+	pOriginX = 0.5f;
+	pOriginY = 0.5f;
 	this._textureIdle = new TextureRegionDrawable(SpriteSheetReaderShoebox.getTextureFromAtlas(buttonIdle));
 	this._texturePressed = new TextureRegionDrawable(SpriteSheetReaderShoebox.getTextureFromAtlas(buttonPressed));
 	_button = new ImageButton(_textureIdle);
@@ -53,11 +55,21 @@ public class GUIButton extends GUITexture {
 
     @Override
     public float getX() {
-	return ((pPosition.x / 100) * Gdx.graphics.getWidth()) - ((_button.getWidth() * pScaleX) * pOriginX);
+	return ((pPosition.x / 100) * Gdx.graphics.getWidth()) - (getWidth() * pOriginX);
     }
 
     @Override
     public float getY() {
-	return ((pPosition.y / 100) * Gdx.graphics.getHeight()) - ((_button.getHeight() * pScaleY) * pOriginY);
+	return ((pPosition.y / 100) * Gdx.graphics.getHeight()) - (getHeight()* pOriginY);
+    }
+    
+    @Override
+    public float getWidth() {
+        return (_button.getWidth() * pScaleX);
+    }
+    
+    @Override
+    public float getHeight() {
+        return (_button.getHeight() * pScaleY);
     }
 }

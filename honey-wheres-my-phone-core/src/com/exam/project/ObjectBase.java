@@ -19,8 +19,8 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
     protected Sprite _sprite;
 
     protected Vector2 pPosition = new Vector2(0, 0);
-    protected float pOriginX = 0.5f;
-    protected float pOriginY = 0.5f;
+    protected float pOriginX = 1f;
+    protected float pOriginY = 1f;
     protected float pScaleX = 1;
     protected float pScaleY = 1;
     protected float pRotation = 0;
@@ -169,7 +169,7 @@ public class ObjectBase extends Actor implements Comparator<Actor> {
 	_sprite.setPosition(getX(), getY());
 	_sprite.setRotation(pRotation);
 	_sprite.setScale(pScaleX, pScaleY);
-	_sprite.setOrigin(pOriginX, pOriginY);
+	_sprite.setOrigin(getWidth()* pOriginX, getHeight()*pOriginY);
     }
 
     private void calculateScale() {

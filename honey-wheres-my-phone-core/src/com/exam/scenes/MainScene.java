@@ -29,8 +29,15 @@ public class MainScene extends Scene {
 
     }
 
+    /**
+     * add events to buttons
+     */
+    private void addButtonListeners() {
+
+    }
+
     @Override
-    public void init() {
+    public void show() {
 	_stage = pSceneManager.getStage();
 	_hook = new Hook(SpriteType.PROPS_ARM, 50, 80);
 
@@ -46,39 +53,14 @@ public class MainScene extends Scene {
 	_entityRenderer.processEntity(_hook);
 
 	addButtonListeners();
-
-
-    }
-
-    /**
-     * add events to buttons
-     */
-    private void addButtonListeners() {
-
-    }
-
-    @Override
-    public void render(SpriteBatch batch) {
-	_entityRenderer.render(batch);
-	_guiRenderer.render(batch);
-	_background.scroll(1);
-    }
-
-    @Override
-    public void dispose() {
-	_entityRenderer.dispose();
-	_stage.clear();
-    }
-
-    @Override
-    public void show() {
-	// TODO Auto-generated method stub
 	
     }
 
     @Override
     public void render(float delta) {
-	// TODO Auto-generated method stub
+	_entityRenderer.render();
+	_guiRenderer.render();
+	_background.scroll(1);
 	
     }
 
@@ -104,6 +86,11 @@ public class MainScene extends Scene {
     public void hide() {
 	// TODO Auto-generated method stub
 	
+    }
+
+    @Override
+    public void dispose() {
+	_entityRenderer.dispose();
     }
 
 }

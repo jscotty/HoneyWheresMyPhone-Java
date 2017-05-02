@@ -39,12 +39,7 @@ public class EntityRenderer implements IRenderer {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
-
-	update();
-    }
-
-    private void update() {
+    public void render() {
 	for (Entity entity : _entities) {
 	    entity.update();
 	}

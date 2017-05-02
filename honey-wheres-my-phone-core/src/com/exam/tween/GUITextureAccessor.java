@@ -15,6 +15,9 @@ public class GUITextureAccessor implements TweenAccessor<GUITexture> {
 	case AccessorReferences.SCALE:
 	    returnValues[0] = texture.getScaleX();
 	    return 1;
+	case AccessorReferences.ROTATE:
+	    returnValues[0] = texture.getRotation();
+	    return 1;
 	default:
 	    assert false; // stop execution!
 	    return -1; // error
@@ -29,6 +32,9 @@ public class GUITextureAccessor implements TweenAccessor<GUITexture> {
 	    break;
 	case AccessorReferences.SCALE:
 	    texture.setObjectScale(newValues[0], newValues[0]);
+	    break;
+	case AccessorReferences.ROTATE:
+	    texture.setObjectRotation(newValues[0]);
 	    break;
 	default:
 	    assert false; // stop execution!

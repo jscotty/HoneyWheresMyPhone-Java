@@ -33,17 +33,8 @@ public class GUIRenderer implements IRenderer {
     }
 
     @Override
-    public void render(SpriteBatch batch) {
-	renderGUITextures(batch);
-    }
+    public void render() {
 
-    private void renderGUITextures(SpriteBatch batch) {
-	if (_guis.size() == 0)
-	    return;
-	for (GUITexture guiTexture : _guis) {
-	    guiTexture.update();
-	    guiTexture.getSprite().draw(batch);
-	}
     }
 
     @Override
