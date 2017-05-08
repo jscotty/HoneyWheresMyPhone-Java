@@ -1,5 +1,8 @@
 package com.exam.entity;
 
+import java.util.Comparator;
+
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -9,13 +12,15 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.exam.gui.Gui;
 import com.exam.handlers.Assets;
+import com.exam.handlers.EntityManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteSheetReaderShoebox;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.World;
 
-public class Entity {
+public class Entity implements Comparator<Entity> {
 
 	protected Vector2 position;
 	protected Vector2 bodyPositionDistance = new Vector2(0,0);
@@ -31,6 +36,8 @@ public class Entity {
 	protected float scaleY = 1f;
 	protected float angle = 0f;
 	
+	protected int zIndex = 0; // for sorting.
+	
 	private float width = 0;
 	private float height = 0;
 	
@@ -43,10 +50,12 @@ public class Entity {
 	 * @param world
 	 * @param bodyType
 	 */
-	public Entity(World world, Vector2 position, BodyType bodyType) {
+	public Entity(World world, Vector2 position, BodyType bodyType, EntityManager manager) {
 		this.world = world;
 		this.position = position;
 		this.bodyType = bodyType;
+		
+		manager.processEntity(this);
 	}
 
 	/**
@@ -55,11 +64,13 @@ public class Entity {
 	 * @param bodyType
 	 * @param spriteType
 	 */
-	public Entity(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, Assets assets) {
+	public Entity(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, EntityManager manager) {
 		this.world = world;
 		this.position = position;
 		this.bodyType = bodyType;
-		texture = assets.getTexture(spriteType);
+		texture = Main.assets.getTexture(spriteType);
+		
+		manager.processEntity(this);
 	}
 	
 //endregion
@@ -84,17 +95,17 @@ public class Entity {
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(float width, float height, float positionX, float positionY){
+	public Entity addBodyBox(float width, float height, float x, float y){
 		//Manhattan distance calculation
-		this.bodyPositionDistance.x = position.x - positionX ;
-		this.bodyPositionDistance.y = position.y - positionY;
+		this.bodyPositionDistance.x = position.x - x ;
+		this.bodyPositionDistance.y = position.y - y;
 		
-		System.out.println("currPos "+position + " || bodyPos " + positionX +" , " + positionY + " | " + bodyPositionDistance);
+		System.out.println("currPos "+position + " || bodyPos " + x +" , " + y + " | " + bodyPositionDistance);
 		
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height);
 		
-		setupBody(shape, positionX, positionY);
+		setupBody(shape, x, y);
 		return this;
 	}
 	/**
@@ -103,15 +114,15 @@ public class Entity {
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(float positionX, float positionY){
+	public Entity addBodyBox(float x, float y){
 		//Manhattan distance calculation
-		this.bodyPositionDistance.x = position.x - positionX ;
-		this.bodyPositionDistance.y = position.y - positionY;
+		this.bodyPositionDistance.x = position.x - x ;
+		this.bodyPositionDistance.y = position.y - y;
 		
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(texture.getRegionWidth()/Main.DEVIDER, texture.getRegionHeight()/Main.DEVIDER);
 		
-		setupBody(shape, positionX, positionY);
+		setupBody(shape, x, y);
 		return this;
 	}
 	/**
@@ -134,7 +145,7 @@ public class Entity {
 	
 	/**
 	 * setting up a Box2D body.
-	 * @param shape type (Circle shape nor PolygonShape)
+	 * @param shape (CircleShape nor PolygonShape)
 	 * @param x position
 	 * @param y position
 	 */
@@ -170,6 +181,19 @@ public class Entity {
 				parent.getPosition().x + position.x,
 				parent.getPosition().y + position.y
 			), parent.getAngle() + angle);
+		}
+	}
+	
+	public void render(SpriteBatch spriteBatch) {
+		spriteBatch.draw(texture, getX(), getY(), originX, originY,getWidth(), getHeight(),scaleX, scaleY, angle);
+	}
+
+	@Override
+	public int compare(Entity o1, Entity o2) {
+		if (o1.zIndex < o2.zIndex){
+			return -1;
+		} else {
+			return 1;
 		}
 	}
 	
@@ -234,5 +258,4 @@ public class Entity {
 	public float getAngle() {
 		return angle;
 	}
-
 }

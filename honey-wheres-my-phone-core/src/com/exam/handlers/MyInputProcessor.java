@@ -22,8 +22,13 @@ public class MyInputProcessor extends InputAdapter{
 	}
 	
 	@Override
+	public boolean mouseMoved(int screenX, int screenY) {
+		MyInput.setMouseCoordinates(screenX, screenY);
+		return super.mouseMoved(screenX, screenY);
+	}
+	
+	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-		System.out.println(screenX);
 		MyInput.setMouseState(button, true);
 		return true;
 	}

@@ -15,8 +15,8 @@ public enum SpriteType {
     PROPS_BLUSH("props/Sheet_Props", "Prop_blush.png"),
 
     //backgrounds
-    BACKGOUND_PLYAY_01("bg01", "Background_Play_01.png"),
-    BACKGOUND_PLYAY_01_OVERLAY("bg01", "Background_OverLay.png"),
+    BACKGOUND_PLYAY_01("", "Background_Play_01.png"),
+    BACKGOUND_PLYAY_01_OVERLAY("", "Background_OverLay.png"),
 
     //logo's
     LOGO_01("logo/Sheets_Logo", "Logo1.png"),

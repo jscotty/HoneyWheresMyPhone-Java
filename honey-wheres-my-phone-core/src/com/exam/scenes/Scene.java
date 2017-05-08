@@ -32,7 +32,7 @@ public abstract class Scene {
 
 	/**
 	 * This method is called every frame.
-	 * @param deltaTime fixed delta time of the time between every frame.
+	 * @param deltaTime time between every frame.
 	 */
 	public abstract void update(float deltaTime);
 

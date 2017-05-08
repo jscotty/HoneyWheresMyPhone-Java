@@ -19,14 +19,13 @@ public class Main extends ApplicationAdapter {
 	private final String TITLE = "Honey? where's my phone?";
 	
 	public static final float STEP = 1/60f;
-	private float accum;
 
 	private SpriteBatch batch;
 	private OrthographicCamera camera;
 	private OrthographicCamera hudCamera;
 	
 	private SceneManager sceneManager;
-	private Assets assets;
+	public static Assets assets;
 
 	@Override
 	public void create() {
@@ -35,7 +34,7 @@ public class Main extends ApplicationAdapter {
 		Gdx.graphics.setTitle(TITLE);
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 
-		assets = new Assets();
+		assets = new Assets(this);
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
@@ -47,20 +46,17 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render() {
-		if(!Assets.isFinishedLoading){
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			return;
-		}
 		// main rendering
-		
-		accum += Gdx.graphics.getDeltaTime();
-		while(accum >= STEP){
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			accum -= STEP;
-			sceneManager.update(STEP);
-			sceneManager.render();
-			MyInput.update();
-		}
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClearColor(1, 0, 0, 1);
+		sceneManager.update(Gdx.graphics.getDeltaTime());
+		sceneManager.render();
+		MyInput.update();
+	}
+	
+	public void renderLoading(int loadedCount){
+		int percentage = (int)(((float)loadedCount / (float)SpriteType.values().length)*100);
+		System.out.println(percentage + " %");
 	}
 
 	@Override
