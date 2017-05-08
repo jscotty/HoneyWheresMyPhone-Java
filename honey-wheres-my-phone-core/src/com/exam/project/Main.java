@@ -5,9 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.exam.handlers.Assets;
 import com.exam.handlers.MyInput;
 import com.exam.handlers.MyInputProcessor;
 import com.exam.scenes.SceneManager;
+import com.exam.toolbox.SpriteType;
 
 public class Main extends ApplicationAdapter {
 
@@ -24,6 +26,7 @@ public class Main extends ApplicationAdapter {
 	private OrthographicCamera hudCamera;
 	
 	private SceneManager sceneManager;
+	private Assets assets;
 
 	@Override
 	public void create() {
@@ -31,7 +34,8 @@ public class Main extends ApplicationAdapter {
 		Gdx.graphics.setDisplayMode((int)(Main.WIDTH / DEVIDER), (int)(Main.HEIGHT / DEVIDER), false);
 		Gdx.graphics.setTitle(TITLE);
 		Gdx.input.setInputProcessor(new MyInputProcessor());
-		
+
+		assets = new Assets();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
@@ -43,7 +47,10 @@ public class Main extends ApplicationAdapter {
 
 	@Override
 	public void render() {
-		
+		if(!Assets.isFinishedLoading){
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			return;
+		}
 		// main rendering
 		
 		accum += Gdx.graphics.getDeltaTime();
@@ -71,5 +78,9 @@ public class Main extends ApplicationAdapter {
 
 	public OrthographicCamera getHudCamera() {
 		return hudCamera;
+	}
+	
+	public Assets getAssets() {
+		return assets;
 	}
 }

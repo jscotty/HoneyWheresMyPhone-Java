@@ -7,7 +7,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.exam.handlers.Assets;
+import com.exam.project.Main;
 import com.exam.toolbox.SpriteSheetReaderShoebox;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.World;
@@ -15,6 +18,7 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Entity {
 
 	protected Vector2 position;
+	protected Vector2 bodyPositionDistance = new Vector2(0,0);
 	protected Vector2 bodyPosition = new Vector2(0,0);
 	protected TextureRegion texture;
 	protected Body body;
@@ -29,61 +33,20 @@ public class Entity {
 	
 	private float width = 0;
 	private float height = 0;
-
-	private float cachedBodyPosX;
-	private float cachedBodyPosY;
 	
 	private BodyType bodyType;
 	
+//region Constructors
 
 	/**
-	 * Constructor for circle body 'ghost' body initialization
+	 * Constructor for 'ghost' initialization
 	 * @param world
 	 * @param bodyType
-	 * @param radius
 	 */
-	public Entity(World world, Vector2 position, BodyType bodyType, float width, float height) {
+	public Entity(World world, Vector2 position, BodyType bodyType) {
 		this.world = world;
 		this.position = position;
 		this.bodyType = bodyType;
-		this.width = width;
-		this.height = height;
-		
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(position);
-		bodyDef.type = bodyType;
-		
-		body = world.createBody(bodyDef);
-		
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width, height);
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		body.createFixture(fdef);
-	}
-
-	/**
-	 * Constructor for square body 'ghost' body initialization
-	 * @param world
-	 * @param bodyType
-	 * @param radius
-	 */
-	public Entity(World world, Vector2 position, BodyType bodyType, float radius) {
-		this.world = world;
-		this.position = position;
-		this.bodyType = bodyType;
-		
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(position);
-		bodyDef.type = bodyType;
-		
-		body = world.createBody(bodyDef);
-		
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(texture.getRegionWidth(), texture.getRegionHeight());
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		body.createFixture(fdef);
 	}
 
 	/**
@@ -92,51 +55,101 @@ public class Entity {
 	 * @param bodyType
 	 * @param spriteType
 	 */
-	public Entity(World world, Vector2 position, BodyType bodyType, SpriteType spriteType) {
+	public Entity(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, Assets assets) {
 		this.world = world;
 		this.position = position;
 		this.bodyType = bodyType;
-		texture = SpriteSheetReaderShoebox.getTextureFromAtlas(spriteType);
+		texture = assets.getTexture(spriteType);
+	}
+	
+//endregion
+	
+//region body initialization.
+	/**
+	 * Add squared body to this entity on entity position and size of entity (texture)
+	 * @return this
+	 */
+	public Entity addBodyBox(){
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(texture.getRegionWidth()/Main.DEVIDER, texture.getRegionHeight()/Main.DEVIDER);
 		
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(position);
-		bodyDef.type = bodyType;
+		setupBody(shape, position.x, position.y);
+		return this;
+	}
+	/**
+	 * Add squared body to this entity on given position with given size.
+	 * @param width size
+	 * @param height size
+	 * @param x position
+	 * @param y position
+	 * @return this
+	 */
+	public Entity addBodyBox(float width, float height, float positionX, float positionY){
+		//Manhattan distance calculation
+		this.bodyPositionDistance.x = position.x - positionX ;
+		this.bodyPositionDistance.y = position.y - positionY;
 		
-		body = world.createBody(bodyDef);
+		System.out.println("currPos "+position + " || bodyPos " + positionX +" , " + positionY + " | " + bodyPositionDistance);
 		
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(texture.getRegionWidth(), texture.getRegionHeight());
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		body.createFixture(fdef);
+		shape.setAsBox(width, height);
+		
+		setupBody(shape, positionX, positionY);
+		return this;
 	}
-
 	/**
-	 * Constructor for circle body initialization
-	 * @param world
-	 * @param bodyType
-	 * @param spriteType
-	 * @param radius
+	 * Add squared body to this entity on given position and size of entity (texture)
+	 * @param x position
+	 * @param y position
+	 * @return this
 	 */
-	public Entity(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, float radius) {
-		this.world = world;
-		this.position = position;
-		this.bodyType = bodyType;
+	public Entity addBodyBox(float positionX, float positionY){
+		//Manhattan distance calculation
+		this.bodyPositionDistance.x = position.x - positionX ;
+		this.bodyPositionDistance.y = position.y - positionY;
 		
-		texture = SpriteSheetReaderShoebox.getTextureFromAtlas(spriteType);
+		PolygonShape shape = new PolygonShape();
+		shape.setAsBox(texture.getRegionWidth()/Main.DEVIDER, texture.getRegionHeight()/Main.DEVIDER);
 		
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(position);
-		bodyDef.type = bodyType;
-		
-		body = world.createBody(bodyDef);
+		setupBody(shape, positionX, positionY);
+		return this;
+	}
+	/**
+	 * Add circle body to this entity with given radius on given position
+	 * @param radius
+	 * @param positionX
+	 * @param positionY
+	 * @return
+	 */
+	public Entity addBodyCircle(float radius, float positionX, float positionY){
+		this.bodyPositionDistance.x = position.x - positionX;
+		this.bodyPositionDistance.y = position.y - positionY;
 		
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
+		
+		setupBody(shape, positionX, positionY);
+		return this;
+	}
+	
+	/**
+	 * setting up a Box2D body.
+	 * @param shape type (Circle shape nor PolygonShape)
+	 * @param x position
+	 * @param y position
+	 */
+	private void setupBody(Shape shape, float positionX, float positionY){
+		BodyDef bodyDef = new BodyDef();
+		bodyDef.position.set(positionX, positionY);
+		bodyDef.type = bodyType;
+		body = world.createBody(bodyDef);
+
+		bodyDef.type = bodyType;
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		body.createFixture(fdef);
 	}
+//endregion
 	
 	public void resetPosition(){
 		position.x = 0;
@@ -149,47 +162,9 @@ public class Entity {
 		return this;
 	}
 	
-	public Entity setBodyBox(float width, float height, float positionX, float positionY){
-		body.destroyFixture(body.getFixtureList().first());
-		this.bodyPosition.x = position.x - positionX ;
-		this.bodyPosition.y = position.y - positionY;
-		cachedBodyPosX = positionX;
-		cachedBodyPosY = positionY;
-		System.out.println(bodyPosition);
-
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(positionX, positionY);
-		bodyDef.type = bodyType;
-		
-		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(width, height);
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		body.createFixture(fdef);
-		return this;
-	}
-	
-	public Entity setBodyCircle(float radius, float positionX, float positionY){
-		body.destroyFixture(body.getFixtureList().first());
-		this.bodyPosition.x = position.x - positionX ;
-		this.bodyPosition.y = position.y - positionY;
-
-		BodyDef bodyDef = new BodyDef();
-		bodyDef.position.set(positionX, positionY);
-		bodyDef.type = bodyType;
-		
-		CircleShape shape = new CircleShape();
-		shape.setRadius(radius);
-		FixtureDef fdef = new FixtureDef();
-		fdef.shape = shape;
-		body.createFixture(fdef);
-		return this;
-	}
-	
-	
 	public void update(float deltaTime){
-		this.bodyPosition.x = cachedBodyPosX + position.x;
-		this.bodyPosition.y = cachedBodyPosY + position.y;
+		bodyPosition.x = (position.x - bodyPositionDistance.x);
+		bodyPosition.y = (position.y - bodyPositionDistance.y);
 		if(parent != null){
 			body.setTransform(new Vector2(	
 				parent.getPosition().x + position.x,
@@ -199,8 +174,7 @@ public class Entity {
 	}
 	
 	protected Vector2 getBodyPosition(){
-		System.out.println(bodyPosition);
-		return new Vector2(position.x + bodyPosition.x, position.y + bodyPosition.y);
+		return bodyPosition;
 	}
 	
 	public float getX(){

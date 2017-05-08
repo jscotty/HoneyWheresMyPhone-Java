@@ -28,7 +28,7 @@ public class MainScene extends Scene{
 		debugRenderer = new Box2DDebugRenderer();
 		entityManager = new EntityManager(world);
 		
-		hook = (Hook) new Hook(world, new Vector2(200, 500), BodyType.KinematicBody, SpriteType.PROPS_ARM).setBodyBox(100, 100, 100,100);
+		hook = (Hook) new Hook(world, new Vector2(200, 1200), BodyType.KinematicBody, SpriteType.PROPS_ARM, main.getAssets()).addBodyCircle(60, 195, 950);
 		entityManager.processEntity(hook);
 	}
 
