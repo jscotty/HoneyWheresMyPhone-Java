@@ -1,0 +1,34 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Button_Accept_Clicked.png" x="764" y="728" width="114" height="114"/>
+	<SubTexture name="Button_Accept_Idle.png" x="832" y="348" width="114" height="114"/>
+	<SubTexture name="Button_AudioOff_Clicked.png" x="736" y="900" width="114" height="114"/>
+	<SubTexture name="Button_AudioOff_Idle.png" x="620" y="900" width="114" height="114"/>
+	<SubTexture name="Button_AudioOn_Clicked.png" x="288" y="918" width="114" height="114"/>
+	<SubTexture name="Button_AudioOn_Idle.png" x="948" y="0" width="114" height="114"/>
+	<SubTexture name="Button_Home_Clicked.png" x="880" y="696" width="114" height="114"/>
+	<SubTexture name="Button_Home_Idle.png" x="880" y="580" width="114" height="114"/>
+	<SubTexture name="Button_Left_Clicked.png" x="0" y="918" width="142" height="142"/>
+	<SubTexture name="Button_Left_Idle.png" x="144" y="918" width="142" height="142"/>
+	<SubTexture name="Button_Pauze_Clicked.png" x="764" y="612" width="114" height="114"/>
+	<SubTexture name="Button_Pauze_Idle.png" x="832" y="0" width="114" height="114"/>
+	<SubTexture name="Button_PlaySmall_Clicked.png" x="416" y="816" width="202" height="202"/>
+	<SubTexture name="Button_PlaySmall_Idle.png" x="416" y="612" width="202" height="202"/>
+	<SubTexture name="Button_Plus_Clicked.png" x="928" y="960" width="74" height="74"/>
+	<SubTexture name="Button_Plus_Idle.png" x="852" y="960" width="74" height="74"/>
+	<SubTexture name="Button_Quit_Clicked.png" x="832" y="116" width="114" height="114"/>
+	<SubTexture name="Button_Quit_Idle.png" x="832" y="232" width="114" height="114"/>
+	<SubTexture name="Button_Replay_Clicked.png" x="832" y="464" width="114" height="114"/>
+	<SubTexture name="Button_Replay_Idle.png" x="852" y="844" width="114" height="114"/>
+	<SubTexture name="Button_Right_Clicked.png" x="620" y="612" width="142" height="142"/>
+	<SubTexture name="Button_Right_Idle.png" x="620" y="756" width="142" height="142"/>
+	<SubTexture name="Menu_Button_Clicked.png" x="0" y="765" width="414" height="151"/>
+	<SubTexture name="Menu_Button_Idle.png" x="416" y="153" width="414" height="151"/>
+	<SubTexture name="Play_Button_Clicked.png" x="0" y="306" width="414" height="151"/>
+	<SubTexture name="Play_Button_Idle.png" x="0" y="0" width="414" height="151"/>
+	<SubTexture name="Resume_Button_Clicked.png" x="0" y="153" width="414" height="151"/>
+	<SubTexture name="Resume_Button_Idle.png" x="416" y="0" width="414" height="151"/>
+	<SubTexture name="Trophies_Button_Clicked.png" x="416" y="306" width="414" height="151"/>
+	<SubTexture name="Trophies_Button_Idle.png" x="0" y="459" width="414" height="151"/>
+	<SubTexture name="Upgrades_Button_Clicked.png" x="0" y="612" width="414" height="151"/>
+	<SubTexture name="Upgrades_Button_Idle.png" x="416" y="459" width="414" height="151"/>
+</TextureAtlas>
