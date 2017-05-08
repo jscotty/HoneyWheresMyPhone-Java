@@ -1,1 +1,1 @@
-include 'honey-wheres-my-phone-desktop', 'honey-wheres-my-phone-html', 'honey-wheres-my-phone-core'
+include 'desktop', 'html', 'core'
