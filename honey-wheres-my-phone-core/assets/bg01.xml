@@ -1,4 +1,0 @@
-<TextureAtlas imagePath="sprites.png">
-	<SubTexture name="Background_OverLay.png" x="722" y="0" width="720" height="1280"/>
-	<SubTexture name="Background_Play_01.png" x="0" y="0" width="720" height="1280"/>
-</TextureAtlas>
