@@ -1,6 +1,7 @@
 package com.exam.handlers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,7 +17,10 @@ public class GUIManager {
 	
 	public void processGui(Gui gui){
 		guis.add(gui);
-		guis.sort(gui);
+	}
+	
+	public void sortGuis(){
+		Collections.sort(guis);
 	}
 	
 	public void update(float deltaTime){

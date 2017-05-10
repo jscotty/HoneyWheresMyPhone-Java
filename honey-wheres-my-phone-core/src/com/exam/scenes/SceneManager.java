@@ -12,13 +12,19 @@ public class SceneManager {
     
     private Stack<Scene> scenes;
 
+    public static final int LOADER = -1;
     public static final int MENU = 0;
     public static final int PLAY = 1;
+    
+    public SceneManager(){
+    	scenes = new Stack<Scene>();
+    	pushScene(LOADER);
+    }
     
     public SceneManager(Main main){
     	this.main = main;
     	scenes = new Stack<Scene>();
-    	pushScene(MENU);
+    	pushScene(LOADER);
     }
     
     public void update(float deltaTime){
@@ -30,6 +36,7 @@ public class SceneManager {
     }
     
     private Scene getScene(int state){
+    	if(state == LOADER) return new AssetsLoaderScene(this);
     	if(state == MENU) return new MainMenuScene(this);
     	if(state == PLAY) return new MainScene(this);
     	return null;

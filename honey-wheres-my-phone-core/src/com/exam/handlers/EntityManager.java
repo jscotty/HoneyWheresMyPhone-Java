@@ -1,6 +1,7 @@
 package com.exam.handlers;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +15,11 @@ public class EntityManager {
 	
 	public void processEntity(Entity entity){
 		entities.add(entity);
-		entities.sort(entity);
+	}
+	
+	public void sortEntities(){
+
+		Collections.sort(entities);
 	}
 	
 	public void update(float deltaTime){

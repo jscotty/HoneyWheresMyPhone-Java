@@ -34,7 +34,7 @@ public class Main extends ApplicationAdapter {
 		Gdx.graphics.setTitle(TITLE);
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 
-		assets = new Assets(this);
+		assets = new Assets();
 		batch = new SpriteBatch();
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, WIDTH, HEIGHT);
@@ -48,15 +48,10 @@ public class Main extends ApplicationAdapter {
 	public void render() {
 		// main rendering
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		sceneManager.update(Gdx.graphics.getDeltaTime());
 		sceneManager.render();
 		MyInput.update();
-	}
-	
-	public void renderLoading(int loadedCount){
-		int percentage = (int)(((float)loadedCount / (float)SpriteType.values().length)*100);
-		System.out.println(percentage + " %");
 	}
 
 	@Override

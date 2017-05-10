@@ -5,6 +5,7 @@
 	<source path="com/exam/entity" />
 	<source path="com/exam/scenes" />
 	<source path="com/exam/renderers" />
+	<source path="com/exam/handlers" />
 	<source path="com/exam/gui" />
 	<source path="com/exam/toolbox" />
 	<source path="com/exam/tween" />

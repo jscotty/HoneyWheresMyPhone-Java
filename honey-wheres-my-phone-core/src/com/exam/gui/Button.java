@@ -50,7 +50,6 @@ public class Button extends Gui {
 		mousePosition.x /= 2;
 		mousePosition.y += Main.HEIGHT;
 		mousePosition.y /= 2;
-		System.out.println(mousePosition + " " + width);
 		
 		if(MyInput.isMousePressed(0) && mousePosition.x > positionX - width / 2 && mousePosition.x < positionX + width / 2 && mousePosition.y > positionY - height / 2 && mousePosition.y < positionY + height / 2) {
 			clicked = true;
@@ -67,7 +66,9 @@ public class Button extends Gui {
 	
 	@Override
 	public void render(SpriteBatch spriteBatch) {
-		spriteBatch.draw(renderTexture, positionX - width / 2, positionY - height / 2);
+		spriteBatch.setColor(1, 1, 1, alpha);
+		spriteBatch.draw(renderTexture, positionX - (width*scaleX) / 2, positionY - (height*scaleY) / 2, originX, originY, width, height,scaleX, scaleY, angle);
+		spriteBatch.setColor(1, 1, 1, 1);
 		
 	}
 	

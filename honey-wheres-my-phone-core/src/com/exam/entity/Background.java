@@ -15,12 +15,14 @@ import com.exam.toolbox.SpriteType;
 
 public class Background extends Entity {
 	
-	private float count = 0.001f;
+	private float count = 0.000f;
+	private float maxSpeed = 0.01f;
 	private List<TextureRegion> overlays = new ArrayList<TextureRegion>(); // just in case there will be more overlays needed.
 
 	public Background(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, EntityManager manager) {
 		super(world, position, bodyType, spriteType, manager);
 		texture.getTexture().setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		zIndex = -2;
 	}
 	
 	public void addOverlay(SpriteType spriteType){
@@ -30,7 +32,8 @@ public class Background extends Entity {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		count += 0.0001*deltaTime;
+		count += 0.0005*deltaTime;
+		if(count > maxSpeed) count = maxSpeed;
 		texture.scroll(0,count);
 	}
 	
