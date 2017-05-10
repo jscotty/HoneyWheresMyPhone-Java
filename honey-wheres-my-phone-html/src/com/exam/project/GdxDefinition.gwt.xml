@@ -8,6 +8,7 @@
 	<inherits name='Main' />
 	<entry-point class='com.exam.project.client.HtmlLauncher' />
 	
+	<add-linker name="xsiframe" />
 	<set-configuration-property name="gdx.assetpath" value="../honey-wheres-my-phone-core/assets" />
 	<set-configuration-property name='xsiframe.failIfScriptTag' value='FALSE'/>	
 </module>

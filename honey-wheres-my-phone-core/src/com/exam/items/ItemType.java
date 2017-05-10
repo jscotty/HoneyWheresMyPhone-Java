@@ -29,7 +29,7 @@ public enum ItemType {
     /**
      * @return spriteType
      */
-    public SpriteType getSprite() {
+    public SpriteType getSpriteType() {
 	return _sprite;
     }
 

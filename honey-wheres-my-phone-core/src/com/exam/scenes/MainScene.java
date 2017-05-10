@@ -13,6 +13,7 @@ import com.exam.gui.Button;
 import com.exam.handlers.EntityManager;
 import com.exam.handlers.MyInput;
 import com.exam.handlers.ObjectContactListener;
+import com.exam.items.ItemManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -25,6 +26,7 @@ public class MainScene extends Scene{
 	
 	private Background background;
 	private Hook hook;
+	private ItemManager itemManager;
 
 	protected MainScene(SceneManager manager) {
 		super(manager);
@@ -32,11 +34,14 @@ public class MainScene extends Scene{
 		world.setContactListener(new ObjectContactListener());
 		debugRenderer = new Box2DDebugRenderer();
 		entityManager = new EntityManager();
+		itemManager = new ItemManager(world, entityManager);
 		
 		
 		background = new Background(world, new Vector2(Main.WIDTH/2,Main.HEIGHT/2), BodyType.StaticBody, SpriteType.BACKGOUND_PLYAY_01, entityManager);
 		background.addOverlay(SpriteType.BACKGOUND_PLYAY_01_OVERLAY);
 		hook = (Hook) new Hook(world, new Vector2(200, 1200), BodyType.KinematicBody, SpriteType.PROPS_ARM, entityManager).addBodyCircle(60, 195, 950);
+		
+		entityManager.sortEntities();
 	}
 
 	@Override
@@ -49,6 +54,7 @@ public class MainScene extends Scene{
 		handleInput();
 		world.step(Main.STEP, 1, 1);
 		entityManager.update(deltaTime);
+		itemManager.update(deltaTime);
 	}
 
 	@Override
