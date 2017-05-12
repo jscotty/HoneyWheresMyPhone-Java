@@ -80,11 +80,24 @@ public class Entity implements Comparable<Entity> {
 	 * Add squared body to this entity on entity position and size of entity (texture)
 	 * @return this
 	 */
-	public Entity addBodyBox() {
+	public Entity addBodyBox(String userData) {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(texture.getRegionWidth() / Main.DEVIDER, texture.getRegionHeight() / Main.DEVIDER);
 
-		setupBody(shape, position.x, position.y);
+		setupBody(shape, position.x, position.y, userData);
+		return this;
+	}
+
+	//region body initialization.
+	/**
+	 * Add squared body to this entity on entity position and size of entity (texture)
+	 * @return this
+	 */
+	public Entity addBodyBox(float[] vertices, String userData) {
+		PolygonShape shape = new PolygonShape();
+		shape.set(vertices);
+
+		setupBody(shape, position.x, position.y, userData);
 		return this;
 	}
 
@@ -96,17 +109,16 @@ public class Entity implements Comparable<Entity> {
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(float width, float height, float x, float y) {
+	public Entity addBodyBox(float width, float height, float x, float y, String userData) {
 		//Manhattan distance calculation
 		this.bodyPositionDistance.x = position.x - x;
 		this.bodyPositionDistance.y = position.y - y;
 
-		System.out.println("currPos " + position + " || bodyPos " + x + " , " + y + " | " + bodyPositionDistance);
-
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height);
+		
 
-		setupBody(shape, x, y);
+		setupBody(shape, x, y, userData);
 		return this;
 	}
 
@@ -116,7 +128,7 @@ public class Entity implements Comparable<Entity> {
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(float x, float y) {
+	public Entity addBodyBox(float x, float y, String userData) {
 		//Manhattan distance calculation
 		this.bodyPositionDistance.x = position.x - x;
 		this.bodyPositionDistance.y = position.y - y;
@@ -124,7 +136,7 @@ public class Entity implements Comparable<Entity> {
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(texture.getRegionWidth() / Main.DEVIDER, texture.getRegionHeight() / Main.DEVIDER);
 
-		setupBody(shape, x, y);
+		setupBody(shape, x, y,userData);
 		return this;
 	}
 
@@ -135,14 +147,14 @@ public class Entity implements Comparable<Entity> {
 	 * @param positionY
 	 * @return
 	 */
-	public Entity addBodyCircle(float radius, float positionX, float positionY) {
+	public Entity addBodyCircle(float radius, float positionX, float positionY, String userData) {
 		this.bodyPositionDistance.x = position.x - positionX;
 		this.bodyPositionDistance.y = position.y - positionY;
 
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
 
-		setupBody(shape, positionX, positionY);
+		setupBody(shape, positionX, positionY,userData);
 		return this;
 	}
 
@@ -152,7 +164,7 @@ public class Entity implements Comparable<Entity> {
 	 * @param x position
 	 * @param y position
 	 */
-	private void setupBody(Shape shape, float positionX, float positionY) {
+	private void setupBody(Shape shape, float positionX, float positionY, String userData) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(positionX, positionY);
 		bodyDef.type = bodyType;
@@ -161,7 +173,11 @@ public class Entity implements Comparable<Entity> {
 		bodyDef.type = bodyType;
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
-		body.createFixture(fdef);
+		body.createFixture(fdef).setUserData(userData);;
+	}
+	
+	public void disableBody(){
+		world.destroyBody(body);
 	}
 	//endregion
 

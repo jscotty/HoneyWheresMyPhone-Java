@@ -2,18 +2,17 @@ package com.exam.gui;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector2;
 import com.exam.handlers.GUIManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 
 public class Gui implements Comparable<Gui> {
-	private float positionX;
-	private float positionY;
-	private float width;
-	private float height;
 	
+	protected Vector2 position = new Vector2(0,0);
 	protected float alpha = 1f;
-	
+	protected float width;
+	protected float height;
 	protected float originX = 0.5f;
 	protected float originY = 0.5f;
 	protected float scaleX = 1f;
@@ -30,8 +29,8 @@ public class Gui implements Comparable<Gui> {
 	 * @param y
 	 */
 	public Gui(float x, float y, GUIManager manager){
-		this.positionX = x;
-		this.positionY = y;
+		this.position.x = x;
+		this.position.y = y;
 		
 		manager.processGui(this);
 	}
@@ -43,8 +42,8 @@ public class Gui implements Comparable<Gui> {
 	 * @param spriteType
 	 */
 	public Gui(float x, float y, SpriteType spriteType, GUIManager manager) {
-		this.positionX = x;
-		this.positionY = y;
+		this.position.x = x;
+		this.position.y = y;
 
 		texture = Main.assets.getTexture(spriteType);
 		width = texture.getRegionWidth();
@@ -72,7 +71,7 @@ public class Gui implements Comparable<Gui> {
 	 */
 	public void render(SpriteBatch spriteBatch) {
 		spriteBatch.setColor(1, 1, 1, alpha);
-		spriteBatch.draw(texture, positionX - (width*scaleX) / 2, positionY - (height*scaleY) / 2, originX, originY, width, height,scaleX, scaleY, angle);
+		spriteBatch.draw(texture, position.x - (width*scaleX) / 2, position.y - (height*scaleY) / 2, originX, originY, width, height,scaleX, scaleY, angle);
 		spriteBatch.setColor(1, 1, 1, 1);
 	}
 

@@ -44,8 +44,8 @@ public class MainMenuScene extends Scene{
 		logo = new Gui(Main.WIDTH/2, 950, SpriteType.LOGO_01, guiManager);
 		
 		startButton = new Button(Main.WIDTH/2, 600, SpriteType.BUTTON_PLAY_IDLE, SpriteType.BUTTON_PLAY_PRESSED, hudCamera, guiManager);
-		trophieButton = new Button(Main.WIDTH/2, 400, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, hudCamera, guiManager);
-		upgradeButton = new Button(Main.WIDTH/2, 200, SpriteType.BUTTON_UPGRADES_IDLE, SpriteType.BUTTON_UPGRADES_PRESSED, hudCamera, guiManager);
+		upgradeButton = new Button(Main.WIDTH/2, 400, SpriteType.BUTTON_UPGRADES_IDLE, SpriteType.BUTTON_UPGRADES_PRESSED, hudCamera, guiManager);
+		trophieButton = new Button(Main.WIDTH/2, 200, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, hudCamera, guiManager);
 		
 		guiManager.sortGuis();
 		startAnimation();
@@ -63,11 +63,11 @@ public class MainMenuScene extends Scene{
 		.push(Tween.to(startButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.4f,1.8f))
 		.push(Tween.to(startButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1,1))
 		
-		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.4f,1.8f))
-		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1,1))
-		
 		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.4f,1.8f))
 		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1,1))
+		
+		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.4f,1.8f))
+		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1,1))
 		.start(tweenManager);
 	}
 	
@@ -79,8 +79,8 @@ public class MainMenuScene extends Scene{
 		.push(Tween.set(upgradeButton, AccessorReferences.SCALE).target(1,1))
 		//start up scaling all buttons at the same time
 		.beginParallel()
-		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.5f,1.5f))
 		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.5f,1.5f))
+		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.5f,1.5f))
 		.push(Tween.to(startButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.5f,1.5f))
 		.end()
 		//start down scaling all buttons at the same time

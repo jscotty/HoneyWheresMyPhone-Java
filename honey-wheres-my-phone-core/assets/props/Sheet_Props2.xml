@@ -1,0 +1,26 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Prop_Test00.png" x="250" y="96" width="103" height="118"/>
+	<SubTexture name="Prop_Test01.png" x="247" y="457" width="112" height="108"/>
+	<SubTexture name="Prop_Test02.png" x="247" y="343" width="112" height="112"/>
+	<SubTexture name="Prop_Test03.png" x="128" y="102" width="120" height="113"/>
+	<SubTexture name="Prop_Test04.png" x="451" y="379" width="74" height="128"/>
+	<SubTexture name="Prop_Test05.png" x="0" y="429" width="122" height="119"/>
+	<SubTexture name="Prop_Test06.png" x="467" y="0" width="66" height="121"/>
+	<SubTexture name="Prop_Test07.png" x="0" y="0" width="130" height="100"/>
+	<SubTexture name="Prop_Test08.png" x="0" y="102" width="126" height="87"/>
+	<SubTexture name="Prop_Test09.png" x="0" y="191" width="124" height="92"/>
+	<SubTexture name="Prop_Test10.png" x="246" y="0" width="110" height="94"/>
+	<SubTexture name="Prop_Test11.png" x="247" y="217" width="118" height="124"/>
+	<SubTexture name="Prop_Test12.png" x="358" y="0" width="107" height="122"/>
+	<SubTexture name="Prop_Test13.png" x="527" y="254" width="62" height="128"/>
+	<SubTexture name="Prop_Test14.png" x="451" y="124" width="81" height="128"/>
+	<SubTexture name="Prop_Test15.png" x="367" y="124" width="82" height="122"/>
+	<SubTexture name="Prop_Test16.png" x="124" y="285" width="121" height="124"/>
+	<SubTexture name="Prop_Test18.png" x="361" y="343" width="88" height="127"/>
+	<SubTexture name="Prop_Test19.png" x="451" y="254" width="74" height="123"/>
+	<SubTexture name="Prop_Test20.png" x="132" y="0" width="112" height="94"/>
+	<SubTexture name="Prop_Test21.png" x="0" y="353" width="122" height="74"/>
+	<SubTexture name="Prop_Test22.png" x="124" y="411" width="121" height="81"/>
+	<SubTexture name="Prop_Test23.png" x="0" y="285" width="122" height="66"/>
+	<SubTexture name="Prop_Test24.png" x="124" y="494" width="116" height="88"/>
+</TextureAtlas>

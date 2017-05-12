@@ -15,6 +15,7 @@ public class SceneManager {
     public static final int LOADER = -1;
     public static final int MENU = 0;
     public static final int PLAY = 1;
+    public static final int UPGRADES = 2;
     
     public SceneManager(){
     	scenes = new Stack<Scene>();
@@ -39,6 +40,7 @@ public class SceneManager {
     	if(state == LOADER) return new AssetsLoaderScene(this);
     	if(state == MENU) return new MainMenuScene(this);
     	if(state == PLAY) return new MainScene(this);
+    	if(state == UPGRADES) return new UpgradeScene(this);
     	return null;
     }
     

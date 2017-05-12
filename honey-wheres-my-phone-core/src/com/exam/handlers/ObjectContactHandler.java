@@ -4,18 +4,13 @@ import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.exam.items.ItemManager;
 
-public class ObjectContactListener implements ContactListener {
+public class ObjectContactHandler implements ContactListener {
 
 	/* called when collided
 	 */
 	@Override
 	public void beginContact(Contact contact) {
-		if(contact.getFixtureA().getUserData() == ItemManager.USER_DATA)
-			System.out.println("A Eey");
-		if(contact.getFixtureB().getUserData() == ItemManager.USER_DATA)
-			System.out.println("B Eey");
 		
 		System.out.println(contact.getFixtureA().getUserData() + " " + contact.getFixtureB().getUserData());
 	}
@@ -36,5 +31,4 @@ public class ObjectContactListener implements ContactListener {
 	public void postSolve(Contact contact, ContactImpulse impulse) {
 		
 	}
-
 }

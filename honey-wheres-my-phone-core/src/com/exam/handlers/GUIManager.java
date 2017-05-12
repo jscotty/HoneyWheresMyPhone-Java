@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.exam.font.FontLoader;
+import com.exam.font.FontType;
 import com.exam.gui.Gui;
 
 public class GUIManager {

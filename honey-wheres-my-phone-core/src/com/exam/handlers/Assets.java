@@ -27,8 +27,7 @@ public class Assets {
 	public void load(){
 		loadAsset();
 		
-		percentage = (int)(((float)assetsLoadedCount / (float)SpriteType.values().length)*100);
-		System.out.println(percentage + " %");
+		percentage = (int)(((float)assetsLoadedCount / (float)SpriteType.values().length)*100); 
 	}
 	
 	private void loadAsset(){

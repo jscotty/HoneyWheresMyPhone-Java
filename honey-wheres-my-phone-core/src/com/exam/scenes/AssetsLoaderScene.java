@@ -3,12 +3,14 @@ package com.exam.scenes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.exam.font.FontLoader;
 import com.exam.handlers.Assets;
 import com.exam.project.Main;
 
 public class AssetsLoaderScene extends Scene {
 	
 	private Assets assets;
+	private FontLoader fontLoader;
 	private BitmapFont font;
 	private String loadingText = "loading assets please wait";
 	private String loadingDrawText = "loading assets please wait";
@@ -17,6 +19,7 @@ public class AssetsLoaderScene extends Scene {
 	public AssetsLoaderScene(SceneManager manager) {
 		super(manager);
 		assets = Main.assets;
+		fontLoader = new FontLoader();
 		font = new BitmapFont(Gdx.files.internal("font/supercell-magic.fnt"),Gdx.files.internal("font/supercell-magic.png"), false);
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		font.setScale(0.8f);
@@ -30,7 +33,12 @@ public class AssetsLoaderScene extends Scene {
 	@Override
 	public void update(float deltaTime) {
 		assets.load();
-		if(Assets.isFinishedLoading)sceneManager.pushScene(SceneManager.MENU);
+		if(Assets.isFinishedLoading){
+			fontLoader.loadFonts();
+		}
+		
+		if(fontLoader.isFontsLoaded())
+			sceneManager.pushScene(SceneManager.MENU);
 
 		loadingDrawText = loadingText;
 		for (int i = 0; i < (int)dotTimer; i++) {
