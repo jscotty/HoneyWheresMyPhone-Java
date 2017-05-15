@@ -1,5 +1,10 @@
 package com.exam.toolbox;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public enum SpriteType {
 
     //props

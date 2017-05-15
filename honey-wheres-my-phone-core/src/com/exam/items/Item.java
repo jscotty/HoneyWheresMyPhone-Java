@@ -7,6 +7,11 @@ import com.exam.entity.Entity;
 import com.exam.handlers.EntityManager;
 import com.exam.project.Main;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class Item extends Entity {
 	
 	private ItemType _itemType;
@@ -14,6 +19,16 @@ public class Item extends Entity {
 	private ItemManager _itemManager;
 	private float _adjustifier = 0.1f;
 	
+	/**
+	 * Constructor for initialization.
+	 * @param itemType for recieving score and sprite type
+	 * @param world for box2D physics
+	 * @param position to render at
+	 * @param bodyType for box2D physics
+	 * @param manager for processing
+	 * @param speed current speed from manager
+	 * @param itemManager for callback
+	 */
 	public Item(ItemType itemType, World world, Vector2 position, BodyType bodyType, EntityManager manager, float speed, ItemManager itemManager) {
 		super(world, position, bodyType, itemType.getSpriteType(), manager);
 		this._itemType = itemType;
@@ -35,11 +50,17 @@ public class Item extends Entity {
 			_itemManager.removeItem(this);
 	}
 	
+	/**
+	 * Reverse item direction
+	 */
 	public void reverse(){
 		_speed = -2;
 		_adjustifier = -_adjustifier;
 	}
 	
+	/**
+	 * @return score of itemType
+	 */
 	public float getScore(){
 		return _itemType.getScore();
 	}

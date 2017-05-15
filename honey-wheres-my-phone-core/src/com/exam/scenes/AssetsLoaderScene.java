@@ -7,6 +7,11 @@ import com.exam.font.FontLoader;
 import com.exam.handlers.Assets;
 import com.exam.project.Main;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class AssetsLoaderScene extends Scene {
 	
 	private Assets _assets;
@@ -16,6 +21,10 @@ public class AssetsLoaderScene extends Scene {
 	private String _loadingDrawText = "loading assets please wait";
 	private float _dotTimer = 0;
 
+	/**
+	 * Constructor for initialization
+	 * @param manager
+	 */
 	public AssetsLoaderScene(SceneManager manager) {
 		super(manager);
 		_assets = Main.assets;
@@ -38,7 +47,7 @@ public class AssetsLoaderScene extends Scene {
 		}
 		
 		if(_fontLoader.isFontsLoaded())
-			pSceneManager.pushScene(SceneManager.MENU);
+			pSceneManager.setScene(SceneManager.MENU);
 
 		_loadingDrawText = _loadingText;
 		for (int i = 0; i < (int)_dotTimer; i++) {

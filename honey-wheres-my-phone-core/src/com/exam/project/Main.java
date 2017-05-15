@@ -11,6 +11,11 @@ import com.exam.handlers.MyInputProcessor;
 import com.exam.scenes.SceneManager;
 import com.exam.toolbox.SpriteType;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class Main extends ApplicationAdapter {
 
 	// screen width and height

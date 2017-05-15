@@ -13,18 +13,35 @@ import com.exam.handlers.EntityManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class Background extends Entity {
 	
-	private float _count = 0.000f;
+	private float _speed = 0f;
 	private float _maxSpeed = 0.01f;
 	private List<TextureRegion> _overlays = new ArrayList<TextureRegion>(); // just in case there will be more overlays needed.
 
+	/**
+	 * Constructor for initializing.
+	 * @param world for body 
+	 * @param position for rendering position
+	 * @param bodyType for Box2D physics
+	 * @param spriteType for receiving sprite to render
+	 * @param manager to process/register this class for rendering.
+	 */
 	public Background(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, EntityManager manager) {
-		super(world, position, bodyType, spriteType, manager);
-		pTexture.getTexture().setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		super(world, position, bodyType, spriteType, manager); // casting parameters to base class
+		pTexture.getTexture().setWrap(TextureWrap.Repeat, TextureWrap.Repeat); // set texture to repeat mode for scrolling.
 		pZIndex = -2;
 	}
 	
+	/**
+	 * Adds a sprite to draw as overlay.
+	 * @param spriteType for receiving sprite to render.
+	 */
 	public void addOverlay(SpriteType spriteType){
 		_overlays.add(Main.assets.getTexture(spriteType));
 	}
@@ -32,9 +49,9 @@ public class Background extends Entity {
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime);
-		_count += 0.0005*deltaTime;
-		if(_count > _maxSpeed) _count = _maxSpeed;
-		pTexture.scroll(0,_count);
+		_speed += 0.0005*deltaTime;
+		if(_speed > _maxSpeed) _speed = _maxSpeed;
+		pTexture.scroll(0,_speed);
 	}
 	
 	@Override

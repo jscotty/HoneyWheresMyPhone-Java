@@ -4,6 +4,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.exam.project.Main;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public abstract class Scene {
 
 	protected SceneManager pSceneManager;
@@ -38,6 +43,7 @@ public abstract class Scene {
 
 	/**
 	 * Render in this method.
+	 * Renders every frame
 	 */
 	public abstract void render();
 

@@ -14,6 +14,11 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class MainMenuScene extends Scene{
 	
 	private GUIManager _guiManager;
@@ -32,6 +37,10 @@ public class MainMenuScene extends Scene{
 	private float _startTweeningAnimationTime = 0.2f;
 	private float _tweenAnimationDelay = 0.0f;
 
+	/**
+	 * Constructor for initialization
+	 * @param manager
+	 */
 	protected MainMenuScene(SceneManager manager) {
 		super(manager);
 		_tweenManager = new TweenManager();
@@ -51,6 +60,9 @@ public class MainMenuScene extends Scene{
 		startAnimation();
 	}
 	
+	/**
+	 * Start animation 
+	 */
 	private void startAnimation() {
 		Timeline.createSequence()
 		//set tweens
@@ -71,6 +83,10 @@ public class MainMenuScene extends Scene{
 		.start(_tweenManager);
 	}
 	
+	/**
+	 * End animation
+	 * @param scene to go to at the end of the animation.
+	 */
 	private void endAnimation(final int scene){
 		Timeline.createSequence()
 		//set tweens
@@ -92,7 +108,7 @@ public class MainMenuScene extends Scene{
 					
 					@Override
 					public void onEvent(int arg0, BaseTween<?> arg1) {
-						pSceneManager.pushScene(scene); // load scene after this tween.
+						pSceneManager.setScene(scene); // load scene after this tween.
 						
 					}
 				}))

@@ -4,8 +4,14 @@ import com.exam.gui.Gui;
 
 import aurelienribon.tweenengine.TweenAccessor;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class GuiAccessor implements TweenAccessor<Gui> {
 
+	//preparing tweening
 	@Override
 	public int getValues(Gui button, int tweenType, float[] returnValues) {
 		switch (tweenType) {
@@ -22,6 +28,7 @@ public class GuiAccessor implements TweenAccessor<Gui> {
 		}
 	}
 
+	//Applies tween data
 	@Override
 	public void setValues(Gui button, int tweenType, float[] newValues) {
 		switch (tweenType) {

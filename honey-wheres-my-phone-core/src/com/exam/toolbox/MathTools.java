@@ -2,6 +2,11 @@ package com.exam.toolbox;
 
 import com.badlogic.gdx.math.Vector2;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class MathTools {
 
     /**

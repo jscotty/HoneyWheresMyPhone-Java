@@ -7,6 +7,11 @@ import com.exam.font.FontLoader;
 import com.exam.font.FontType;
 import com.exam.handlers.GUIManager;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class GuiText extends Gui{
 	
 	private BitmapFont _font;
@@ -20,11 +25,24 @@ public class GuiText extends Gui{
 	private Color _fontColor = new Color(1,1,1,1);
 	private Color _shadowColor;
 	
+	/**
+	 * Constructor for initialization
+	 * @param x position
+	 * @param y position
+	 * @param manager
+	 * @param fontType
+	 */
 	public GuiText(float x, float y, GUIManager manager, FontType fontType) {
 		super(x, y, manager);
 		_font = FontLoader.getFont(fontType);
 	}
 	
+	/**
+	 * Add shadow to this gui text with a stable offset.
+	 * @param offset
+	 * @param color
+	 * @return
+	 */
 	public GuiText addShadow(float offset, Color color){
 		this._shadowXOffset = offset;
 		this._shadowYOffset = offset;
@@ -33,6 +51,13 @@ public class GuiText extends Gui{
 		return this;
 	}
 	
+	/**
+	 * Add shadow to this gui text with x and y offset
+	 * @param xOffset
+	 * @param yOffset
+	 * @param color
+	 * @return
+	 */
 	public GuiText addShadow(float xOffset, float yOffset, Color color){
 		this._shadowXOffset = xOffset;
 		this._shadowYOffset = yOffset;
@@ -41,14 +66,26 @@ public class GuiText extends Gui{
 		return this;
 	}
 	
-	public void setMessage(String message){
+	/**
+	 * Set text message to be drawn.
+	 * @param message to be drawn
+	 */
+	public void setText(String message){
 		this._message = message;
 	}
 	
+	/**
+	 * Set size of this text.
+	 * @param size
+	 */
 	public void setFontSize(float size){
 		this._size = size;
 	}
 	
+	/**
+	 * Set text color.
+	 * @param color
+	 */
 	public void setColor(Color color){
 		_fontColor = color;
 	}

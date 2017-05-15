@@ -15,6 +15,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.exam.handlers.EntityManager;
 import com.exam.project.Main;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class ItemManager implements ContactListener{
 	
 	public static final String USER_DATA = "Item";
@@ -48,12 +53,21 @@ public class ItemManager implements ContactListener{
 	private List<Item> _itemsDestroyed = new ArrayList<Item>();
 	private List<Item> _itemsInField = new CopyOnWriteArrayList<Item>();
 	
+	/**
+	 * Constructor for initialization
+	 * @param world for Item Box2D physics
+	 * @param manager to process items
+	 */
 	public ItemManager(World world, EntityManager manager) {
 		this._world = world;
 		this._entityManager = manager;
 		_random = new Random();
 	}
 	
+	/**
+	 * Update item manager to manage speed and spawning.
+	 * @param deltaTime
+	 */
 	public void update(float deltaTime){
 		_meters += deltaTime + _speedMutliplier;
 		System.out.println((_speed - 2)/10);
@@ -66,11 +80,18 @@ public class ItemManager implements ContactListener{
 		}
 	}
 	
+	/**
+	 * Spawn items in order of random row
+	 */
 	private void spawn(){
 		int randomRow = _random.nextInt(ITEMROWS_TILL100.length);
 		spawnItems(randomRow);
 	}
 	
+	/**
+	 * Spawn items in order of 1 integers from ITEMROWS_TILL100.
+	 * @param index or row array
+	 */
 	private void spawnItems(int index){
 		int[] row = ITEMROWS_TILL100[index];
 		for (int i = 0; i < row.length; i++) {
@@ -89,17 +110,22 @@ public class ItemManager implements ContactListener{
 		}
 	}
 	
+	/**
+	 * remove item from screen.
+	 * @param item
+	 */
 	public void removeItem(Item item){
-		item.disableBody();
-		_itemsDestroyed.add(item);
-		_entityManager.removeEntity(item);
-		_itemsInField.remove(item);
+		item.disableBody(); // no Box2D needed anymore
+		_itemsDestroyed.add(item); // still adding to list for catching up later
+		_entityManager.removeEntity(item); // remove from manager.
+		_itemsInField.remove(item); // remove from items in field list.
 	}
 
+// region contactlistener methods
 	@Override
 	public void beginContact(Contact contact) {
 		for (Item item : _itemsInField) {
-			//item.reverse();
+			item.reverse();
 		}
 	}
 
@@ -115,5 +141,5 @@ public class ItemManager implements ContactListener{
 	public int getMeters() {
 		return (int)_meters;
 	}
-
+//endregion
 }

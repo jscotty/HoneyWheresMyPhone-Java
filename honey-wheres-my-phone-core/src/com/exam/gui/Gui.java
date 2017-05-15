@@ -7,6 +7,11 @@ import com.exam.handlers.GUIManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class Gui implements Comparable<Gui> {
 	
 	protected Vector2 pPosition = new Vector2(0,0);
@@ -23,6 +28,7 @@ public class Gui implements Comparable<Gui> {
 	
 	private TextureRegion _texture;
 	
+//region constructors
 	/**
 	 * 'ghost' Gui nor empty constructor for child classes.
 	 * @param x
@@ -51,6 +57,7 @@ public class Gui implements Comparable<Gui> {
 		
 		manager.processGui(this);
 	}
+//endregion
 	
 	public Gui setIndex(int index){
 		pZIndex = index;
@@ -58,7 +65,7 @@ public class Gui implements Comparable<Gui> {
 	}
 
 	/**
-	 * Update gui for behaviour.
+	 * updates every frame
 	 * @param pSpriteBatch
 	 */
 	public void update(float deltaTime) {
@@ -66,7 +73,8 @@ public class Gui implements Comparable<Gui> {
 	}
 	
 	/**
-	 * Render sprites. This method is called every frame.
+	 * Rendering texture.
+	 * called every frame
 	 * @param spriteBatch
 	 */
 	public void render(SpriteBatch spriteBatch) {
@@ -84,6 +92,7 @@ public class Gui implements Comparable<Gui> {
 		}
 	}
 	
+//region properties
 	public TextureRegion getTexture() {
 		return _texture;
 	}
@@ -109,4 +118,5 @@ public class Gui implements Comparable<Gui> {
 	public void setAlpha(float alpha) {
 		this.pAlpha = alpha;
 	}
+//endregion
 }

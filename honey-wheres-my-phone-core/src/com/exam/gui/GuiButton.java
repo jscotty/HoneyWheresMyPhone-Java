@@ -9,10 +9,12 @@ import com.exam.handlers.MyInput;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class GuiButton extends Gui {
-
-	private float _positionX;
-	private float _positionY;
 	private float _width;
 	private float _height;
 	
@@ -25,10 +27,17 @@ public class GuiButton extends Gui {
 	
 	private boolean _clicked;
 	
+	/**
+	 * Constructor for initialization
+	 * @param x
+	 * @param y
+	 * @param spriteTypeUp
+	 * @param spriteTypeDown
+	 * @param cam
+	 * @param manager
+	 */
 	public GuiButton(float x, float y, SpriteType spriteTypeUp, SpriteType spriteTypeDown, OrthographicCamera cam, GUIManager manager) {
 		super(x, y, manager);
-		this._positionX = x;
-		this._positionY = y;
 		this._camera = cam;
 
 		_textureUp = Main.assets.getTexture(spriteTypeUp);
@@ -41,7 +50,8 @@ public class GuiButton extends Gui {
 		
 	}
 	
-	public void update(float dt) {
+	@Override
+	public void update(float deltaTime) {
 		_mousePosition.set(MyInput.getMouseXCoordinate(), MyInput.getMouseYCoordinate(), 0);
 		_camera.unproject(_mousePosition);
 
@@ -51,9 +61,9 @@ public class GuiButton extends Gui {
 		_mousePosition.y += Main.HEIGHT;
 		_mousePosition.y /= 2;
 		
-		if(MyInput.isMousePressed(0) && _mousePosition.x > _positionX - _width / 2 && _mousePosition.x < _positionX + _width / 2 && _mousePosition.y > _positionY - _height / 2 && _mousePosition.y < _positionY + _height / 2) {
+		if(MyInput.isMousePressed(0) && _mousePosition.x > pPosition.x - _width / 2 && _mousePosition.x < pPosition.x + _width / 2 && _mousePosition.y > pPosition.y - _height / 2 && _mousePosition.y < pPosition.y + _height / 2) {
 			_clicked = true;
-		} else if(MyInput.isMouseDown(0) && _mousePosition.x > _positionX - _width / 2 && _mousePosition.x < _positionX + _width / 2 && _mousePosition.y > _positionY - _height / 2 && _mousePosition.y < _positionY + _height / 2) {
+		} else if(MyInput.isMouseDown(0) && _mousePosition.x > pPosition.x - _width / 2 && _mousePosition.x < pPosition.x + _width / 2 && _mousePosition.y > pPosition.y - _height / 2 && _mousePosition.y < pPosition.y + _height / 2) {
 			if(_renderTexture != _textureDown)
 				_renderTexture = _textureDown;
 		} else {
@@ -67,11 +77,14 @@ public class GuiButton extends Gui {
 	@Override
 	public void render(SpriteBatch spriteBatch) {
 		spriteBatch.setColor(1, 1, 1, pAlpha);
-		spriteBatch.draw(_renderTexture, _positionX - (_width*pScaleX) / 2, _positionY - (_height*pScaleY) / 2, pOriginX, pOriginY, _width, _height,pScaleX, pScaleY, pAngle);
+		spriteBatch.draw(_renderTexture, pPosition.x - (_width*pScaleX) / 2, pPosition.y - (_height*pScaleY) / 2, pOriginX, pOriginY, _width, _height,pScaleX, pScaleY, pAngle);
 		spriteBatch.setColor(1, 1, 1, 1);
 		
 	}
 	
+	/**
+	 * @return if button is been clicked.
+	 */
 	public boolean isClicked() {
 		return _clicked; 
 	}

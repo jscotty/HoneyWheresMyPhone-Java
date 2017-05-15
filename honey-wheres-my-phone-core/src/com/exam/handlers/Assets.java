@@ -5,10 +5,14 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.exam.project.Main;
 import com.exam.toolbox.SpriteSheetReaderShoebox;
 import com.exam.toolbox.SpriteType;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class Assets {
 	
 	public static boolean isFinishedLoading = false;
@@ -18,17 +22,27 @@ public class Assets {
 	private int _assetsLoadedCount = 0;
 	
 	private int _percentage = 0;
+	
+	/**
+	 * Constructor for initialization
+	 */
 	public Assets() {
 		_textures = new HashMap<SpriteType, TextureRegion>();
-		
 	}
 	
+	/**
+	 * load asset.
+	 */
 	public void load(){
 		loadAsset();
 		
 		_percentage = (int)(((float)_assetsLoadedCount / (float)SpriteType.values().length)*100); 
 	}
 	
+	/**
+	 * load next asset. 
+	 * Asset count: _assetsLoadedCount and maximum count of SpriteType.values().length
+	 */
 	private void loadAsset(){
 		if(_assetsLoadedCount > SpriteType.values().length-1){
 			isFinishedLoading = true;
@@ -51,6 +65,7 @@ public class Assets {
 	/**
 	 * Loads all assets
 	 */
+	@SuppressWarnings("unused")
 	private void loadAllAssets(){
 		// looping through all textureRegionElements.
 		for (SpriteType type : SpriteType.values()) {
@@ -78,6 +93,9 @@ public class Assets {
 		return _textures.get(type);
 	}
 	
+	/**
+	 * @return percentage of loaded assets
+	 */
 	public int getPercentage() {
 		return _percentage;
 	}

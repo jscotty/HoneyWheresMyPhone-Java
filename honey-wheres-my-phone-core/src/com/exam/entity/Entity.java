@@ -15,29 +15,34 @@ import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.World;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class Entity implements Comparable<Entity> {
 
-	protected Vector2 pPosition = new Vector2(0, 0);
-	private Vector2 _bodyPositionDistance = new Vector2(0, 0);
+	// render data
+	protected Vector2 pPosition = new Vector2(0, 0); 
+	private Vector2 _bodyPositionDistance = new Vector2(0, 0); // Calculating distance to adjust the body position
 	protected Vector2 pBodyPosition = new Vector2(0, 0);
-
-	protected Body pBody;
-	protected TextureRegion pTexture;
-	private World _world;
-	private Entity _parent;
 
 	protected float pOriginX = 0.5f;
 	protected float pOriginY = 0.5f;
 	protected float pScaleX = 1f;
 	protected float pScaleY = 1f;
 	protected float pAngle = 0f;
-
-	protected int pZIndex = 0; // for sorting.
-
+	private Entity _parent;
 	private float _width = 0;
 	private float _height = 0;
 
+	// box2D and render visualization data
+	protected Body pBody;
+	protected TextureRegion pTexture;
+	private World _world;
 	private BodyType _bodyType;
+
+	protected int pZIndex = 0; // for sorting.
 
 	//region Constructors
 
@@ -89,9 +94,8 @@ public class Entity implements Comparable<Entity> {
 		return this;
 	}
 
-	//region body initialization.
 	/**
-	 * Add squared body to this entity on entity position and size of entity (texture)
+	 * Add polygon body to this entity on entity position with a custom shape
 	 * @return this
 	 */
 	public Entity addBodyBox(float[] vertices, String userData) {
@@ -182,16 +186,28 @@ public class Entity implements Comparable<Entity> {
 	}
 	//endregion
 
+	/**
+	 * reset position to 0
+	 */
 	public void resetPosition() {
 		pPosition.x = 0;
 		pPosition.y = 0;
 	}
 
+	/**
+	 * set angle to given parameter
+	 * @param angle
+	 * @return this
+	 */
 	public Entity setAngle(float angle) {
 		this.pAngle = angle;
 		return this;
 	}
 
+	/**
+	 * updates everu frame
+	 * @param deltaTime, time between current and last frame.
+	 */
 	public void update(float deltaTime) {
 		pBodyPosition.x = (pPosition.x - _bodyPositionDistance.x);
 		pBodyPosition.y = (pPosition.y - _bodyPositionDistance.y);
@@ -201,6 +217,11 @@ public class Entity implements Comparable<Entity> {
 		}
 	}
 
+	/**
+	 * rendering texture
+	 * called every frame
+	 * @param spriteBatch
+	 */
 	public void render(SpriteBatch spriteBatch) {
 		spriteBatch.draw(pTexture, getX(), getY(), pOriginX, pOriginY, getWidth(), getHeight(), pScaleX, pScaleY, pAngle);
 	}
@@ -214,6 +235,7 @@ public class Entity implements Comparable<Entity> {
 		}
 	}
 
+//region properties
 	protected Vector2 getBodyPosition() {
 		return pBodyPosition;
 	}
@@ -275,4 +297,5 @@ public class Entity implements Comparable<Entity> {
 	public float getAngle() {
 		return pAngle;
 	}
+//endregion
 }

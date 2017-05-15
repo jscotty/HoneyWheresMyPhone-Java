@@ -21,6 +21,11 @@ import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class MainScene extends Scene{
 	
 	private World _world;
@@ -33,6 +38,10 @@ public class MainScene extends Scene{
 	private GuiText _metersText;
 	private ItemManager _itemManager;
 
+	/**
+	 * Constructor for initialization.
+	 * @param manager
+	 */
 	protected MainScene(SceneManager manager) {
 		super(manager);
 		_world = new World(new Vector2(0f,-10f), true);
@@ -64,7 +73,7 @@ public class MainScene extends Scene{
 		_entityManager.update(deltaTime);
 		_itemManager.update(deltaTime);
 		
-		_metersText.setMessage(_itemManager.getMeters() + "/1000");
+		_metersText.setText(_itemManager.getMeters() + "/1000");
 	}
 
 	@Override

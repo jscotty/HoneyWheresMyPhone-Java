@@ -2,6 +2,11 @@ package com.exam.items;
 
 import com.exam.toolbox.SpriteType;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public enum ItemType {
     BLUSH(SpriteType.PROPS_BLUSH, 1),
     CHARGER(SpriteType.PROPS_CHARGER, 1),
