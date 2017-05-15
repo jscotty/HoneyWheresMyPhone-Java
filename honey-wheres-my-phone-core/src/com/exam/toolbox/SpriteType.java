@@ -25,7 +25,10 @@ public enum SpriteType {
     //logo's
     LOGO_01("buttons/Sheet_UserInterface", "Logo1.png"),
 
-    // buttons
+    //
+    
+    
+    //buttons
     BUTTON_AUDIO_ON_PRESSED("buttons/Sheet_UserInterface", "Button_AudioOn_Clicked.png"),
     BUTTON_AUDIO_ON_IDLE("buttons/Sheet_UserInterface", "Button_AudioOn_Idle.png"),
     

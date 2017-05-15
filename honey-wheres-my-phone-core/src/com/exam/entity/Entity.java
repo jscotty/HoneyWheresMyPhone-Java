@@ -17,26 +17,27 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Entity implements Comparable<Entity> {
 
-	protected Vector2 position;
-	protected Vector2 bodyPositionDistance = new Vector2(0, 0);
-	protected Vector2 bodyPosition = new Vector2(0, 0);
-	protected TextureRegion texture;
-	protected Body body;
-	protected World world;
-	protected Entity parent;
+	protected Vector2 pPosition = new Vector2(0, 0);
+	private Vector2 _bodyPositionDistance = new Vector2(0, 0);
+	protected Vector2 pBodyPosition = new Vector2(0, 0);
 
-	protected float originX = 0.5f;
-	protected float originY = 0.5f;
-	protected float scaleX = 1f;
-	protected float scaleY = 1f;
-	protected float angle = 0f;
+	protected Body pBody;
+	protected TextureRegion pTexture;
+	private World _world;
+	private Entity _parent;
 
-	protected int zIndex = 0; // for sorting.
+	protected float pOriginX = 0.5f;
+	protected float pOriginY = 0.5f;
+	protected float pScaleX = 1f;
+	protected float pScaleY = 1f;
+	protected float pAngle = 0f;
 
-	private float width = 0;
-	private float height = 0;
+	protected int pZIndex = 0; // for sorting.
 
-	private BodyType bodyType;
+	private float _width = 0;
+	private float _height = 0;
+
+	private BodyType _bodyType;
 
 	//region Constructors
 
@@ -46,9 +47,9 @@ public class Entity implements Comparable<Entity> {
 	 * @param bodyType
 	 */
 	public Entity(World world, Vector2 position, BodyType bodyType, EntityManager manager) {
-		this.world = world;
-		this.position = position;
-		this.bodyType = bodyType;
+		this._world = world;
+		this.pPosition = position;
+		this._bodyType = bodyType;
 
 		manager.processEntity(this);
 	}
@@ -60,10 +61,10 @@ public class Entity implements Comparable<Entity> {
 	 * @param spriteType
 	 */
 	public Entity(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, EntityManager manager) {
-		this.world = world;
-		this.position = position;
-		this.bodyType = bodyType;
-		texture = Main.assets.getTexture(spriteType);
+		this._world = world;
+		this.pPosition = position;
+		this._bodyType = bodyType;
+		pTexture = Main.assets.getTexture(spriteType);
 
 		manager.processEntity(this);
 	}
@@ -71,7 +72,7 @@ public class Entity implements Comparable<Entity> {
 	//endregion
 	
 	public Entity setIndex(int index){
-		zIndex = index;
+		pZIndex = index;
 		return this;
 	}
 
@@ -82,9 +83,9 @@ public class Entity implements Comparable<Entity> {
 	 */
 	public Entity addBodyBox(String userData) {
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(texture.getRegionWidth() / Main.DEVIDER, texture.getRegionHeight() / Main.DEVIDER);
+		shape.setAsBox(pTexture.getRegionWidth() / Main.DEVIDER, pTexture.getRegionHeight() / Main.DEVIDER);
 
-		setupBody(shape, position.x, position.y, userData);
+		setupBody(shape, pPosition.x, pPosition.y, userData);
 		return this;
 	}
 
@@ -97,7 +98,7 @@ public class Entity implements Comparable<Entity> {
 		PolygonShape shape = new PolygonShape();
 		shape.set(vertices);
 
-		setupBody(shape, position.x, position.y, userData);
+		setupBody(shape, pPosition.x, pPosition.y, userData);
 		return this;
 	}
 
@@ -111,8 +112,8 @@ public class Entity implements Comparable<Entity> {
 	 */
 	public Entity addBodyBox(float width, float height, float x, float y, String userData) {
 		//Manhattan distance calculation
-		this.bodyPositionDistance.x = position.x - x;
-		this.bodyPositionDistance.y = position.y - y;
+		this._bodyPositionDistance.x = pPosition.x - x;
+		this._bodyPositionDistance.y = pPosition.y - y;
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height);
@@ -130,11 +131,11 @@ public class Entity implements Comparable<Entity> {
 	 */
 	public Entity addBodyBox(float x, float y, String userData) {
 		//Manhattan distance calculation
-		this.bodyPositionDistance.x = position.x - x;
-		this.bodyPositionDistance.y = position.y - y;
+		this._bodyPositionDistance.x = pPosition.x - x;
+		this._bodyPositionDistance.y = pPosition.y - y;
 
 		PolygonShape shape = new PolygonShape();
-		shape.setAsBox(texture.getRegionWidth() / Main.DEVIDER, texture.getRegionHeight() / Main.DEVIDER);
+		shape.setAsBox(pTexture.getRegionWidth() / Main.DEVIDER, pTexture.getRegionHeight() / Main.DEVIDER);
 
 		setupBody(shape, x, y,userData);
 		return this;
@@ -148,8 +149,8 @@ public class Entity implements Comparable<Entity> {
 	 * @return
 	 */
 	public Entity addBodyCircle(float radius, float positionX, float positionY, String userData) {
-		this.bodyPositionDistance.x = position.x - positionX;
-		this.bodyPositionDistance.y = position.y - positionY;
+		this._bodyPositionDistance.x = pPosition.x - positionX;
+		this._bodyPositionDistance.y = pPosition.y - positionY;
 
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
@@ -167,46 +168,46 @@ public class Entity implements Comparable<Entity> {
 	private void setupBody(Shape shape, float positionX, float positionY, String userData) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(positionX, positionY);
-		bodyDef.type = bodyType;
-		body = world.createBody(bodyDef);
+		bodyDef.type = _bodyType;
+		pBody = _world.createBody(bodyDef);
 
-		bodyDef.type = bodyType;
+		bodyDef.type = _bodyType;
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
-		body.createFixture(fdef).setUserData(userData);;
+		pBody.createFixture(fdef).setUserData(userData);;
 	}
 	
 	public void disableBody(){
-		world.destroyBody(body);
+		_world.destroyBody(pBody);
 	}
 	//endregion
 
 	public void resetPosition() {
-		position.x = 0;
-		position.y = 0;
+		pPosition.x = 0;
+		pPosition.y = 0;
 	}
 
 	public Entity setAngle(float angle) {
-		this.angle = angle;
+		this.pAngle = angle;
 		return this;
 	}
 
 	public void update(float deltaTime) {
-		bodyPosition.x = (position.x - bodyPositionDistance.x);
-		bodyPosition.y = (position.y - bodyPositionDistance.y);
-		if (parent != null) {
-			body.setTransform(new Vector2(parent.getPosition().x + position.x, parent.getPosition().y + position.y),
-					parent.getAngle() + angle);
+		pBodyPosition.x = (pPosition.x - _bodyPositionDistance.x);
+		pBodyPosition.y = (pPosition.y - _bodyPositionDistance.y);
+		if (_parent != null) {
+			pBody.setTransform(new Vector2(_parent.getPosition().x + pPosition.x, _parent.getPosition().y + pPosition.y),
+					_parent.getAngle() + pAngle);
 		}
 	}
 
 	public void render(SpriteBatch spriteBatch) {
-		spriteBatch.draw(texture, getX(), getY(), originX, originY, getWidth(), getHeight(), scaleX, scaleY, angle);
+		spriteBatch.draw(pTexture, getX(), getY(), pOriginX, pOriginY, getWidth(), getHeight(), pScaleX, pScaleY, pAngle);
 	}
 
 	@Override
 	public int compareTo(Entity o) {
-		if (this.zIndex < o.zIndex) {
+		if (this.pZIndex < o.pZIndex) {
 			return -1;
 		} else {
 			return 1;
@@ -214,64 +215,64 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	protected Vector2 getBodyPosition() {
-		return bodyPosition;
+		return pBodyPosition;
 	}
 
 	public float getX() {
-		if (parent != null)
-			return (parent.getPosition().x + position.x) - getOriginX();
+		if (_parent != null)
+			return (_parent.getPosition().x + pPosition.x) - getOriginX();
 		else
-			return position.x - getOriginX();
+			return pPosition.x - getOriginX();
 	}
 
 	public float getY() {
-		if (parent != null)
-			return (parent.getPosition().y + position.y) - getOriginY();
+		if (_parent != null)
+			return (_parent.getPosition().y + pPosition.y) - getOriginY();
 		else
-			return position.y - getOriginY();
+			return pPosition.y - getOriginY();
 	}
 
 	public float getWidth() {
-		if (texture != null)
-			return texture.getRegionWidth();
-		return width;
+		if (pTexture != null)
+			return pTexture.getRegionWidth();
+		return _width;
 	}
 
 	public float getHeight() {
-		if (texture != null)
-			return texture.getRegionHeight();
-		return height;
+		if (pTexture != null)
+			return pTexture.getRegionHeight();
+		return _height;
 	}
 
 	public TextureRegion getTexture() {
-		return texture;
+		return pTexture;
 	}
 
 	public Vector2 getPosition() {
-		return position;
+		return pPosition;
 	}
 
 	public Entity getParent() {
-		return parent;
+		return _parent;
 	}
 
 	public float getOriginX() {
-		return originX * getWidth();
+		return pOriginX * getWidth();
 	}
 
 	public float getOriginY() {
-		return originY * getHeight();
+		return pOriginY * getHeight();
 	}
 
 	public float getScaleX() {
-		return scaleX;
+		return pScaleX;
 	}
 
 	public float getScaleY() {
-		return scaleY;
+		return pScaleY;
 	}
 
 	public float getAngle() {
-		return angle;
+		return pAngle;
 	}
 }

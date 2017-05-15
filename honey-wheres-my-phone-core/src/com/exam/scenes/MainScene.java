@@ -11,12 +11,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.exam.entity.Background;
 import com.exam.entity.Hook;
 import com.exam.font.FontType;
-import com.exam.gui.Button;
+import com.exam.gui.GuiButton;
 import com.exam.gui.GuiText;
 import com.exam.handlers.EntityManager;
 import com.exam.handlers.GUIManager;
 import com.exam.handlers.MyInput;
-import com.exam.handlers.ObjectContactListener;
 import com.exam.items.ItemManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
@@ -24,34 +23,33 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class MainScene extends Scene{
 	
-	private World world;
-	private Box2DDebugRenderer debugRenderer;
-	private EntityManager entityManager;
-	private GUIManager guiManager;
+	private World _world;
+	private Box2DDebugRenderer _debugRenderer;
+	private EntityManager _entityManager;
+	private GUIManager _guiManager;
 	
-	private Background background;
-	private Hook hook;
-	private GuiText metersText;
-	private ItemManager itemManager;
+	private Background _background;
+	private Hook _hook;
+	private GuiText _metersText;
+	private ItemManager _itemManager;
 
 	protected MainScene(SceneManager manager) {
 		super(manager);
-		world = new World(new Vector2(0f,-10f), true);
-		world.setContactListener(new ObjectContactListener());
-		debugRenderer = new Box2DDebugRenderer();
-		entityManager = new EntityManager();
-		guiManager = new GUIManager();
-		itemManager = new ItemManager(world, entityManager);
-		world.setContactListener(itemManager);
+		_world = new World(new Vector2(0f,-10f), true);
+		_debugRenderer = new Box2DDebugRenderer();
+		_entityManager = new EntityManager();
+		_guiManager = new GUIManager();
+		_itemManager = new ItemManager(_world, _entityManager);
+		_world.setContactListener(_itemManager);
 		
 		
-		background = new Background(world, new Vector2(Main.WIDTH/2,Main.HEIGHT/2), BodyType.StaticBody, SpriteType.BACKGOUND_PLYAY_01, entityManager);
-		background.addOverlay(SpriteType.BACKGOUND_PLYAY_01_OVERLAY);
-		hook = (Hook) new Hook(world, new Vector2(200, 1200), BodyType.KinematicBody, SpriteType.PROPS_ARM, entityManager).addBodyCircle(40, 195, 950, "");
+		_background = new Background(_world, new Vector2(Main.WIDTH/2,Main.HEIGHT/2), BodyType.StaticBody, SpriteType.BACKGOUND_PLYAY_01, _entityManager);
+		_background.addOverlay(SpriteType.BACKGOUND_PLYAY_01_OVERLAY);
+		_hook = (Hook) new Hook(_world, new Vector2(200, 1200), BodyType.KinematicBody, SpriteType.PROPS_ARM, _entityManager).addBodyCircle(40, 195, 950, "");
 		
-		metersText = new GuiText(50, 50, guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
+		_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
 		
-		entityManager.sortEntities();
+		_entityManager.sortEntities();
 	}
 
 	@Override
@@ -62,26 +60,26 @@ public class MainScene extends Scene{
 	@Override
 	public void update(float deltaTime) {
 		handleInput();
-		world.step(Main.STEP, 1, 1);
-		entityManager.update(deltaTime);
-		itemManager.update(deltaTime);
+		_world.step(Main.STEP, 1, 1);
+		_entityManager.update(deltaTime);
+		_itemManager.update(deltaTime);
 		
-		metersText.setMessage(itemManager.getMeters() + "/1000");
+		_metersText.setMessage(_itemManager.getMeters() + "/1000");
 	}
 
 	@Override
 	public void render() {
-		spriteBatch.setProjectionMatrix(camera.combined);
-		spriteBatch.begin();
-		entityManager.render(spriteBatch);
-		spriteBatch.end();
+		pSpriteBatch.setProjectionMatrix(pCamera.combined);
+		pSpriteBatch.begin();
+		_entityManager.render(pSpriteBatch);
+		pSpriteBatch.end();
 		
-		spriteBatch.setProjectionMatrix(hudCamera.combined);
-		spriteBatch.begin();
-		guiManager.render(spriteBatch);
-		spriteBatch.end();
+		pSpriteBatch.setProjectionMatrix(pHudCamera.combined);
+		pSpriteBatch.begin();
+		_guiManager.render(pSpriteBatch);
+		pSpriteBatch.end();
 		
-		debugRenderer.render(world, camera.combined);
+		_debugRenderer.render(_world, pCamera.combined);
 	}
 
 	@Override

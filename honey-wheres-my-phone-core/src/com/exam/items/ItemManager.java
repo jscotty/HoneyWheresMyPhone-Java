@@ -19,7 +19,7 @@ public class ItemManager implements ContactListener{
 	
 	public static final String USER_DATA = "Item";
 
-	private final int[][] itemRows_till100 = new int[][]{
+	private final int[][] ITEMROWS_TILL100 = new int[][]{
 		{1,0,0,0,0},
 		{0,1,0,0,0},
 		{0,0,1,0,0},
@@ -33,56 +33,56 @@ public class ItemManager implements ContactListener{
 		{0,0,1,1,0}
 	};
 
-	private World world;
-	private EntityManager entityManager;
-	private Random random;
+	private World _world;
+	private EntityManager _entityManager;
+	private Random _random;
 	
-	private final float border = 80.0f;
-	private float screenWidth = Main.WIDTH - border;
-	private float speedMutliplier;
-	private float speed = 2f;
-	private float delay = 5f;
-	private float meters;
-	private boolean reverse = false;
+	private final float BORDER = 80.0f;
+	private float _screenWidth = Main.WIDTH - BORDER;
+	private float _speedMutliplier;
+	private float _speed = 2f;
+	private float _delay = 5f;
+	private float _meters;
+	private boolean _reverse = false;
 	
-	private List<Item> itemsDestroyed = new ArrayList<Item>();
-	private List<Item> itemsInField = new CopyOnWriteArrayList<Item>();
+	private List<Item> _itemsDestroyed = new ArrayList<Item>();
+	private List<Item> _itemsInField = new CopyOnWriteArrayList<Item>();
 	
 	public ItemManager(World world, EntityManager manager) {
-		this.world = world;
-		this.entityManager = manager;
-		random = new Random();
+		this._world = world;
+		this._entityManager = manager;
+		_random = new Random();
 	}
 	
 	public void update(float deltaTime){
-		meters += deltaTime + speedMutliplier;
-		System.out.println((speed - 2)/10);
-		speed += deltaTime * 0.2f;
-		speedMutliplier += 0.000025f;
-		if(meters > delay){
+		_meters += deltaTime + _speedMutliplier;
+		System.out.println((_speed - 2)/10);
+		_speed += deltaTime * 0.2f;
+		_speedMutliplier += 0.000025f;
+		if(_meters > _delay){
 			spawn();
-			delay += 5;
-			System.out.println(delay);
+			_delay += 5;
+			System.out.println(_delay);
 		}
 	}
 	
 	private void spawn(){
-		int randomRow = random.nextInt(itemRows_till100.length);
+		int randomRow = _random.nextInt(ITEMROWS_TILL100.length);
 		spawnItems(randomRow);
 	}
 	
 	private void spawnItems(int index){
-		int[] row = itemRows_till100[index];
+		int[] row = ITEMROWS_TILL100[index];
 		for (int i = 0; i < row.length; i++) {
-			float xPosition = ((screenWidth/row.length) * (i)) + border;
+			float xPosition = ((_screenWidth/row.length) * (i)) + BORDER;
 			if(row[i] == 1){
 				Vector2 position = new Vector2(xPosition, -100);
-				int randomItem = random.nextInt(ItemType.values().length);
-				if(reverse){
+				int randomItem = _random.nextInt(ItemType.values().length);
+				if(_reverse){
 					
 				} else { 
-					Item item = (Item) new Item(ItemType.values()[randomItem], world, position, BodyType.DynamicBody, entityManager, speed, this).addBodyBox(50,50, position.x ,position.y, USER_DATA);
-					itemsInField.add(item);
+					Item item = (Item) new Item(ItemType.values()[randomItem], _world, position, BodyType.DynamicBody, _entityManager, _speed, this).addBodyBox(50,50, position.x ,position.y, USER_DATA);
+					_itemsInField.add(item);
 				}
 			}
 			
@@ -91,14 +91,14 @@ public class ItemManager implements ContactListener{
 	
 	public void removeItem(Item item){
 		item.disableBody();
-		itemsDestroyed.add(item);
-		entityManager.removeEntity(item);
-		itemsInField.remove(item);
+		_itemsDestroyed.add(item);
+		_entityManager.removeEntity(item);
+		_itemsInField.remove(item);
 	}
 
 	@Override
 	public void beginContact(Contact contact) {
-		for (Item item : itemsInField) {
+		for (Item item : _itemsInField) {
 			//item.reverse();
 		}
 	}
@@ -113,7 +113,7 @@ public class ItemManager implements ContactListener{
 	public void postSolve(Contact contact, ContactImpulse impulse) { }
 	
 	public int getMeters() {
-		return (int)meters;
+		return (int)_meters;
 	}
 
 }

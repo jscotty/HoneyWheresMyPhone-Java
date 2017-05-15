@@ -9,16 +9,16 @@ import com.exam.project.Main;
 
 public class Item extends Entity {
 	
-	private ItemType itemType;
-	private float speed = 2f;
-	private ItemManager itemManager;
-	private float adjustifier = 0.1f;
+	private ItemType _itemType;
+	private float _speed = 2f;
+	private ItemManager _itemManager;
+	private float _adjustifier = 0.1f;
 	
 	public Item(ItemType itemType, World world, Vector2 position, BodyType bodyType, EntityManager manager, float speed, ItemManager itemManager) {
 		super(world, position, bodyType, itemType.getSpriteType(), manager);
-		this.itemType = itemType;
-		this.speed = speed;
-		this.itemManager = itemManager;
+		this._itemType = itemType;
+		this._speed = speed;
+		this._itemManager = itemManager;
 	}
 	
 	@Override
@@ -26,21 +26,21 @@ public class Item extends Entity {
 		// TODO Auto-generated method stub
 		super.update(deltaTime);
 		
-		speed += deltaTime *adjustifier;
-		position.y += speed;
+		_speed += deltaTime *_adjustifier;
+		pPosition.y += _speed;
 		
-		body.setTransform(position, 0);
+		pBody.setTransform(pPosition, 0);
 		
-		if(position.y > Main.HEIGHT+100)
-			itemManager.removeItem(this);
+		if(pPosition.y > Main.HEIGHT+100)
+			_itemManager.removeItem(this);
 	}
 	
 	public void reverse(){
-		speed = -2;
-		adjustifier = -adjustifier;
+		_speed = -2;
+		_adjustifier = -_adjustifier;
 	}
 	
 	public float getScore(){
-		return itemType.getScore();
+		return _itemType.getScore();
 	}
 }

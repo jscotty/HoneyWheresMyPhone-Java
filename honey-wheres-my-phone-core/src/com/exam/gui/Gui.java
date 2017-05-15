@@ -9,19 +9,19 @@ import com.exam.toolbox.SpriteType;
 
 public class Gui implements Comparable<Gui> {
 	
-	protected Vector2 position = new Vector2(0,0);
-	protected float alpha = 1f;
-	protected float width;
-	protected float height;
-	protected float originX = 0.5f;
-	protected float originY = 0.5f;
-	protected float scaleX = 1f;
-	protected float scaleY = 1f;
-	protected float angle = 0f;
+	protected Vector2 pPosition = new Vector2(0,0);
+	protected float pAlpha = 1f;
+	protected float pWidth;
+	protected float pHeight;
+	protected float pOriginX = 0.5f;
+	protected float pOriginY = 0.5f;
+	protected float pScaleX = 1f;
+	protected float pScaleY = 1f;
+	protected float pAngle = 0f;
 	
-	protected int zIndex = 0; // for sorting.
+	protected int pZIndex = 0; // for sorting.
 	
-	private TextureRegion texture;
+	private TextureRegion _texture;
 	
 	/**
 	 * 'ghost' Gui nor empty constructor for child classes.
@@ -29,8 +29,8 @@ public class Gui implements Comparable<Gui> {
 	 * @param y
 	 */
 	public Gui(float x, float y, GUIManager manager){
-		this.position.x = x;
-		this.position.y = y;
+		this.pPosition.x = x;
+		this.pPosition.y = y;
 		
 		manager.processGui(this);
 	}
@@ -42,24 +42,24 @@ public class Gui implements Comparable<Gui> {
 	 * @param spriteType
 	 */
 	public Gui(float x, float y, SpriteType spriteType, GUIManager manager) {
-		this.position.x = x;
-		this.position.y = y;
+		this.pPosition.x = x;
+		this.pPosition.y = y;
 
-		texture = Main.assets.getTexture(spriteType);
-		width = texture.getRegionWidth();
-		height = texture.getRegionHeight();
+		_texture = Main.assets.getTexture(spriteType);
+		pWidth = _texture.getRegionWidth();
+		pHeight = _texture.getRegionHeight();
 		
 		manager.processGui(this);
 	}
 	
 	public Gui setIndex(int index){
-		zIndex = index;
+		pZIndex = index;
 		return this;
 	}
 
 	/**
 	 * Update gui for behaviour.
-	 * @param spriteBatch
+	 * @param pSpriteBatch
 	 */
 	public void update(float deltaTime) {
 		
@@ -70,14 +70,14 @@ public class Gui implements Comparable<Gui> {
 	 * @param spriteBatch
 	 */
 	public void render(SpriteBatch spriteBatch) {
-		spriteBatch.setColor(1, 1, 1, alpha);
-		spriteBatch.draw(texture, position.x - (width*scaleX) / 2, position.y - (height*scaleY) / 2, originX, originY, width, height,scaleX, scaleY, angle);
+		spriteBatch.setColor(1, 1, 1, pAlpha);
+		spriteBatch.draw(_texture, pPosition.x - (pWidth*pScaleX) / 2, pPosition.y - (pHeight*pScaleY) / 2, pOriginX, pOriginY, pWidth, pHeight,pScaleX, pScaleY, pAngle);
 		spriteBatch.setColor(1, 1, 1, 1);
 	}
 
 	@Override
 	public int compareTo(Gui o) {
-		if (this.zIndex < o.zIndex){
+		if (this.pZIndex < o.pZIndex){
 			return -1;
 		} else {
 			return 1;
@@ -85,28 +85,28 @@ public class Gui implements Comparable<Gui> {
 	}
 	
 	public TextureRegion getTexture() {
-		return texture;
+		return _texture;
 	}
 	public float getScaleX() {
-		return scaleX;
+		return pScaleX;
 	}
 	public float getScaleY() {
-		return scaleY;
+		return pScaleY;
 	}
 	public void setScaleX(float scaleX) {
-		this.scaleX = scaleX;
+		this.pScaleX = scaleX;
 	}
 	public void setScaleY(float scaleY) {
-		this.scaleY = scaleY;
+		this.pScaleY = scaleY;
 	}
 	public void setScale(float scaleX, float scaleY) {
-		this.scaleX = scaleX;
-		this.scaleY = scaleY;
+		this.pScaleX = scaleX;
+		this.pScaleY = scaleY;
 	}
 	public float getAlpha() {
-		return alpha;
+		return pAlpha;
 	}
 	public void setAlpha(float alpha) {
-		this.alpha = alpha;
+		this.pAlpha = alpha;
 	}
 }

@@ -12,28 +12,28 @@ import com.exam.gui.Gui;
 
 public class GUIManager {
 
-	private List<Gui> guis = new ArrayList<Gui>();
+	private List<Gui> _guis = new ArrayList<Gui>();
 	
 	public GUIManager() {
 		
 	}
 	
 	public void processGui(Gui gui){
-		guis.add(gui);
+		_guis.add(gui);
 	}
 	
 	public void sortGuis(){
-		Collections.sort(guis);
+		Collections.sort(_guis);
 	}
 	
 	public void update(float deltaTime){
-		for (Gui gui : guis) {
+		for (Gui gui : _guis) {
 			gui.update(deltaTime);
 		}
 	}
 	
 	public void render(SpriteBatch spriteBatch){
-		for (Gui gui : guis) {
+		for (Gui gui : _guis) {
 			gui.render(spriteBatch);
 		}
 	}

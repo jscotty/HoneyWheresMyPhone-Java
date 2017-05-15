@@ -8,39 +8,37 @@ import com.exam.project.Main;
 
 public class SceneManager {
 
-    private Main main;
+    private Main _main;
     
-    private Stack<Scene> scenes;
+    private Stack<Scene> _scenes;
 
     public static final int LOADER = -1;
     public static final int MENU = 0;
     public static final int PLAY = 1;
-    public static final int UPGRADES = 2;
     
     public SceneManager(){
-    	scenes = new Stack<Scene>();
+    	_scenes = new Stack<Scene>();
     	pushScene(LOADER);
     }
     
     public SceneManager(Main main){
-    	this.main = main;
-    	scenes = new Stack<Scene>();
+    	this._main = main;
+    	_scenes = new Stack<Scene>();
     	pushScene(LOADER);
     }
     
     public void update(float deltaTime){
-    	scenes.peek().update(deltaTime);
+    	_scenes.peek().update(deltaTime);
     }
     
     public void render(){
-    	scenes.peek().render();
+    	_scenes.peek().render();
     }
     
     private Scene getScene(int state){
     	if(state == LOADER) return new AssetsLoaderScene(this);
     	if(state == MENU) return new MainMenuScene(this);
     	if(state == PLAY) return new MainScene(this);
-    	if(state == UPGRADES) return new UpgradeScene(this);
     	return null;
     }
     
@@ -50,16 +48,16 @@ public class SceneManager {
     }
     
     public void pushScene(int state){
-    	scenes.push(getScene(state));
+    	_scenes.push(getScene(state));
     }
     
     public void popScene(){
-    	Scene scene = scenes.pop();
+    	Scene scene = _scenes.pop();
     	scene.dispose();
     }
     
     public Main getMain(){
-    	return main;
+    	return _main;
     }
     
 }

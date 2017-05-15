@@ -11,31 +11,31 @@ import com.exam.entity.Entity;
 
 public class EntityManager {
 
-	private List<Entity> entities = new CopyOnWriteArrayList<Entity>();
+	private List<Entity> _entities = new CopyOnWriteArrayList<Entity>();
 	
 	public EntityManager() {}
 	
 	public void processEntity(Entity entity){
-		entities.add(entity);
+		_entities.add(entity);
 	}
 	
 	public void sortEntities(){
-		Collections.sort(entities);
+		Collections.sort(_entities);
 	}
 	
 	public void removeEntity(Entity entity){
 		
-		entities.remove(entity); // no need to update this entity anymore!
+		_entities.remove(entity); // no need to update this entity anymore!
 	}
 	
 	public void update(float deltaTime){
-		for (Entity entity : entities) {
+		for (Entity entity : _entities) {
 			entity.update(deltaTime);
 		}
 	}
 	
 	public void render(SpriteBatch spriteBatch){
-		for (Entity entity : entities) {
+		for (Entity entity : _entities) {
 			entity.render(spriteBatch);
 		}
 	}

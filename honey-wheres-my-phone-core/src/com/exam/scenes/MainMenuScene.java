@@ -1,6 +1,6 @@
 package com.exam.scenes;
 
-import com.exam.gui.Button;
+import com.exam.gui.GuiButton;
 import com.exam.gui.Gui;
 import com.exam.handlers.GUIManager;
 import com.exam.project.Main;
@@ -16,93 +16,93 @@ import aurelienribon.tweenengine.TweenManager;
 
 public class MainMenuScene extends Scene{
 	
-	private GUIManager guiManager;
+	private GUIManager _guiManager;
 	
 	// not sure why I got this warning.. because I register them inside the given guiManager in the constructor.
 	
-	private Gui background;
-	private Gui backgroundOverlay;
-	private Gui logo;
+	private Gui _background;
+	private Gui _backgroundOverlay;
+	private Gui _logo;
 	
-	private Button startButton;
-	private Button trophieButton;
-	private Button upgradeButton;
+	private GuiButton _startButton;
+	private GuiButton _trophieButton;
+	private GuiButton _upgradeButton;
 	
-	private TweenManager tweenManager;
-	private float startTweeningAnimationTime = 0.2f;
-	private float tweenAnimationDelay = 0.0f;
+	private TweenManager _tweenManager;
+	private float _startTweeningAnimationTime = 0.2f;
+	private float _tweenAnimationDelay = 0.0f;
 
 	protected MainMenuScene(SceneManager manager) {
 		super(manager);
-		tweenManager = new TweenManager();
+		_tweenManager = new TweenManager();
 		Tween.registerAccessor(Gui.class, new GuiAccessor());
 		
-		guiManager = new GUIManager();
+		_guiManager = new GUIManager();
 
-		background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01, guiManager).setIndex(-2);
-		backgroundOverlay = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01_OVERLAY, guiManager).setIndex(-1);
-		logo = new Gui(Main.WIDTH/2, 950, SpriteType.LOGO_01, guiManager);
+		_background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01, _guiManager).setIndex(-2);
+		_backgroundOverlay = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01_OVERLAY, _guiManager).setIndex(-1);
+		_logo = new Gui(Main.WIDTH/2, 950, SpriteType.LOGO_01, _guiManager);
 		
-		startButton = new Button(Main.WIDTH/2, 600, SpriteType.BUTTON_PLAY_IDLE, SpriteType.BUTTON_PLAY_PRESSED, hudCamera, guiManager);
-		upgradeButton = new Button(Main.WIDTH/2, 400, SpriteType.BUTTON_UPGRADES_IDLE, SpriteType.BUTTON_UPGRADES_PRESSED, hudCamera, guiManager);
-		trophieButton = new Button(Main.WIDTH/2, 200, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, hudCamera, guiManager);
+		_startButton = new GuiButton(Main.WIDTH/2, 600, SpriteType.BUTTON_PLAY_IDLE, SpriteType.BUTTON_PLAY_PRESSED, pHudCamera, _guiManager);
+		_upgradeButton = new GuiButton(Main.WIDTH/2, 400, SpriteType.BUTTON_UPGRADES_IDLE, SpriteType.BUTTON_UPGRADES_PRESSED, pHudCamera, _guiManager);
+		_trophieButton = new GuiButton(Main.WIDTH/2, 200, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, pHudCamera, _guiManager);
 		
-		guiManager.sortGuis();
+		_guiManager.sortGuis();
 		startAnimation();
 	}
 	
 	private void startAnimation() {
 		Timeline.createSequence()
 		//set tweens
-		.push(Tween.set(startButton, AccessorReferences.SCALE).target(0,0))
-		.push(Tween.set(trophieButton, AccessorReferences.SCALE).target(0,0))
-		.push(Tween.set(upgradeButton, AccessorReferences.SCALE).target(0,0))
+		.push(Tween.set(_startButton, AccessorReferences.SCALE).target(0,0))
+		.push(Tween.set(_trophieButton, AccessorReferences.SCALE).target(0,0))
+		.push(Tween.set(_upgradeButton, AccessorReferences.SCALE).target(0,0))
 		// wait half second before starting animation
 		.pushPause(0.5f)
 		// scale up and down all tweens after each other.
-		.push(Tween.to(startButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.4f,1.8f))
-		.push(Tween.to(startButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1,1))
+		.push(Tween.to(_startButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f))
+		.push(Tween.to(_startButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1,1))
 		
-		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.4f,1.8f))
-		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1,1))
+		.push(Tween.to(_upgradeButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f))
+		.push(Tween.to(_upgradeButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1,1))
 		
-		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.4f,1.8f))
-		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1,1))
-		.start(tweenManager);
+		.push(Tween.to(_trophieButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f))
+		.push(Tween.to(_trophieButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1,1))
+		.start(_tweenManager);
 	}
 	
 	private void endAnimation(final int scene){
 		Timeline.createSequence()
 		//set tweens
-		.push(Tween.set(startButton, AccessorReferences.SCALE).target(1,1))
-		.push(Tween.set(trophieButton, AccessorReferences.SCALE).target(1,1))
-		.push(Tween.set(upgradeButton, AccessorReferences.SCALE).target(1,1))
+		.push(Tween.set(_startButton, AccessorReferences.SCALE).target(1,1))
+		.push(Tween.set(_trophieButton, AccessorReferences.SCALE).target(1,1))
+		.push(Tween.set(_upgradeButton, AccessorReferences.SCALE).target(1,1))
 		//start up scaling all buttons at the same time
 		.beginParallel()
-		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.5f,1.5f))
-		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.5f,1.5f))
-		.push(Tween.to(startButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(1.5f,1.5f))
+		.push(Tween.to(_trophieButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.5f,1.5f))
+		.push(Tween.to(_upgradeButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.5f,1.5f))
+		.push(Tween.to(_startButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.5f,1.5f))
 		.end()
 		//start down scaling all buttons at the same time
 		.beginParallel()
-		.push(Tween.to(startButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(0,0))
-		.push(Tween.to(trophieButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(0,0))
-		.push(Tween.to(upgradeButton, AccessorReferences.SCALE, startTweeningAnimationTime).target(0,0)
+		.push(Tween.to(_startButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(0,0))
+		.push(Tween.to(_trophieButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(0,0))
+		.push(Tween.to(_upgradeButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(0,0)
 				.setCallback(new TweenCallback() {
 					
 					@Override
 					public void onEvent(int arg0, BaseTween<?> arg1) {
-						sceneManager.pushScene(scene); // load scene after this tween.
+						pSceneManager.pushScene(scene); // load scene after this tween.
 						
 					}
 				}))
 		.end()
-		.start(tweenManager);
+		.start(_tweenManager);
 	}
 
 	@Override
 	public void handleInput() {
-		if(startButton.isClicked()){
+		if(_startButton.isClicked()){
 			endAnimation(SceneManager.PLAY);
 		}
 	}
@@ -110,16 +110,16 @@ public class MainMenuScene extends Scene{
 	@Override
 	public void update(float deltaTime) {
 		handleInput();
-		tweenManager.update(deltaTime);
-		guiManager.update(deltaTime);
+		_tweenManager.update(deltaTime);
+		_guiManager.update(deltaTime);
 	}
 
 	@Override
 	public void render() {
-		spriteBatch.setProjectionMatrix(hudCamera.combined);
-		spriteBatch.begin();
-		guiManager.render(spriteBatch);
-		spriteBatch.end();
+		pSpriteBatch.setProjectionMatrix(pHudCamera.combined);
+		pSpriteBatch.begin();
+		_guiManager.render(pSpriteBatch);
+		pSpriteBatch.end();
 	}
 
 	@Override

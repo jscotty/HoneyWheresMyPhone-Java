@@ -6,23 +6,23 @@ import com.exam.project.Main;
 
 public abstract class Scene {
 
-	protected SceneManager sceneManager;
-	protected Main main;
+	protected SceneManager pSceneManager;
+	protected Main pMain;
 
-	protected SpriteBatch spriteBatch;
-	protected OrthographicCamera camera;
-	protected OrthographicCamera hudCamera;
+	protected SpriteBatch pSpriteBatch;
+	protected OrthographicCamera pCamera;
+	protected OrthographicCamera pHudCamera;
 
 	/**
 	 * Constructor to initialize all variables
-	 * @param sceneManager
+	 * @param pSceneManager
 	 */
 	protected Scene(SceneManager manager) {
-		this.sceneManager = manager;
-		main = manager.getMain();
-		spriteBatch = main.getBatch();
-		camera = main.getCamera();
-		hudCamera = main.getHudCamera();
+		this.pSceneManager = manager;
+		pMain = manager.getMain();
+		pSpriteBatch = pMain.getBatch();
+		pCamera = pMain.getCamera();
+		pHudCamera = pMain.getHudCamera();
 	}
 
 	/**

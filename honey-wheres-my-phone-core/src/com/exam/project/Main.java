@@ -16,16 +16,16 @@ public class Main extends ApplicationAdapter {
 	// screen width and height
 	public static final int WIDTH = 720, HEIGHT = 1280;
 	public static final float DEVIDER = 2f;
-	private final String TITLE = "Honey? where's my phone?";
-	
 	public static final float STEP = 1/60f;
+	private final String TITLE = "Honey? where's my phone?";
 
-	private SpriteBatch batch;
-	private OrthographicCamera camera;
-	private OrthographicCamera hudCamera;
-	
-	private SceneManager sceneManager;
 	public static Assets assets;
+
+	private SpriteBatch _batch;
+	private OrthographicCamera _camera;
+	private OrthographicCamera _hudCamera;
+	
+	private SceneManager _sceneManager;
 
 	@Override
 	public void create() {
@@ -35,13 +35,13 @@ public class Main extends ApplicationAdapter {
 		Gdx.input.setInputProcessor(new MyInputProcessor());
 
 		assets = new Assets();
-		batch = new SpriteBatch();
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, WIDTH, HEIGHT);
-		hudCamera = new OrthographicCamera();
-		hudCamera.setToOrtho(false, WIDTH, HEIGHT);
+		_batch = new SpriteBatch();
+		_camera = new OrthographicCamera();
+		_camera.setToOrtho(false, WIDTH, HEIGHT);
+		_hudCamera = new OrthographicCamera();
+		_hudCamera.setToOrtho(false, WIDTH, HEIGHT);
 		
-		sceneManager = new SceneManager(this);
+		_sceneManager = new SceneManager(this);
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class Main extends ApplicationAdapter {
 		// main rendering
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		sceneManager.update(Gdx.graphics.getDeltaTime());
-		sceneManager.render();
+		_sceneManager.update(Gdx.graphics.getDeltaTime());
+		_sceneManager.render();
 		MyInput.update();
 	}
 
@@ -60,18 +60,14 @@ public class Main extends ApplicationAdapter {
 	}
 
 	public SpriteBatch getBatch() {
-		return batch;
+		return _batch;
 	}
 
 	public OrthographicCamera getCamera() {
-		return camera;
+		return _camera;
 	}
 
 	public OrthographicCamera getHudCamera() {
-		return hudCamera;
-	}
-	
-	public Assets getAssets() {
-		return assets;
+		return _hudCamera;
 	}
 }

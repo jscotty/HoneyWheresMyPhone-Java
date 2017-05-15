@@ -9,68 +9,65 @@ import com.exam.handlers.GUIManager;
 
 public class GuiText extends Gui{
 	
-	private BitmapFont font;
+	private BitmapFont _font;
 	
-	private FontType fontType;
+	private String _message = "";
+	private float _size = 1;
+	private float _shadowXOffset;
+	private float _shadowYOffset;
+	private boolean _hasShadow = false;
 	
-	private String message = "";
-	private float size = 1;
-	private float shadowXOffset;
-	private float shadowYOffset;
-	private boolean hasShadow = false;
-	
-	private Color fontColor = new Color(1,1,1,1);
-	private Color shadowColor;
+	private Color _fontColor = new Color(1,1,1,1);
+	private Color _shadowColor;
 	
 	public GuiText(float x, float y, GUIManager manager, FontType fontType) {
 		super(x, y, manager);
-		this.fontType = fontType;
-		font = FontLoader.getFont(fontType);
+		_font = FontLoader.getFont(fontType);
 	}
 	
 	public GuiText addShadow(float offset, Color color){
-		this.shadowXOffset = offset;
-		this.shadowYOffset = offset;
-		hasShadow = true;
-		shadowColor = color;
+		this._shadowXOffset = offset;
+		this._shadowYOffset = offset;
+		_hasShadow = true;
+		_shadowColor = color;
 		return this;
 	}
 	
 	public GuiText addShadow(float xOffset, float yOffset, Color color){
-		this.shadowXOffset = xOffset;
-		this.shadowYOffset = yOffset;
-		hasShadow = true;
-		shadowColor = color;
+		this._shadowXOffset = xOffset;
+		this._shadowYOffset = yOffset;
+		_hasShadow = true;
+		_shadowColor = color;
 		return this;
 	}
 	
 	public void setMessage(String message){
-		this.message = message;
+		this._message = message;
 	}
 	
 	public void setFontSize(float size){
-		this.size = size;
+		this._size = size;
 	}
 	
 	public void setColor(Color color){
-		fontColor = color;
+		_fontColor = color;
 	}
 
 	@Override
 	public void render(SpriteBatch spriteBatch) {
-		font.setScale(size);
+		_font.setScale(_size);
 		
-		if(hasShadow){
-			font.setColor(shadowColor);
-			font.draw(spriteBatch, message, position.x + shadowXOffset, position.y + shadowYOffset);
+		if(_hasShadow){
+			_font.setColor(_shadowColor);
+			_font.draw(spriteBatch, _message, pPosition.x + _shadowXOffset, pPosition.y + _shadowYOffset);
 		}
 		
-		font.setColor(fontColor);
-		font.draw(spriteBatch, message, position.x, position.y);
+		_font.setColor(_fontColor);
+		_font.draw(spriteBatch, _message, pPosition.x, pPosition.y);
 		
 		//reset font for other classes who might use this font as well!
-		font.setColor(new Color(1,1,1,1));
-		font.setScale(1); 
+		_font.setColor(new Color(1,1,1,1));
+		_font.setScale(1); 
 	}
 
 	

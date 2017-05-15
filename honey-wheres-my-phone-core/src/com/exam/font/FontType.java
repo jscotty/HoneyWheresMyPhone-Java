@@ -3,13 +3,13 @@ package com.exam.font;
 public enum FontType {
 	SUPERCELL_MAGIC("font/supercell-magic");
 	
-	private String fontName;
+	private String _fontName;
 	
 	private FontType(String fontName){
-		this.fontName = fontName;
+		this._fontName = fontName;
 	}
 	
-	public String getFontName() {
-		return fontName;
+	public String getFontPathName() {
+		return _fontName;
 	}
 }
