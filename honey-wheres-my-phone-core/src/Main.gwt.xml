@@ -11,4 +11,5 @@
 	<source path="com/exam/tween" />
 	<source path="com/exam/items" />
 	<source path="com/exam/managers" />
+	<source path="com/exam/font" />
 </module>

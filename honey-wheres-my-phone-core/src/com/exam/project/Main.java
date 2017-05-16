@@ -9,7 +9,6 @@ import com.exam.handlers.Assets;
 import com.exam.handlers.MyInput;
 import com.exam.handlers.MyInputProcessor;
 import com.exam.scenes.SceneManager;
-import com.exam.toolbox.SpriteType;
 
 /**
  * @author Justin Scott Bieshaar

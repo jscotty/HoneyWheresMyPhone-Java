@@ -1,7 +1,6 @@
 package com.exam.handlers;
 
 import com.badlogic.gdx.InputAdapter;
-import com.exam.project.Main;
 
 /**
  * @author Justin Scott Bieshaar

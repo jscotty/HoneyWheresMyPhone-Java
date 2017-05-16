@@ -36,6 +36,12 @@ public class GuiText extends Gui{
 		super(x, y, manager);
 		_font = FontLoader.getFont(fontType);
 	}
+
+	public GuiText(float x, float y, GUIManager manager, FontType fontType, String text) {
+		super(x, y, manager);
+		_font = FontLoader.getFont(fontType);
+		_message = text;
+	}
 	
 	/**
 	 * Add shadow to this gui text with a stable offset.
@@ -92,6 +98,7 @@ public class GuiText extends Gui{
 
 	@Override
 	public void render(SpriteBatch spriteBatch) {
+		if(_size == 0) return;
 		_font.setScale(_size);
 		
 		if(_hasShadow){
@@ -107,6 +114,8 @@ public class GuiText extends Gui{
 		_font.setScale(1); 
 	}
 
-	
+	public float getSize() {
+		return _size;
+	}
 
 }

@@ -3,6 +3,7 @@ package com.exam.scenes;
 import com.exam.gui.GuiButton;
 import com.exam.gui.Gui;
 import com.exam.handlers.GUIManager;
+import com.exam.panels.UpgradePanel;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.exam.tween.AccessorReferences;
@@ -36,6 +37,8 @@ public class MainMenuScene extends Scene{
 	private TweenManager _tweenManager;
 	private float _startTweeningAnimationTime = 0.2f;
 	private float _tweenAnimationDelay = 0.0f;
+	
+	private UpgradePanel upgradePanel;
 
 	/**
 	 * Constructor for initialization
@@ -57,6 +60,8 @@ public class MainMenuScene extends Scene{
 		_trophieButton = new GuiButton(Main.WIDTH/2, 200, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, pHudCamera, _guiManager);
 		
 		_guiManager.sortGuis();
+		
+		upgradePanel = new UpgradePanel(pHudCamera, pSceneManager);
 		startAnimation();
 	}
 	
@@ -118,14 +123,19 @@ public class MainMenuScene extends Scene{
 
 	@Override
 	public void handleInput() {
+		if(upgradePanel.isActive()) return;
 		if(_startButton.isClicked()){
 			endAnimation(SceneManager.PLAY);
 		}
+		
+		if(_upgradeButton.isClicked())
+			upgradePanel.startAnimation();
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		handleInput();
+		upgradePanel.update(deltaTime);
 		_tweenManager.update(deltaTime);
 		_guiManager.update(deltaTime);
 	}
@@ -136,6 +146,7 @@ public class MainMenuScene extends Scene{
 		pSpriteBatch.begin();
 		_guiManager.render(pSpriteBatch);
 		pSpriteBatch.end();
+		upgradePanel.render(pSpriteBatch);
 	}
 
 	@Override

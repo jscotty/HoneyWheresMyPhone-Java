@@ -1,8 +1,9 @@
 package com.exam.handlers;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.exam.entity.Entity;
@@ -14,7 +15,13 @@ import com.exam.entity.Entity;
  */
 public class EntityManager {
 
-	private List<Entity> _entities = new CopyOnWriteArrayList<Entity>(); // using copyonwrite to be able to remove an entity while running.
+	private List<Entity> _entities;
+	private List<Entity> _entitiesToRemove;
+	
+	public EntityManager(){
+		_entities = new ArrayList<Entity>();
+		_entitiesToRemove = new ArrayList<Entity>();
+	}
 	
 	/**
 	 * process entity to be rendered and update.
@@ -37,7 +44,7 @@ public class EntityManager {
 	 * @param entity
 	 */
 	public void removeEntity(Entity entity){
-		_entities.remove(entity); // no need to update this entity anymore!
+		_entitiesToRemove.add(entity);
 	}
 	
 	/**
@@ -49,6 +56,13 @@ public class EntityManager {
 		for (Entity entity : _entities) {
 			entity.update(deltaTime);
 		}
+		
+		if(_entitiesToRemove.size() == 0) return;
+		
+		for (Entity entity : _entitiesToRemove) {
+			_entities.remove(entity);
+		}
+		_entitiesToRemove.clear();
 	}
 	
 	/**

@@ -96,6 +96,9 @@ public class Gui implements Comparable<Gui> {
 	public TextureRegion getTexture() {
 		return _texture;
 	}
+	public void setTexture(SpriteType spriteType) {
+		this._texture = Main.assets.getTexture(spriteType);
+	}
 	public float getScaleX() {
 		return pScaleX;
 	}
@@ -117,6 +120,18 @@ public class Gui implements Comparable<Gui> {
 	}
 	public void setAlpha(float alpha) {
 		this.pAlpha = alpha;
+	}
+	public void setXPosition(float x){
+		pPosition.x = x;
+	}
+	public Vector2 getPosition() {
+		return pPosition;
+	}
+	public float getWidth(){
+		return _texture.getRegionWidth();
+	}
+	public float getHeight(){
+		return _texture.getRegionHeight();
 	}
 //endregion
 }

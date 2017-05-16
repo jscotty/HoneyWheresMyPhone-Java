@@ -3,7 +3,6 @@ package com.exam.items;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -51,7 +50,7 @@ public class ItemManager implements ContactListener{
 	private boolean _reverse = false;
 	
 	private List<Item> _itemsDestroyed = new ArrayList<Item>();
-	private List<Item> _itemsInField = new CopyOnWriteArrayList<Item>();
+	private List<Item> _itemsInField = new ArrayList<Item>();
 	
 	/**
 	 * Constructor for initialization
@@ -70,13 +69,11 @@ public class ItemManager implements ContactListener{
 	 */
 	public void update(float deltaTime){
 		_meters += deltaTime + _speedMutliplier;
-		System.out.println((_speed - 2)/10);
 		_speed += deltaTime * 0.2f;
 		_speedMutliplier += 0.000025f;
 		if(_meters > _delay){
 			spawn();
 			_delay += 5;
-			System.out.println(_delay);
 		}
 	}
 	

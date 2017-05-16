@@ -30,7 +30,13 @@ public enum SpriteType {
     //logo's
     LOGO_01("buttons/Sheet_UserInterface", "Logo1.png"),
 
-    //
+    //upgrade tab
+    UPGRADE_ARM_LENGTH("buttons/Sheet_UserInterface", "Upgrade_ArmLength.png"),
+    UPGRADE_STARTDEPTH_INCREASER("buttons/Sheet_UserInterface", "Upgrade_StartDeeper.png"),
+    UPGRADE_ITEMVALUE_INCREASER("buttons/Sheet_UserInterface", "Upgrade_ItemValue.png"),
+    UPGRADE_PROCESS_EMPTY("buttons/Sheet_UserInterface", "Upgrade_ProcessEmpty.png"),
+    UPGRADE_PROCESS_FULL("buttons/Sheet_UserInterface", "Upgrade_ProcessFull.png"),
+    UPGRADE_PROCESS_SELECT("buttons/Sheet_UserInterface", "Upgrade_ProcessSelect.png"),
     
     
     //buttons
