@@ -29,8 +29,8 @@ public class Item extends Entity {
 	 * @param speed current speed from manager
 	 * @param itemManager for callback
 	 */
-	public Item(ItemType itemType, World world, Vector2 position, BodyType bodyType, EntityManager manager, float speed, ItemManager itemManager) {
-		super(world, position, bodyType, itemType.getSpriteType(), manager);
+	public Item(ItemType itemType, Vector2 position, EntityManager manager, float speed, ItemManager itemManager) {
+		super(position, itemType.getSpriteType(), manager);
 		this._itemType = itemType;
 		this._speed = speed;
 		this._itemManager = itemManager;

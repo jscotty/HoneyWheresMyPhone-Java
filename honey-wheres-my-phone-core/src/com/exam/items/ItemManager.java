@@ -99,7 +99,7 @@ public class ItemManager implements ContactListener{
 				if(_reverse){
 					
 				} else { 
-					Item item = (Item) new Item(ItemType.values()[randomItem], _world, position, BodyType.DynamicBody, _entityManager, _speed, this).addBodyBox(50,50, position.x ,position.y, USER_DATA);
+					Item item = (Item) new Item(ItemType.values()[randomItem], position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 50,50, position.x ,position.y, USER_DATA);
 					_itemsInField.add(item);
 				}
 			}

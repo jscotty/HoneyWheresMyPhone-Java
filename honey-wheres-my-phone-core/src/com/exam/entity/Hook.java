@@ -25,8 +25,8 @@ public class Hook extends Entity {
 	 * @param spriteType for receiving desired texture.
 	 * @param manager to process/register this instance.
 	 */
-	public Hook(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, EntityManager manager) {
-		super(world, position, bodyType, spriteType, manager);
+	public Hook(Vector2 position, SpriteType spriteType, EntityManager manager) {
+		super(position, spriteType, manager);
 		_mouseX = position.x;
 	}
 

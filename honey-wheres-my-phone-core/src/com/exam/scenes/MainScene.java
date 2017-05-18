@@ -8,7 +8,8 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
-import com.exam.entity.Background;
+import com.exam.background.Background;
+import com.exam.background.BackgroundManager;
 import com.exam.entity.EntityManager;
 import com.exam.entity.Hook;
 import com.exam.font.FontType;
@@ -34,13 +35,14 @@ public class MainScene extends Scene{
 	private Box2DDebugRenderer _debugRenderer;
 	private EntityManager _entityManager;
 	private GUIManager _guiManager;
-	
-	private Background _background;
+
 	private Hook _hook;
 	private GuiText _metersText;
 	private ItemManager _itemManager;
 	private GuiButton _pauseButton;
 	private PausePanel _pausePanel;
+	
+	private BackgroundManager backgroundManager;
 
 	/**
 	 * Constructor for initialization.
@@ -52,17 +54,16 @@ public class MainScene extends Scene{
 		_debugRenderer = new Box2DDebugRenderer();
 		_entityManager = new EntityManager();
 		_guiManager = new GUIManager();
-		_itemManager = new ItemManager(_world, _entityManager);
+		//_itemManager = new ItemManager(_world, _entityManager);
 		_world.setContactListener(_itemManager);
 		
+		backgroundManager = new BackgroundManager(_entityManager);
 		
-		_background = new Background(_world, new Vector2(Main.WIDTH/2,Main.HEIGHT/2), BodyType.StaticBody, SpriteType.BACKGOUND_PLYAY_01, _entityManager);
-		_background.addOverlay(SpriteType.BACKGOUND_PLYAY_01_OVERLAY);
-		_hook = (Hook) new Hook(_world, new Vector2(200, 1200), BodyType.KinematicBody, SpriteType.PROPS_ARM, _entityManager).addBodyCircle(40, 195, 950, "");
+		//_hook = (Hook) new Hook(new Vector2(200, 1200), SpriteType.PROPS_ARM, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 40, 195, 950, "");
 		_pauseButton = new GuiButton(600, 1200, SpriteType.BUTTON_PAUSE_IDLE, SpriteType.BUTTON_PAUSE_PRESSED, pHudCamera, _guiManager);
 		_pausePanel = new PausePanel(pHudCamera, pSceneManager);
 		
-		_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
+		//_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
 		
 		_entityManager.sortEntities();
 	}
@@ -84,9 +85,10 @@ public class MainScene extends Scene{
 		_world.step(Main.STEP, 1, 1);
 		_entityManager.update(deltaTime);
 		_guiManager.update(deltaTime);
-		_itemManager.update(deltaTime);
+		//_itemManager.update(deltaTime);
+		backgroundManager.update(deltaTime);
 		
-		_metersText.setText(_itemManager.getMeters() + "/1000");
+		//_metersText.setText(_itemManager.getMeters() + "/1000");
 	}
 
 	@Override

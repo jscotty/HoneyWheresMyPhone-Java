@@ -39,7 +39,6 @@ public class Entity implements Comparable<Entity> {
 	protected Body pBody;
 	protected TextureRegion pTexture;
 	private World _world;
-	private BodyType _bodyType;
 
 	protected int pZIndex = 0; // for sorting.
 
@@ -50,10 +49,8 @@ public class Entity implements Comparable<Entity> {
 	 * @param world
 	 * @param bodyType
 	 */
-	public Entity(World world, Vector2 position, BodyType bodyType, EntityManager manager) {
-		this._world = world;
+	public Entity(Vector2 position, EntityManager manager) {
 		this.pPosition = position;
-		this._bodyType = bodyType;
 
 		manager.processEntity(this);
 	}
@@ -64,10 +61,8 @@ public class Entity implements Comparable<Entity> {
 	 * @param bodyType
 	 * @param spriteType
 	 */
-	public Entity(World world, Vector2 position, BodyType bodyType, SpriteType spriteType, EntityManager manager) {
-		this._world = world;
+	public Entity(Vector2 position, SpriteType spriteType, EntityManager manager) {
 		this.pPosition = position;
-		this._bodyType = bodyType;
 		pTexture = Main.assets.getTexture(spriteType);
 
 		manager.processEntity(this);
@@ -85,11 +80,12 @@ public class Entity implements Comparable<Entity> {
 	 * Add squared body to this entity on entity position and size of entity (texture)
 	 * @return this
 	 */
-	public Entity addBodyBox(String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, String userData) {
+		this._world = world;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(pTexture.getRegionWidth() / Main.DEVIDER, pTexture.getRegionHeight() / Main.DEVIDER);
 
-		setupBody(shape, pPosition.x, pPosition.y, userData);
+		setupBody(shape, bodyType, pPosition.x, pPosition.y, userData);
 		return this;
 	}
 
@@ -97,11 +93,12 @@ public class Entity implements Comparable<Entity> {
 	 * Add polygon body to this entity on entity position with a custom shape
 	 * @return this
 	 */
-	public Entity addBodyBox(float[] vertices, String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, float[] vertices, String userData) {
+		this._world = world;
 		PolygonShape shape = new PolygonShape();
 		shape.set(vertices);
 
-		setupBody(shape, pPosition.x, pPosition.y, userData);
+		setupBody(shape, bodyType, pPosition.x, pPosition.y, userData);
 		return this;
 	}
 
@@ -113,16 +110,17 @@ public class Entity implements Comparable<Entity> {
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(float width, float height, float x, float y, String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, float width, float height, float positionX, float positionY, String userData) {
+		this._world = world;
 		//Manhattan distance calculation
-		this._bodyPositionDistance.x = pPosition.x - x;
-		this._bodyPositionDistance.y = pPosition.y - y;
+		this._bodyPositionDistance.x = pPosition.x - positionX;
+		this._bodyPositionDistance.y = pPosition.y - positionY;
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height);
 		
 
-		setupBody(shape, x, y, userData);
+		setupBody(shape, bodyType, positionX, positionY, userData);
 		return this;
 	}
 
@@ -132,15 +130,16 @@ public class Entity implements Comparable<Entity> {
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(float x, float y, String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, float positionX, float positionY, String userData) {
+		this._world = world;
 		//Manhattan distance calculation
-		this._bodyPositionDistance.x = pPosition.x - x;
-		this._bodyPositionDistance.y = pPosition.y - y;
+		this._bodyPositionDistance.x = pPosition.x - positionX;
+		this._bodyPositionDistance.y = pPosition.y - positionY;
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(pTexture.getRegionWidth() / Main.DEVIDER, pTexture.getRegionHeight() / Main.DEVIDER);
 
-		setupBody(shape, x, y,userData);
+		setupBody(shape, bodyType, positionX, positionY, userData);
 		return this;
 	}
 
@@ -151,14 +150,16 @@ public class Entity implements Comparable<Entity> {
 	 * @param positionY
 	 * @return
 	 */
-	public Entity addBodyCircle(float radius, float positionX, float positionY, String userData) {
+	public Entity addBodyCircle(World world, BodyType bodyType, float radius, float positionX, float positionY, String userData) {
+		this._world = world;
+		//Manhattan distance calculation
 		this._bodyPositionDistance.x = pPosition.x - positionX;
 		this._bodyPositionDistance.y = pPosition.y - positionY;
 
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
 
-		setupBody(shape, positionX, positionY,userData);
+		setupBody(shape, bodyType, positionX, positionY,userData);
 		return this;
 	}
 
@@ -168,13 +169,13 @@ public class Entity implements Comparable<Entity> {
 	 * @param x position
 	 * @param y position
 	 */
-	private void setupBody(Shape shape, float positionX, float positionY, String userData) {
+	private void setupBody(Shape shape, BodyType bodyType, float positionX, float positionY, String userData) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(positionX, positionY);
-		bodyDef.type = _bodyType;
+		bodyDef.type = bodyType;
 		pBody = _world.createBody(bodyDef);
 
-		bodyDef.type = _bodyType;
+		bodyDef.type = bodyType;
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
 		pBody.createFixture(fdef).setUserData(userData);;
@@ -204,7 +205,7 @@ public class Entity implements Comparable<Entity> {
 	}
 
 	/**
-	 * updates everu frame
+	 * updates every frame
 	 * @param deltaTime, time between current and last frame.
 	 */
 	public void update(float deltaTime) {
@@ -235,18 +236,23 @@ public class Entity implements Comparable<Entity> {
 	}
 
 //region properties
+	public void setPosition(float xPosition, float yPosition){
+		this.pPosition.x = xPosition;
+		this.pPosition.y = yPosition;
+	}
+	
 	protected Vector2 getBodyPosition() {
 		return pBodyPosition;
 	}
 
-	public float getX() {
+	protected float getX() {
 		if (_parent != null)
 			return (_parent.getPosition().x + pPosition.x) - getOriginX();
 		else
 			return pPosition.x - getOriginX();
 	}
 
-	public float getY() {
+	protected float getY() {
 		if (_parent != null)
 			return (_parent.getPosition().y + pPosition.y) - getOriginY();
 		else
