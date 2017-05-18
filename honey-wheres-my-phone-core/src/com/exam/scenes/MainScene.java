@@ -9,14 +9,16 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.exam.entity.Background;
+import com.exam.entity.EntityManager;
 import com.exam.entity.Hook;
 import com.exam.font.FontType;
+import com.exam.gui.GUIManager;
 import com.exam.gui.GuiButton;
 import com.exam.gui.GuiText;
-import com.exam.handlers.EntityManager;
-import com.exam.handlers.GUIManager;
 import com.exam.handlers.MyInput;
 import com.exam.items.ItemManager;
+import com.exam.managers.GameManager;
+import com.exam.panels.PausePanel;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -37,6 +39,8 @@ public class MainScene extends Scene{
 	private Hook _hook;
 	private GuiText _metersText;
 	private ItemManager _itemManager;
+	private GuiButton _pauseButton;
+	private PausePanel _pausePanel;
 
 	/**
 	 * Constructor for initialization.
@@ -55,6 +59,8 @@ public class MainScene extends Scene{
 		_background = new Background(_world, new Vector2(Main.WIDTH/2,Main.HEIGHT/2), BodyType.StaticBody, SpriteType.BACKGOUND_PLYAY_01, _entityManager);
 		_background.addOverlay(SpriteType.BACKGOUND_PLYAY_01_OVERLAY);
 		_hook = (Hook) new Hook(_world, new Vector2(200, 1200), BodyType.KinematicBody, SpriteType.PROPS_ARM, _entityManager).addBodyCircle(40, 195, 950, "");
+		_pauseButton = new GuiButton(600, 1200, SpriteType.BUTTON_PAUSE_IDLE, SpriteType.BUTTON_PAUSE_PRESSED, pHudCamera, _guiManager);
+		_pausePanel = new PausePanel(pHudCamera, pSceneManager);
 		
 		_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
 		
@@ -63,14 +69,21 @@ public class MainScene extends Scene{
 
 	@Override
 	public void handleInput() {
-		
+		if(_pauseButton.isClicked()){
+			_pausePanel.startAnimation();
+		}
 	}
 
 	@Override
 	public void update(float deltaTime) {
+		if(GameManager.isPaused) {
+			_pausePanel.update(deltaTime); // only need to update the pause screen 
+			return;
+		}
 		handleInput();
 		_world.step(Main.STEP, 1, 1);
 		_entityManager.update(deltaTime);
+		_guiManager.update(deltaTime);
 		_itemManager.update(deltaTime);
 		
 		_metersText.setText(_itemManager.getMeters() + "/1000");
@@ -88,6 +101,7 @@ public class MainScene extends Scene{
 		_guiManager.render(pSpriteBatch);
 		pSpriteBatch.end();
 		
+		_pausePanel.render(pSpriteBatch);
 		_debugRenderer.render(_world, pCamera.combined);
 	}
 

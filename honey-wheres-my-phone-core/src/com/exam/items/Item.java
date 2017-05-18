@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.exam.entity.Entity;
-import com.exam.handlers.EntityManager;
+import com.exam.entity.EntityManager;
 import com.exam.project.Main;
 
 /**

@@ -3,11 +3,11 @@ package com.exam.panels;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.exam.font.FontType;
+import com.exam.gui.GUIManager;
 import com.exam.gui.Gui;
 import com.exam.gui.GuiButton;
 import com.exam.gui.GuiText;
 import com.exam.gui.UpgradeProcess;
-import com.exam.handlers.GUIManager;
 import com.exam.project.Main;
 import com.exam.scenes.SceneManager;
 import com.exam.toolbox.SpriteType;
@@ -65,9 +65,9 @@ public class UpgradePanel extends Panel {
 		cashText.setText("$ Moneyz");
 		
 		fadeBackgrounds = new Gui[]{
-			new Gui(Main.WIDTH/2, (Main.HEIGHT/2)+ OFFSET, SpriteType.BACKROUND_FADE_01, guiManager),
-			new Gui(Main.WIDTH/2, Main.HEIGHT/2.0f, SpriteType.BACKROUND_FADE_01, guiManager),
-			new Gui(Main.WIDTH/2, (Main.HEIGHT/2)- OFFSET, SpriteType.BACKROUND_FADE_01, guiManager)
+			new Gui(Main.WIDTH/2, (Main.HEIGHT/2)+ OFFSET, SpriteType.BACKGROUND_FADE_01, guiManager),
+			new Gui(Main.WIDTH/2, Main.HEIGHT/2.0f, SpriteType.BACKGROUND_FADE_01, guiManager),
+			new Gui(Main.WIDTH/2, (Main.HEIGHT/2)- OFFSET, SpriteType.BACKGROUND_FADE_01, guiManager)
 		};
 		
 		icons = new Gui[]{

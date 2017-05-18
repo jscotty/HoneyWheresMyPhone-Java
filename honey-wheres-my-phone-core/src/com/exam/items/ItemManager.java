@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
-import com.exam.handlers.EntityManager;
+import com.exam.entity.EntityManager;
 import com.exam.project.Main;
 
 /**

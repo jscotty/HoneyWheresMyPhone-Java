@@ -1,11 +1,10 @@
-package com.exam.handlers;
+package com.exam.gui;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.exam.gui.Gui;
 
 /**
  * @author Justin Scott Bieshaar

@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.exam.font.FontLoader;
 import com.exam.font.FontType;
-import com.exam.handlers.GUIManager;
 
 /**
  * @author Justin Scott Bieshaar
@@ -98,7 +97,7 @@ public class GuiText extends Gui{
 
 	@Override
 	public void render(SpriteBatch spriteBatch) {
-		if(_size == 0) return;
+		if(_size == 0) return; // bitmapfont does not support a font size of 0
 		_font.setScale(_size);
 		
 		if(_hasShadow){

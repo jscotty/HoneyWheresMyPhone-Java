@@ -12,4 +12,5 @@
 	<source path="com/exam/items" />
 	<source path="com/exam/managers" />
 	<source path="com/exam/font" />
+	<source path="com/exam/panels" />
 </module>

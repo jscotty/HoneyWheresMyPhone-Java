@@ -20,12 +20,36 @@ public enum SpriteType {
     PROPS_BLUSH("props/Sheet_Props", "Prop_blush.png"),
 
     //backgrounds
-    BACKGOUND_PLYAY_01("", "Background_Play_01.png"),
-    BACKGOUND_PLYAY_01_OVERLAY("", "Background_OverLay.png"),
+    BACKGROUND_TOP("","background/BackgroundTop.png"),
+    BACKGROUND_TOP_OVERLAY("","background/BorderTop.png"),
 
-    BACKROUND_FADE_01("buttons/Sheet_UserInterface", "Background_Fade1.png"),
-    BACKROUND_FADE_02("buttons/Sheet_UserInterface", "Background_Fade2.png"),
-    BACKROUND_FADE_03("buttons/Sheet_UserInterface", "Background_Fade3.png"),
+    BACKGROUND_LEVEL_00("","background/Background_lvl1.png"),
+    BACKGROUND_OVERLAY_LEVEL_00("","background/Border_lvl0.png"),
+
+    BACKGROUND_LEVEL_01("","background/Background_lvl1.png"),
+    BACKGROUND_OVERLAY_LEVEL_01("","background/Border_lvl1.png"),
+
+    BACKGROUND_LEVEL_02("","background/Background_lvl2.png"),
+    BACKGROUND_OVERLAY_LEVEL_02("","background/Border_lvl2.png"),
+
+    BACKGROUND_LEVEL_03("","background/Background_lvl3.png"),
+    BACKGROUND_OVERLAY_LEVEL_03("","background/Border_lvl3.png"),
+
+    BACKGROUND_LEVEL_04("","background/Background_lvl4.png"),
+    BACKGROUND_OVERLAY_LEVEL_04("","background/Border_lvl4.png"),
+
+    BACKGROUND_LEVEL_05("","background/Background_lvl5.png"),
+    BACKGROUND_OVERLAY_LEVEL_05("","background/Border_lvl5.png"),
+
+    BACKGROUND_LEVEL_06("","background/Background_lvl6.png"),
+    BACKGROUND_OVERLAY_LEVEL_06("","background/Border_lvl6.png"),
+    
+    BACKGOUND_PLYAY_01("", "Background_Play_01.png"),
+    BACKGOUND_PLYAY_01_OVERLAY("", "Background_Overlay.png"),
+
+    BACKGROUND_FADE_01("buttons/Sheet_UserInterface", "Background_Fade1.png"),
+    BACKGROUND_FADE_02("buttons/Sheet_UserInterface", "Background_Fade2.png"),
+    BACKGROUND_FADE_03("buttons/Sheet_UserInterface", "Background_Fade3.png"),
 
     //logo's
     LOGO_01("buttons/Sheet_UserInterface", "Logo1.png"),
@@ -38,6 +62,8 @@ public enum SpriteType {
     UPGRADE_PROCESS_FULL("buttons/Sheet_UserInterface", "Upgrade_ProcessFull.png"),
     UPGRADE_PROCESS_SELECT("buttons/Sheet_UserInterface", "Upgrade_ProcessSelect.png"),
     
+    //Text
+    GAME_PAUSED_TEXT("buttons/Sheet_UserInterface", "Text_GamePaused.png"),
     
     //buttons
     BUTTON_AUDIO_ON_PRESSED("buttons/Sheet_UserInterface", "Button_AudioOn_Clicked.png"),
@@ -46,7 +72,7 @@ public enum SpriteType {
     BUTTON_AUDIO_OFF_PRESSED("buttons/Sheet_UserInterface", "Button_AudioOff_Clicked.png"),
     BUTTON_AUDIO_OFF_IDLE("buttons/Sheet_UserInterface", "Button_AudioOff_Idle.png"),
 
-    BUTTON_BUY_PRESSED("buttons/Sheet_UserInterface", "Button_Buy_Clicked.png"),
+    BUTTON_BUY_PRESSED("buttons/Sheet_UserInterface", "Button_Buy_Pressed.png"),
     BUTTON_BUY_IDLE("buttons/Sheet_UserInterface", "Button_Buy_Idle.png"),
 
     BUTTON_HOME_PRESSED("buttons/Sheet_UserInterface", "Button_Home_Clicked.png"),
@@ -58,10 +84,10 @@ public enum SpriteType {
     BUTTON_PAUSE_PRESSED("buttons/Sheet_UserInterface", "Button_Pauze_Clicked.png"),
     BUTTON_PAUSE_IDLE("buttons/Sheet_UserInterface", "Button_Pauze_Idle.png"),
 
-    BUTTON_PLAY_SMALL_PRESSED("buttons/Sheet_UserInterface", "Button_PlaySmall_Clicked.png"),
+    BUTTON_PLAY_SMALL_PRESSED("buttons/Sheet_UserInterface", "Button_PlaySmall_Pressed.png"),
     BUTTON_PLAY_SMALL_IDLE("buttons/Sheet_UserInterface", "Button_PlaySmall_Idle.png"),
 
-    BUTTON_QUIT_PRESSED("buttons/Sheet_UserInterface", "Button_Quit_Clicked.png"),
+    BUTTON_QUIT_PRESSED("buttons/Sheet_UserInterface", "Button_Quit_Pressed.png"),
     BUTTON_QUIT_IDLE("buttons/Sheet_UserInterface", "Button_Quit_Idle.png"),
 
     BUTTON_RIGHT_PRESSED("buttons/Sheet_UserInterface", "Button_Right_Clicked.png"),

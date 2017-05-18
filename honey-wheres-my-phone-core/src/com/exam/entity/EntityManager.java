@@ -1,4 +1,4 @@
-package com.exam.handlers;
+package com.exam.entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.exam.entity.Entity;
 
 /**
  * @author Justin Scott Bieshaar

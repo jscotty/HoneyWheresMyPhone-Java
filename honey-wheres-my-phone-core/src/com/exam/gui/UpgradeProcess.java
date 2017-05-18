@@ -2,7 +2,6 @@ package com.exam.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.exam.font.FontType;
-import com.exam.handlers.GUIManager;
 import com.exam.toolbox.SpriteType;
 
 public class UpgradeProcess {
@@ -53,7 +52,7 @@ public class UpgradeProcess {
 		for (int i = 0; i < processIcons.length; i++) {
 			processIcons[i].setScale(scaleX, scaleY);
 		}
-		System.out.println(scaleX);
+		
 		upgradeTypeText.setFontSize(FONT_SIZE*scaleX);
 	}
 	

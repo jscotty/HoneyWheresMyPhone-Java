@@ -47,7 +47,7 @@ public class SpriteSheetReaderShoebox {
 	    System.out.println(e.getStackTrace());
 	}
 	if (tDesiredTexture == null)
-	    System.out.println("Failed to read xml file or find given name.");
+	    System.out.println("Failed to read xml file or find given name." + type.getSpriteName());
 	return tDesiredTexture;
     }
 

@@ -3,7 +3,6 @@ package com.exam.gui;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.exam.handlers.GUIManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 

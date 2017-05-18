@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
-import com.exam.handlers.GUIManager;
 import com.exam.handlers.MyInput;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
@@ -60,7 +59,6 @@ public class GuiButton extends Gui {
 		_mousePosition.x /= 2;
 		_mousePosition.y += Main.HEIGHT;
 		_mousePosition.y /= 2;
-		
 		if(MyInput.isMousePressed(0) && _mousePosition.x > pPosition.x - _width / 2 && _mousePosition.x < pPosition.x + _width / 2 && _mousePosition.y > pPosition.y - _height / 2 && _mousePosition.y < pPosition.y + _height / 2) {
 			_clicked = true;
 		} else if(MyInput.isMouseDown(0) && _mousePosition.x > pPosition.x - _width / 2 && _mousePosition.x < pPosition.x + _width / 2 && _mousePosition.y > pPosition.y - _height / 2 && _mousePosition.y < pPosition.y + _height / 2) {

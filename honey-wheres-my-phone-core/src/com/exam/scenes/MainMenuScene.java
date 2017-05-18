@@ -1,8 +1,8 @@
 package com.exam.scenes;
 
 import com.exam.gui.GuiButton;
+import com.exam.gui.GUIManager;
 import com.exam.gui.Gui;
-import com.exam.handlers.GUIManager;
 import com.exam.panels.UpgradePanel;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
