@@ -10,6 +10,8 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.exam.handlers.GameEvent;
+import com.exam.handlers.GameEventListener;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.World;
@@ -19,7 +21,7 @@ import com.badlogic.gdx.physics.box2d.World;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class Entity implements Comparable<Entity> {
+public class Entity implements Comparable<Entity> , GameEventListener {
 
 	// render data
 	protected Vector2 pPosition = new Vector2(0, 0); 
@@ -302,5 +304,13 @@ public class Entity implements Comparable<Entity> {
 	public float getAngle() {
 		return pAngle;
 	}
+//endregion
+
+//region GameEventListener methods
+	@Override
+	public void gameStart(GameEvent event) { }
+
+	@Override
+	public void gameEnd(GameEvent event) { }
 //endregion
 }

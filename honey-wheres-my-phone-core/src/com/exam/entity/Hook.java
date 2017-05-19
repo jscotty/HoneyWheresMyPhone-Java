@@ -3,9 +3,14 @@ package com.exam.entity;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
+import com.exam.handlers.GameEvent;
 import com.exam.handlers.MyInput;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
+import com.exam.tween.AccessorReferences;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
 
 /**
  * @author Justin Scott Bieshaar
@@ -14,8 +19,12 @@ import com.exam.toolbox.SpriteType;
  */
 public class Hook extends Entity {
 	
+	private TweenManager tweenManager;
 	private float _speedDevider = 5f; // for flowing movement
 	private float _mouseX;
+	
+	private float startTweenAnimationDuration = 1f;
+	private boolean start = false;
 
 	/**
 	 * constructor and initalization. Casting parameters to base class
@@ -27,6 +36,7 @@ public class Hook extends Entity {
 	 */
 	public Hook(Vector2 position, SpriteType spriteType, EntityManager manager) {
 		super(position, spriteType, manager);
+		tweenManager = new TweenManager();
 		_mouseX = position.x;
 	}
 
@@ -45,10 +55,33 @@ public class Hook extends Entity {
 		pPosition.x += (_mouseX - pPosition.x)/_speedDevider;
 	}
 	
+	private void tweenToStartPosition(){
+		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 1150).start(tweenManager);
+	}
+	
+	private void tweenToEndPosition(){
+		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 700).start(tweenManager);
+	}
+	
 	@Override
 	public void update(float deltaTime) {
 		super.update(deltaTime); // update base.
 		handleInput();
+		tweenManager.update(deltaTime);
+	}
+	
+	@Override
+	public void gameStart(GameEvent event) {
+		if(start)return; // only call once!
+		start = true;
+		System.out.println("work");
+		
+		tweenToStartPosition();
+	}
+	
+	@Override
+	public void gameEnd(GameEvent event) {
+		tweenToEndPosition();
 	}
 
 }

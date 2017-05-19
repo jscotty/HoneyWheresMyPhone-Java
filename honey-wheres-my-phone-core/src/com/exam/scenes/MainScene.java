@@ -59,7 +59,8 @@ public class MainScene extends Scene{
 		
 		backgroundManager = new BackgroundManager(_entityManager);
 		
-		//_hook = (Hook) new Hook(new Vector2(200, 1200), SpriteType.PROPS_ARM, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 40, 195, 950, "");
+		_hook = (Hook) new Hook(new Vector2(200, 2000), SpriteType.PROPS_ARM, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 45, 195, 1750, "");
+		backgroundManager.addListener(_hook);
 		_pauseButton = new GuiButton(600, 1200, SpriteType.BUTTON_PAUSE_IDLE, SpriteType.BUTTON_PAUSE_PRESSED, pHudCamera, _guiManager);
 		_pausePanel = new PausePanel(pHudCamera, pSceneManager);
 		
