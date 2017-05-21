@@ -8,7 +8,7 @@ package com.exam.toolbox;
 public enum SpriteType {
 
     //props
-    PROPS_ARM("props/Sheet_Props", "Player_Arm.png"),
+    PROPS_ARM("", "props/Arm.png"),
     PROPS_BOOK("props/Sheet_Props", "Prop_Book.png"),
     PROPS_CHARGER("props/Sheet_Props", "Prop_Charger.png"),
     PROPS_EYE_SHADOW("props/Sheet_Props", "Prop_EyeShadow.png"),
@@ -20,6 +20,7 @@ public enum SpriteType {
     PROPS_BLUSH("props/Sheet_Props", "Prop_blush.png"),
 
     //backgrounds
+    BACKGROUND("","background/characterScreen.jpg"),
     BACKGROUND_TOP("","background/BackgroundTop.png"),
     BACKGROUND_TOP_OVERLAY("","background/BorderTop.png"),
 

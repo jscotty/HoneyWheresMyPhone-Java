@@ -24,6 +24,7 @@ public class Background extends Entity {
 	private float _speed = 0f;
 	private float _maxSpeed = 0.01f;
 	private Entity _overlay;
+	private BackgroundType _backgroundType;
 	/**
 	 * Constructor for initializing.
 	 * @param world for body 
@@ -32,10 +33,15 @@ public class Background extends Entity {
 	 * @param spriteType for receiving sprite to render
 	 * @param manager to process/register this class for rendering.
 	 */
-	public Background(Vector2 position, BackgroundType background, EntityManager manager) {
-		super(position, background.getBackgroundSprite(), manager); // casting parameters to base class
-		_overlay = new Entity(position, background.getOverlaySprite(), manager).setIndex(10);
+	public Background(Vector2 position, BackgroundType backgroundType, EntityManager manager) {
+		super(position, backgroundType.getBackgroundSprite(), manager); // casting parameters to base class
+		this._backgroundType = backgroundType;
+		_overlay = new Entity(position, backgroundType.getOverlaySprite(), manager).setIndex(10);
 		pZIndex = -2;
+	}
+	
+	public void scroll(float speed){
+		pPosition.y += speed;
 	}
 
 	@Override
@@ -44,4 +50,13 @@ public class Background extends Entity {
 		_overlay.setPosition(pPosition.x, pPosition.y);
 	}
 
+	public int getRepeatCount(){
+		return _backgroundType.getRepeatCount();
+	}
+	
+	public void changeVisualization(BackgroundType backgroundType){
+		this.setTexture(backgroundType.getBackgroundSprite());
+		_overlay.setTexture(backgroundType.getOverlaySprite());
+		_backgroundType = backgroundType;
+	}
 }

@@ -1,15 +1,21 @@
 package com.exam.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.exam.handlers.GameEvent;
+import com.exam.handlers.GameEventHandler;
 import com.exam.handlers.MyInput;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.exam.tween.AccessorReferences;
 
+import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 
 /**
@@ -22,6 +28,7 @@ public class Hook extends Entity {
 	private TweenManager tweenManager;
 	private float _speedDevider = 5f; // for flowing movement
 	private float _mouseX;
+	private Set<GameEventHandler> handlers = new HashSet<GameEventHandler>();
 	
 	private float startTweenAnimationDuration = 1f;
 	private boolean start = false;
@@ -56,11 +63,31 @@ public class Hook extends Entity {
 	}
 	
 	private void tweenToStartPosition(){
-		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 1150).start(tweenManager);
+		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 1250).setCallback(new TweenCallback() {
+			
+			@Override
+			public void onEvent(int arg0, BaseTween<?> arg1) {
+				castAnimationEnd();
+			}
+		}).start(tweenManager);
 	}
 	
 	private void tweenToEndPosition(){
 		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 700).start(tweenManager);
+	}
+	
+	public synchronized void addHandler(GameEventHandler handler){
+		handlers.add(handler);
+	}
+	
+	public synchronized void removeHandler(GameEventHandler handler){
+		handlers.remove(handler);
+	}
+	
+	private void castAnimationEnd(){
+		for (GameEventHandler handler : handlers) {
+			handler.castMethod();
+		}
 	}
 	
 	@Override
@@ -74,7 +101,6 @@ public class Hook extends Entity {
 	public void gameStart(GameEvent event) {
 		if(start)return; // only call once!
 		start = true;
-		System.out.println("work");
 		
 		tweenToStartPosition();
 	}

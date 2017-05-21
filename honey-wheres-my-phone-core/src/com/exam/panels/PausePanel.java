@@ -42,12 +42,7 @@ public class PausePanel extends Panel {
 		resumeButton = new GuiButton(Main.WIDTH/2, Main.HEIGHT/ 2 + 90, SpriteType.BUTTON_RESUME_IDLE, SpriteType.BUTTON_RESUME_PRESSED, camera, guiManager);
 		menuButton = new GuiButton(Main.WIDTH/2, Main.HEIGHT/2 - 90, SpriteType.BUTTON_MENU_IDLE, SpriteType.BUTTON_MENU_PRESSED, camera, guiManager);
 		muteButton = new GuiButton(600, 1200, SpriteType.BUTTON_AUDIO_ON_IDLE, SpriteType.BUTTON_AUDIO_ON_PRESSED, camera, guiManager);
-	}
 
-	@Override
-	public void startAnimation() {
-		isActive = true;
-		GameManager.isPaused = true;
 		Timeline.createSequence()
 		//set tweens
 		.push(Tween.set(background, AccessorReferences.SCALE).target(0,0))
@@ -55,7 +50,14 @@ public class PausePanel extends Panel {
 		.push(Tween.set(resumeButton, AccessorReferences.SCALE).target(0,0))
 		.push(Tween.set(menuButton, AccessorReferences.SCALE).target(0,0))
 		.push(Tween.set(muteButton, AccessorReferences.SCALE).target(0,0))
-		
+		.start(tweenManager);
+	}
+
+	@Override
+	public void startAnimation() {
+		isActive = true;
+		GameManager.isPaused = true;
+		Timeline.createSequence()
 		.pushPause(0.1f)
 		
 		.beginParallel()

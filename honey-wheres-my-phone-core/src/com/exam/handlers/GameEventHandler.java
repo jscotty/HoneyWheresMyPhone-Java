@@ -8,13 +8,15 @@ import java.util.Set;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class GameEventHandler {
+public abstract class GameEventHandler {
 
 	private Set<GameEventListener> listeners; // set managing automatically if adding listener is already in the list.
 	
 	public GameEventHandler() {
 		listeners = new HashSet<GameEventListener>();
 	}
+	
+	public abstract void castMethod();
 	
 	public synchronized void addListener(GameEventListener listener){
 		listeners.add(listener);

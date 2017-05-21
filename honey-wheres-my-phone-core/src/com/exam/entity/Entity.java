@@ -238,6 +238,10 @@ public class Entity implements Comparable<Entity> , GameEventListener {
 	}
 
 //region properties
+	public void setTexture(SpriteType spriteType){
+		this.pTexture = Main.assets.getTexture(spriteType);
+	}
+	
 	public void setPosition(float xPosition, float yPosition){
 		this.pPosition.x = xPosition;
 		this.pPosition.y = yPosition;

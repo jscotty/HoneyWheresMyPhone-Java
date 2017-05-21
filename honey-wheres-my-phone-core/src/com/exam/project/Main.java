@@ -2,6 +2,7 @@ package com.exam.project;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -30,7 +31,8 @@ public class Main extends ApplicationAdapter {
 	private OrthographicCamera _hudCamera;
 	
 	private SceneManager _sceneManager;
-
+	private FPSLogger fps;
+	
 	@Override
 	public void create() {
 		// initialize
@@ -44,6 +46,8 @@ public class Main extends ApplicationAdapter {
 		_camera.setToOrtho(false, WIDTH, HEIGHT);
 		_hudCamera = new OrthographicCamera();
 		_hudCamera.setToOrtho(false, WIDTH, HEIGHT);
+		
+		fps = new FPSLogger();
 		
 		_sceneManager = new SceneManager(this);
 	}

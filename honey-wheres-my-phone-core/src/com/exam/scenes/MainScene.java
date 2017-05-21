@@ -54,17 +54,19 @@ public class MainScene extends Scene{
 		_debugRenderer = new Box2DDebugRenderer();
 		_entityManager = new EntityManager();
 		_guiManager = new GUIManager();
-		//_itemManager = new ItemManager(_world, _entityManager);
+		_itemManager = new ItemManager(_world, _entityManager);
 		_world.setContactListener(_itemManager);
 		
 		backgroundManager = new BackgroundManager(_entityManager);
 		
-		_hook = (Hook) new Hook(new Vector2(200, 2000), SpriteType.PROPS_ARM, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 45, 195, 1750, "");
+		_hook = (Hook) new Hook(new Vector2(200, 2000), SpriteType.PROPS_ARM, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 45, 195, 1575, "");
+		_hook.addHandler(backgroundManager);
+		_hook.addHandler(_itemManager);
 		backgroundManager.addListener(_hook);
 		_pauseButton = new GuiButton(600, 1200, SpriteType.BUTTON_PAUSE_IDLE, SpriteType.BUTTON_PAUSE_PRESSED, pHudCamera, _guiManager);
 		_pausePanel = new PausePanel(pHudCamera, pSceneManager);
 		
-		//_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
+		_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
 		
 		_entityManager.sortEntities();
 	}
@@ -86,10 +88,10 @@ public class MainScene extends Scene{
 		_world.step(Main.STEP, 1, 1);
 		_entityManager.update(deltaTime);
 		_guiManager.update(deltaTime);
-		//_itemManager.update(deltaTime);
+		_itemManager.update(deltaTime);
 		backgroundManager.update(deltaTime);
 		
-		//_metersText.setText(_itemManager.getMeters() + "/1000");
+		_metersText.setText(_itemManager.getMeters() + "/1000");
 	}
 
 	@Override

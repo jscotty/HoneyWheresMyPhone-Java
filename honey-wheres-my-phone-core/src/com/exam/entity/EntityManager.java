@@ -35,6 +35,7 @@ public class EntityManager {
 	 * Sorts for render ordering.
 	 */
 	public void sortEntities(){
+		System.out.println("sort");
 		Collections.sort(_entities);
 	}
 	

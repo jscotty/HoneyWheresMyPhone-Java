@@ -46,7 +46,7 @@ public class Item extends Entity {
 		
 		pBody.setTransform(pPosition, 0);
 		
-		if(pPosition.y > Main.HEIGHT+100)
+		if(pPosition.y > Main.HEIGHT+200)
 			_itemManager.removeItem(this);
 	}
 	

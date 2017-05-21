@@ -89,21 +89,17 @@ public class UpgradePanel extends Panel {
 		};
 		
 		processes = new UpgradeProcess[]{
-			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ OFFSET+ 60, "Depth increaser"),
-			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ 60, "Start depth increaser"),
-			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)- OFFSET + 60, "Item value increaser"),
+			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ OFFSET+ 60, "Increase depth"),
+			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ 60, "Increase head start"),
+			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)- OFFSET + 60, "Increase item value"),
 		};
 
 		continueButton = new GuiButton(600, 100, SpriteType.BUTTON_PLAY_SMALL_IDLE, SpriteType.BUTTON_PLAY_SMALL_PRESSED, camera, guiManager);
 		closeButton = new GuiButton(100, 1200, SpriteType.BUTTON_QUIT_IDLE, SpriteType.BUTTON_QUIT_PRESSED, camera, guiManager);
-	}
 
-
-	@Override
-	public void startAnimation() {
-		isActive = true;
-		Timeline.createSequence()
 		//set tweens
+		Timeline.createSequence()
+		.beginParallel()
 		.push(Tween.set(background, AccessorReferences.SCALE).target(0,0))
 		.push(Tween.set(backgroundOverlay, AccessorReferences.SCALE).target(0,0))
 		.push(Tween.set(fadeBackgrounds[UPGRADE_DEPTH_INCREASE], AccessorReferences.SCALE).target(0,0))
@@ -129,7 +125,15 @@ public class UpgradePanel extends Panel {
 		.push(Tween.set(continueButton, AccessorReferences.SCALE).target(0,0))
 		.push(Tween.set(closeButton, AccessorReferences.SCALE).target(0,0))
 		.push(Tween.set(cashText, AccessorReferences.SCALE).target(0,0))
-		
+		.end()
+		.start(tweenManager);
+	}
+
+
+	@Override
+	public void startAnimation() {
+		isActive = true;
+		Timeline.createSequence()
 		.pushPause(0.1f)
 		
 		.beginParallel()

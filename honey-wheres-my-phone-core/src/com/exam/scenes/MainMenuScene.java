@@ -27,7 +27,6 @@ public class MainMenuScene extends Scene{
 	// not sure why I got this warning.. because I register them inside the given guiManager in the constructor.
 	
 	private Gui _background;
-	private Gui _backgroundOverlay;
 	private Gui _logo;
 	
 	private GuiButton _startButton;
@@ -51,8 +50,7 @@ public class MainMenuScene extends Scene{
 		
 		_guiManager = new GUIManager();
 
-		_background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01, _guiManager).setIndex(-2);
-		_backgroundOverlay = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01_OVERLAY, _guiManager).setIndex(-1);
+		_background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGROUND, _guiManager).setIndex(-2);
 		_logo = new Gui(Main.WIDTH/2, 950, SpriteType.LOGO_01, _guiManager);
 		
 		_startButton = new GuiButton(Main.WIDTH/2, 600, SpriteType.BUTTON_PLAY_IDLE, SpriteType.BUTTON_PLAY_PRESSED, pHudCamera, _guiManager);
