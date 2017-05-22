@@ -1,5 +1,7 @@
 package com.exam.items;
 
+import java.util.Random;
+
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -18,6 +20,7 @@ public class Item extends Entity {
 	private float _speed = 2f;
 	private ItemManager _itemManager;
 	private float _adjustifier = 0.1f;
+	private float _xVelocity = 1f;
 	
 	/**
 	 * Constructor for initialization.
@@ -34,6 +37,11 @@ public class Item extends Entity {
 		this._itemType = itemType;
 		this._speed = speed;
 		this._itemManager = itemManager;
+		
+		Random random = new Random();
+		int randomNumber = random.nextInt(10);
+		if(randomNumber > 5)
+			_xVelocity = -1f;
 	}
 	
 	@Override
@@ -42,12 +50,20 @@ public class Item extends Entity {
 		super.update(deltaTime);
 		
 		_speed += deltaTime *_adjustifier;
-		pPosition.y += _speed;
+		pPosition.y += _speed + (Math.cos(pPosition.y)*10);
+		
+		pPosition.x += _xVelocity*_speed;
+		
+		if(pPosition.x <=0 || pPosition.x >= Main.WIDTH) bounce();
 		
 		pBody.setTransform(pPosition, 0);
 		
 		if(pPosition.y > Main.HEIGHT+200)
 			_itemManager.removeItem(this);
+	}
+	
+	private void bounce(){
+		_xVelocity = -_xVelocity;
 	}
 	
 	/**

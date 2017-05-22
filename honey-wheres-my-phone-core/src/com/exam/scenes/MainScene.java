@@ -78,7 +78,7 @@ public class MainScene extends Scene{
 	@Override
 	public void handleInput() {
 		if(_pauseButton.isClicked()){
-			_endPanel.startAnimation();
+			_pausePanel.startAnimation();
 		}
 	}
 
