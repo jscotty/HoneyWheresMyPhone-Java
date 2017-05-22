@@ -9,15 +9,37 @@ public enum SpriteType {
 
     //props
     PROPS_ARM("", "props/Arm.png"),
-    PROPS_BOOK("props/Sheet_Props", "Prop_Book.png"),
-    PROPS_CHARGER("props/Sheet_Props", "Prop_Charger.png"),
-    PROPS_EYE_SHADOW("props/Sheet_Props", "Prop_EyeShadow.png"),
-    PROPS_LIPSTICK("props/Sheet_Props", "Prop_Lipstick.png"),
-    PROPS_MIRROR("props/Sheet_Props", "Prop_Mirror.png"),
-    PROPS_PENTY("props/Sheet_Props", "Prop_Penty.png"),
-    PROPS_TAMPON("props/Sheet_Props", "Prop_Tampon.png"),
-    PROPS_WALLET("props/Sheet_Props", "Prop_Wallet.png"),
-    PROPS_BLUSH("props/Sheet_Props", "Prop_blush.png"),
+    
+    PROPS_LIGHTER("props/Sheet_Props", "Prop_1_Aansteker.png"),
+    PROPS_CONDOM("props/Sheet_Props", "Prop_1_Condoom.png"),
+    PROPS_ID_CARD("props/Sheet_Props", "Prop_1_ID.png"),
+    PROPS_MAKE_UP_OPEN("props/Sheet_Props", "Prop_1_MakeUpOpen.png"),
+    PROPS_PEPPERSPRAY("props/Sheet_Props", "Prop_1_Pepperspray.png"),
+    PROPS_PILL("props/Sheet_Props", "Prop_1_Pil.png"),
+    PROPS_CIGARETTES("props/Sheet_Props", "Prop_1_Sigaretten.png"),
+    PROPS_SNACK("props/Sheet_Props", "Prop_1_Snack.png"),
+    PROPS_TAMPON("props/Sheet_Props", "Prop_1_Tampon.png"),
+    PROPS_WATERMELON("props/Sheet_Props", "Prop_1_Watermeloen.png"),
+    PROPS_BRUSH("props/Sheet_Props", "Prop_2_Borstel.png"),
+    PROPS_LIPSTICK("props/Sheet_Props", "Prop_2_Lippenstift.png"),
+    PROPS_LOLLY("props/Sheet_Props", "Prop_2_Lolly.png"),
+    PROPS_MAKE_UP_CLOSED("props/Sheet_Props", "Prop_2_MakeUpDicht.png"),
+    PROPS_KNIFE("props/Sheet_Props", "Prop_2_Mes.png"),
+    PROPS_WALLET("props/Sheet_Props", "Prop_2_Portemonee.png"),
+    PROPS_REDBULL("props/Sheet_Props", "Prop_2_Redbull.png"),
+    PROPS_NOTE("props/Sheet_Props", "Prop_2_Schrift.png"),
+    PROPS_UNDERWEAR("props/Sheet_Props", "Prop_2_Slip.png"),
+    PROPS_TICKETS("props/Sheet_Props", "Prop_2_Tickets.png"),
+    PROPS_BLUSH("props/Sheet_Props", "Prop_3_Blush.png"),
+    PROPS_FESTIVAL_COINS("props/Sheet_Props", "Prop_3_FestivalMuntjes.png"),
+    PROPS_FOHN("props/Sheet_Props", "Prop_3_Fohn.png"),
+    PROPS_TICKET("props/Sheet_Props", "Prop_3_Kaart.png"),
+    PROPS_LABELLO("props/Sheet_Props", "Prop_3_Labello.png"),
+    PROPS_CHARGER("props/Sheet_Props", "Prop_3_Oplader.png"),
+    PROPS_SHOE("props/Sheet_Props", "Prop_3_Schoen.png"),
+    PROPS_KEYS("props/Sheet_Props", "Prop_3_Sleutelbos.png"),
+    PROPS_TISSUES("props/Sheet_Props", "Prop_3_Tissues.png"),
+    PROPS_FISH("props/Sheet_Props", "Prop_3_Vis.png"),
 
     //backgrounds
     BACKGROUND("","background/characterScreen.jpg"),
@@ -65,6 +87,7 @@ public enum SpriteType {
     
     //Text
     GAME_PAUSED_TEXT("buttons/Sheet_UserInterface", "Text_GamePaused.png"),
+    GAME_ENDED_TEXT("buttons/Sheet_UserInterface", "Text_RoundScore.png"),
     
     //buttons
     BUTTON_AUDIO_ON_PRESSED("buttons/Sheet_UserInterface", "Button_AudioOn_Clicked.png"),
@@ -106,6 +129,15 @@ public enum SpriteType {
     BUTTON_TROPHIES_PRESSED("buttons/Sheet_UserInterface", "Trophies_Button_Clicked.png"),
     BUTTON_TROPHIES_IDLE("buttons/Sheet_UserInterface", "Trophies_Button_Idle.png"),
 
+    BUTTON_TROPHIES_PRESSED_SMALL("buttons/Sheet_UserInterface", "Button_Trophies_Pressed.png"),
+    BUTTON_TROPHIES_IDLE_SMALL("buttons/Sheet_UserInterface", "Button_Trophies_Idle.png"),
+
+    BUTTON_REPLAY_PRESSED("buttons/Sheet_UserInterface", "Button_Replay_Clicked.png"),
+    BUTTON_REPLAY_IDLE("buttons/Sheet_UserInterface", "Button_Replay_Idle.png"),
+
+    BUTTON_UPGRADES_PRESSED_SMALL("buttons/Sheet_UserInterface", "Button_Upgrades_Pressed.png"),
+    BUTTON_UPGRADES_IDLE_SMALL("buttons/Sheet_UserInterface", "Button_Upgrades_Idle.png"),
+    
     BUTTON_UPGRADES_PRESSED("buttons/Sheet_UserInterface", "Upgrades_Button_Clicked.png"),
     BUTTON_UPGRADES_IDLE("buttons/Sheet_UserInterface", "Upgrades_Button_Idle.png");
 

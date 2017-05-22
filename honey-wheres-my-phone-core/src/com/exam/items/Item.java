@@ -64,4 +64,8 @@ public class Item extends Entity {
 	public float getScore(){
 		return _itemType.getScore();
 	}
+	
+	public ItemType getItemType() {
+		return _itemType;
+	}
 }

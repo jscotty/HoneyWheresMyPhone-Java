@@ -84,5 +84,33 @@ public class SpriteSheetReaderShoebox {
 		}
 		return tDesiredTexture;
 	}
+	
+	public static TextureRegion[] getTexturesFromAtlas(String atlas) {
+		TextureRegion[] textures = null;
+		XmlReader tXml = new XmlReader();
+		try {
+			// Element is the root element of your document, i.e. <levels>
+			XmlReader.Element tElement = tXml.parse(Gdx.files.internal(atlas + ".xml")); // parse xml file to element
+			Texture tAtlasTexture = new Texture(atlas + ".png"); // get atlas texture
+
+			Array<Element> tSub = tElement.getChildrenByName("SubTexture");
+			textures = new TextureRegion[tSub.size]; // desired texture
+			int index = 0;
+			for (Element child : tSub) {
+				int x = 0, y = 0, width = 0, height = 0;
+				//sprite name found, generate textureRegion
+				x = Integer.parseInt(child.getAttribute("x"));
+				y = Integer.parseInt(child.getAttribute("y"));
+				width = Integer.parseInt(child.getAttribute("width"));
+				height = Integer.parseInt(child.getAttribute("height"));
+
+				textures[index] = new TextureRegion(tAtlasTexture, x, y, width, height);
+				index++;
+			}
+		} catch (Exception e) {
+			System.out.println(e.getStackTrace());
+		}
+		return textures;
+	}
 
 }

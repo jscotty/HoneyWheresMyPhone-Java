@@ -44,16 +44,19 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 	
 	private final float BORDER = 80.0f;
 	private float _screenWidth = Main.WIDTH - BORDER;
-	private float _speedMutliplier;
 	private float _speed = 2f;
+	private float _backgroundSpeed;
 	private float _delay = 5f;
 	private float _meters;
-	private boolean _reverse = false;
 	private boolean _start = false;
+	private boolean _reverse = false;
 	private float yPosition = -100;
+	private int backgroundLevel;
 	
 	private List<Item> _itemsDestroyed = new ArrayList<Item>();
 	private List<Item> _itemsInField = new ArrayList<Item>();
+
+	private List<List<ItemType>> _itemLevels = new ArrayList<List<ItemType>>();
 	
 	/**
 	 * Constructor for initialization
@@ -64,6 +67,17 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 		this._world = world;
 		this._entityManager = manager;
 		_random = new Random();
+		initItemLists();
+	}
+	
+	private void initItemLists() {
+		for (int i = 0; i < 3; i++) { // create 3 lists
+			_itemLevels.add(new ArrayList<ItemType>());
+		}
+		for (ItemType item : ItemType.values()) {
+			System.out.println(item);
+			_itemLevels.get(item.getLevel()-1).add(item); // add item to preferred level
+		}
 	}
 	
 	/**
@@ -72,20 +86,17 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 	 */
 	public void update(float deltaTime){
 		if(!_start) return;
-		if(_reverse){
-			_speed -= deltaTime * 0.6f;
-			_speedMutliplier -= 0.000025f;
-			yPosition = Main.HEIGHT + 100;
-		} else {
-			_speed += deltaTime * 0.2f;
-			_speedMutliplier += 0.000025f;
-			yPosition = -100;
-		}
-		_meters += deltaTime + _speedMutliplier;
+		
+		calculateSpeed();
+		
 		if(_meters > _delay){
 			spawn();
 			_delay += 5;
 		}
+	}
+	
+	private void calculateSpeed(){
+		_speed = _backgroundSpeed *1.5f;
 	}
 	
 	/**
@@ -106,8 +117,19 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 			float xPosition = ((_screenWidth/row.length) * (i)) + BORDER;
 			if(row[i] == 1){
 				Vector2 position = new Vector2(xPosition, yPosition);
-				int randomItem = _random.nextInt(ItemType.values().length);
-				Item item = (Item) new Item(ItemType.values()[randomItem], position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 50,50, position.x ,position.y, USER_DATA);
+				int randomItem = _random.nextInt(_itemLevels.get(backgroundLevel).size());
+				ItemType itemType;
+				Item item = null;
+				System.out.println(_speed);
+				if(_reverse){ 
+					if(_itemsDestroyed.size() == 0) return;
+					itemType = _itemsDestroyed.get(_itemsDestroyed.size()-1).getItemType();
+					item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 50,50, position.x ,position.y, USER_DATA);
+				} else {
+					 itemType = _itemLevels.get(backgroundLevel).get(randomItem);
+					 item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 50,50, position.x ,position.y, USER_DATA);
+				}
+				
 				_itemsInField.add(item);
 				
 			}
@@ -129,10 +151,11 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 // region contactlistener methods
 	@Override
 	public void beginContact(Contact contact) {
-		_reverse = true;
-		_speed = -_speed;
+		if(contact.getFixtureA().getUserData() == USER_DATA && contact.getFixtureB().getUserData() == "" || contact.getFixtureB().getUserData() == USER_DATA && contact.getFixtureA().getUserData() == "")
+		//_reverse = true;
+		//_speed = -_speed;
 		for (Item item : _itemsInField) {
-			item.reverse();
+			//item.reverse();
 		}
 	}
 
@@ -144,10 +167,6 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) { }
-	
-	public int getMeters() {
-		return (int)_meters;
-	}
 //endregion
 
 //region GameEventHandler methods
@@ -156,4 +175,16 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 		_start = true;
 	}
 //endregion
+	
+	public void setMeters(float _meters) {
+		this._meters = _meters;
+	}
+	
+	public void setBackgroundSpeed(float _backgroundSpeed) {
+		this._backgroundSpeed = _backgroundSpeed;
+	}
+	
+	public void setBackgroundLevel(int backgroundLevel) {
+		this.backgroundLevel = backgroundLevel;
+	}
 }

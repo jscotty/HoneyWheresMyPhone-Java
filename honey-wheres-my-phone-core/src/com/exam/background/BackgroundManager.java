@@ -22,6 +22,18 @@ import aurelienribon.tweenengine.TweenManager;
 public class BackgroundManager extends GameEventHandler {
 	
 	private final float MAXIMUM_SPEED = 25F;
+	private final float START_ANIMATION_ADD_POSITION = 300;
+	private final int MAXIMUM_METERS = 1000;
+	private final int PHONE_LEVELS = 5; // there are 5 phones in game for 5 distance upgrades
+	private final int BACKGROUND_LEVELS = 3; // there are 3 background types (bag background, rocks background and lava background)
+	
+	private float levelsSize = -START_ANIMATION_ADD_POSITION;
+	private float currentPixelsMoved = 0;
+	private int meters = 0;
+	private int phoneLevelDistance = 0;
+	private int phoneLevel = 0;
+	private int backgroundLevelDistance = 0;
+	private int backgroundLevel = 0;
 	
 	private EntityManager entityManager;
 	private Entity backgroundTop;
@@ -31,7 +43,7 @@ public class BackgroundManager extends GameEventHandler {
 	private TweenManager tweenManager;
 	private int backgroundCount = 0;
 
-	private float speed = 2f;
+	private float speed = 10f;
 	private boolean introEnded = false;
 	
 	private float startAnimationDuration = 1f;
@@ -53,6 +65,8 @@ public class BackgroundManager extends GameEventHandler {
 		activeBackgrounds.add(introBackgrounds[0]);
 		activeBackgrounds.add(introBackgrounds[1]);
 		backgroundCount = introBackgrounds[1].getRepeatCount();
+		
+		calculateLevelsSize();
 	}
 	
 	private void startScrolling(){
@@ -60,8 +74,8 @@ public class BackgroundManager extends GameEventHandler {
 		.pushPause(0.1f)
 		.beginParallel()
 		.push(Tween.to(borderTop, AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2,Main.HEIGHT*1.5f))
-		.push(Tween.to(introBackgrounds[0], AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2,Main.HEIGHT/2 + 300))
-		.push(Tween.to(introBackgrounds[1], AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2, -(Main.HEIGHT/2)+300).setCallback(new TweenCallback() {
+		.push(Tween.to(introBackgrounds[0], AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2,Main.HEIGHT/2 + START_ANIMATION_ADD_POSITION))
+		.push(Tween.to(introBackgrounds[1], AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2, -(Main.HEIGHT/2)+START_ANIMATION_ADD_POSITION).setCallback(new TweenCallback() {
 			
 			@Override
 			public void onEvent(int arg0, BaseTween<?> arg1) {
@@ -85,7 +99,7 @@ public class BackgroundManager extends GameEventHandler {
 		for (Background background : activeBackgrounds) {
 			background.scroll(speed);
 
-			if(background.getPosition().y > Main.HEIGHT*1.5f){
+			if(background.getPosition().y >= Main.HEIGHT*1.49f){
 				nextBackground(background);
 			}
 		}
@@ -97,7 +111,18 @@ public class BackgroundManager extends GameEventHandler {
 		tweenManager.update(deltaTime);
 		
 		if(!introEnded)return;
-		speed += 0.001f;
+		if(speed >= MAXIMUM_SPEED)
+			speed = MAXIMUM_SPEED;
+		else
+			speed += 0.001f;
+		currentPixelsMoved += speed;
+		meters = (int)((float)(currentPixelsMoved / levelsSize)*MAXIMUM_METERS);
+		if(meters > phoneLevelDistance*(phoneLevel+1)){
+			phoneLevel++;
+		}
+		if(meters > backgroundLevelDistance*(backgroundLevel+1)){
+			backgroundLevel++;
+		}
 		scroll();
 	}
 	
@@ -116,6 +141,30 @@ public class BackgroundManager extends GameEventHandler {
 		} else 
 			backgroundRepeatCount++;
 		background.changeVisualization(BackgroundType.values()[activeBackgroundIndex]);
+	}
+	
+	private void calculateLevelsSize(){
+		for (BackgroundType background : BackgroundType.values()) {
+			levelsSize += (background.getRepeatCount()+1)*Main.HEIGHT;
+		}
+		
+		levelsSize -= Main.HEIGHT*2; // substracting first two background sizes of intro backgrounds.
+
+		phoneLevelDistance = (int) (MAXIMUM_METERS / PHONE_LEVELS);
+		backgroundLevelDistance = (int) (MAXIMUM_METERS / BACKGROUND_LEVELS);
+	}
+	
+	public int getMeters() {
+		if(meters > MAXIMUM_METERS) meters = MAXIMUM_METERS;
+		return meters;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+	
+	public int getBackgroundLevel() {
+		return backgroundLevel;
 	}
 	
 	@Override
