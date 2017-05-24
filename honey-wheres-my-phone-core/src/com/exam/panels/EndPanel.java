@@ -111,10 +111,12 @@ private GUIManager guiManager;
 	
 	private void handleInput(){
 		if(menuButton.isClicked()){
+			GameManager.reset();
 			scene = 0;
 			endAnimation();
 		}
 		if(resumeButton.isClicked()) {
+			GameManager.reset();
 			scene = 1;
 			endAnimation();
 		}

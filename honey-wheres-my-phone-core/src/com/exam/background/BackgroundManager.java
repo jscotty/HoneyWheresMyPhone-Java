@@ -8,6 +8,7 @@ import com.exam.entity.Entity;
 import com.exam.entity.EntityManager;
 import com.exam.handlers.GameEventHandler;
 import com.exam.handlers.MyInput;
+import com.exam.managers.GameManager;
 import com.exam.project.Main;
 import com.exam.toolbox.SpriteType;
 import com.exam.tween.AccessorReferences;
@@ -21,11 +22,13 @@ import aurelienribon.tweenengine.TweenManager;
 
 public class BackgroundManager extends GameEventHandler {
 	
-	private final float MAXIMUM_SPEED = 25F;
 	private final float START_ANIMATION_ADD_POSITION = 300;
+	private final float BACKWARDS_SPEED = -25f;
 	private final int MAXIMUM_METERS = 1000;
 	private final int PHONE_LEVELS = 5; // there are 5 phones in game for 5 distance upgrades
 	private final int BACKGROUND_LEVELS = 3; // there are 3 background types (bag background, rocks background and lava background)
+	
+	private final float[] LEVEL_SPEED = new float[]{5f,8f,10f,12f,14f,15f};
 	
 	private float levelsSize = -START_ANIMATION_ADD_POSITION;
 	private float currentPixelsMoved = 0;
@@ -43,12 +46,13 @@ public class BackgroundManager extends GameEventHandler {
 	private TweenManager tweenManager;
 	private int backgroundCount = 0;
 
-	private float speed = 10f;
+	private float speed = 2f;
 	private boolean introEnded = false;
+	private boolean backwardEnded = false;
 	
 	private float startAnimationDuration = 1f;
 	private boolean start = false;
-	private int activeBackgroundIndex = 1;
+	private int activeBackgroundIndex = 2;
 	private Vector2 cachedNextBackgroundPosition = new Vector2(Main.WIDTH/2, -(Main.HEIGHT/2)+20);
 	private int backgroundRepeatCount = 0;
 	
@@ -99,8 +103,14 @@ public class BackgroundManager extends GameEventHandler {
 		for (Background background : activeBackgrounds) {
 			background.scroll(speed);
 
-			if(background.getPosition().y >= Main.HEIGHT*1.49f){
-				nextBackground(background);
+			if(GameManager.isHit){
+				if(background.getPosition().y <= -(Main.HEIGHT*0.49f)){
+					previousBackground(background);
+				}
+			} else {
+				if(background.getPosition().y >= Main.HEIGHT*1.49f){
+					nextBackground(background);
+				}
 			}
 		}
 		
@@ -109,25 +119,38 @@ public class BackgroundManager extends GameEventHandler {
 	public void update(float deltaTime){
 		handleInput();
 		tweenManager.update(deltaTime);
-		
-		if(!introEnded)return;
-		if(speed >= MAXIMUM_SPEED)
-			speed = MAXIMUM_SPEED;
-		else
-			speed += 0.001f;
+
+		if(!introEnded || backwardEnded)return;
 		currentPixelsMoved += speed;
 		meters = (int)((float)(currentPixelsMoved / levelsSize)*MAXIMUM_METERS);
+
+		
 		if(meters > phoneLevelDistance*(phoneLevel+1)){
 			phoneLevel++;
 		}
 		if(meters > backgroundLevelDistance*(backgroundLevel+1)){
 			backgroundLevel++;
 		}
+		// speed adjustifiers. 
+		if(GameManager.isHit){
+			if(speed <= BACKWARDS_SPEED){
+				speed = BACKWARDS_SPEED;
+			}else
+				speed -= 2f;
+		} else{
+
+			if(speed >= LEVEL_SPEED[phoneLevel]){
+				speed = LEVEL_SPEED[phoneLevel];
+			}else
+				speed += 0.01f;
+		}
+		if(meters >= 1000)
+			gameEnd();
 		scroll();
 	}
 	
 	private void nextBackground(Background background){
-		if(activeBackgroundIndex >= BackgroundType.values().length-1) {introEnded = false; return;}
+		if(activeBackgroundIndex >= BackgroundType.values().length-1) {gameEnd(); return;}
 		
 		background.setPosition(Main.WIDTH/2, cachedNextBackgroundPosition.y+(speed*2));
 		
@@ -142,13 +165,34 @@ public class BackgroundManager extends GameEventHandler {
 			backgroundRepeatCount++;
 		background.changeVisualization(BackgroundType.values()[activeBackgroundIndex]);
 	}
+
+	
+	private void previousBackground(Background background){
+		if(activeBackgroundIndex <=0) {
+			backwardEnded = true; 
+			gameEnd();
+			return;
+		}
+		background.setPosition(Main.WIDTH/2, Main.HEIGHT*1.5f);
+		
+		if(backgroundRepeatCount <= 0){
+			backgroundCount = 0;
+			activeBackgroundIndex--;
+			BackgroundType backgroundType = BackgroundType.values()[activeBackgroundIndex];
+			background.changeVisualization(backgroundType);
+			backgroundRepeatCount = backgroundType.getRepeatCount();
+			System.out.println(backgroundCount);
+		} else 
+			backgroundRepeatCount--;
+		background.changeVisualization(BackgroundType.values()[activeBackgroundIndex]);
+	}
 	
 	private void calculateLevelsSize(){
 		for (BackgroundType background : BackgroundType.values()) {
 			levelsSize += (background.getRepeatCount()+1)*Main.HEIGHT;
 		}
 		
-		levelsSize -= Main.HEIGHT*2; // substracting first two background sizes of intro backgrounds.
+		levelsSize -= Main.HEIGHT*2; // Subtracting first two background sizes of intro backgrounds.
 
 		phoneLevelDistance = (int) (MAXIMUM_METERS / PHONE_LEVELS);
 		backgroundLevelDistance = (int) (MAXIMUM_METERS / BACKGROUND_LEVELS);
@@ -156,6 +200,7 @@ public class BackgroundManager extends GameEventHandler {
 	
 	public int getMeters() {
 		if(meters > MAXIMUM_METERS) meters = MAXIMUM_METERS;
+		if(meters < 0) meters = 0;
 		return meters;
 	}
 	
@@ -167,15 +212,29 @@ public class BackgroundManager extends GameEventHandler {
 		return backgroundLevel;
 	}
 	
-	@Override
-	protected synchronized void gameStart() {
-		super.gameStart();
+	public int getPhoneLevel() {
+		return phoneLevel;
 	}
 
 	@Override
 	public void castMethod() {
 		introEnded = true;
 		entityManager.removeEntity(backgroundTop);
+	}
+
+	@Override
+	protected synchronized void gameReverse() {
+		super.gameReverse();
+		GameManager.isHit = true;
+	}
+	
+	@Override
+	protected synchronized void gameEnd() {
+		super.gameEnd();
+		for (Background background : activeBackgrounds) {
+			background.setPosition(Main.WIDTH/2, Main.HEIGHT/2);
+			background.changeVisualization(BackgroundType.values()[0]);
+		}
 	}
 
 }

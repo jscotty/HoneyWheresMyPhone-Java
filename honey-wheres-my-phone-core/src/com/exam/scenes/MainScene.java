@@ -16,6 +16,8 @@ import com.exam.font.FontType;
 import com.exam.gui.GUIManager;
 import com.exam.gui.GuiButton;
 import com.exam.gui.GuiText;
+import com.exam.handlers.GameEvent;
+import com.exam.handlers.GameEventListener;
 import com.exam.handlers.MyInput;
 import com.exam.items.ItemManager;
 import com.exam.managers.GameManager;
@@ -23,6 +25,7 @@ import com.exam.panels.EndPanel;
 import com.exam.panels.PausePanel;
 import com.exam.panels.UpgradePanel;
 import com.exam.project.Main;
+import com.exam.toolbox.AnimationType;
 import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
@@ -31,7 +34,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class MainScene extends Scene{
+public class MainScene extends Scene implements GameEventListener{
 	
 	private World _world;
 	private Box2DDebugRenderer _debugRenderer;
@@ -62,10 +65,12 @@ public class MainScene extends Scene{
 		
 		backgroundManager = new BackgroundManager(_entityManager);
 		
-		_hook = (Hook) new Hook(new Vector2(200, 2000), SpriteType.PROPS_ARM, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 45, 195, 1575, "");
+		_hook = (Hook) new Hook(new Vector2(200, 2000), AnimationType.ARM_WIGGLE, AnimationType.HAND_REACHING, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 45, 195, 1475, "");
 		_hook.addHandler(backgroundManager);
 		_hook.addHandler(_itemManager);
 		backgroundManager.addListener(_hook);
+		backgroundManager.addListener(this);
+		_itemManager.addListener(_hook);
 		_pauseButton = new GuiButton(600, 1200, SpriteType.BUTTON_PAUSE_IDLE, SpriteType.BUTTON_PAUSE_PRESSED, pHudCamera, _guiManager);
 		_pausePanel = new PausePanel(pHudCamera, pSceneManager);
 		_endPanel = new EndPanel(pHudCamera, pSceneManager);
@@ -77,6 +82,7 @@ public class MainScene extends Scene{
 
 	@Override
 	public void handleInput() {
+		if(_endPanel.isActive())return;
 		if(_pauseButton.isClicked()){
 			_pausePanel.startAnimation();
 		}
@@ -95,9 +101,7 @@ public class MainScene extends Scene{
 		_itemManager.update(deltaTime);
 		backgroundManager.update(deltaTime);
 		
-		_itemManager.setMeters(backgroundManager.getMeters());
-		_itemManager.setBackgroundSpeed(backgroundManager.getSpeed());
-		_itemManager.setBackgroundLevel(backgroundManager.getBackgroundLevel());
+		_itemManager.setBackgroundData(backgroundManager.getSpeed(), backgroundManager.getBackgroundLevel(), backgroundManager.getPhoneLevel(), backgroundManager.getMeters());
 		_metersText.setText(backgroundManager.getMeters() + "/1000");
 		
 		_endPanel.update(deltaTime);
@@ -118,12 +122,23 @@ public class MainScene extends Scene{
 
 		_pausePanel.render(pSpriteBatch);
 		_endPanel.render(pSpriteBatch);
-		_debugRenderer.render(_world, pCamera.combined);
+		//_debugRenderer.render(_world, pCamera.combined);
 	}
 
 	@Override
 	public void dispose() {
 		
 	}
+
+	@Override
+	public void gameStart(GameEvent event) {}
+
+	@Override
+	public void gameEnd(GameEvent event) {
+		_endPanel.startAnimation();
+	}
+
+	@Override
+	public void gameReverse(GameEvent event) {}
 
 }

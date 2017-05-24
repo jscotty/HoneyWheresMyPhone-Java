@@ -1,0 +1,25 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Prop_Phone1_00.png" x="1510" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_01.png" x="1510" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_02.png" x="1208" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_03.png" x="1208" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_04.png" x="1208" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_05.png" x="1208" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_06.png" x="906" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_07.png" x="906" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_08.png" x="906" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_09.png" x="906" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_10.png" x="1510" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_11.png" x="604" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_12.png" x="604" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone1_13.png" x="604" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_00.png" x="302" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_01.png" x="302" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_02.png" x="302" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_03.png" x="302" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_04.png" x="0" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_05.png" x="0" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_06.png" x="0" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_07.png" x="0" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone2_08.png" x="604" y="1206" width="300" height="400"/>
+</TextureAtlas>

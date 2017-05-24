@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.exam.handlers.Assets;
 import com.exam.handlers.MyInput;
 import com.exam.handlers.MyInputProcessor;
+import com.exam.managers.GameManager;
 import com.exam.scenes.SceneManager;
 
 /**
@@ -31,7 +32,6 @@ public class Main extends ApplicationAdapter {
 	private OrthographicCamera _hudCamera;
 	
 	private SceneManager _sceneManager;
-	private FPSLogger fps;
 	
 	@Override
 	public void create() {
@@ -39,6 +39,8 @@ public class Main extends ApplicationAdapter {
 		Gdx.graphics.setDisplayMode((int)(Main.WIDTH / DEVIDER), (int)(Main.HEIGHT / DEVIDER), false);
 		Gdx.graphics.setTitle(TITLE);
 		Gdx.input.setInputProcessor(new MyInputProcessor());
+		
+		GameManager.init();
 
 		assets = new Assets();
 		_batch = new SpriteBatch();
@@ -47,7 +49,6 @@ public class Main extends ApplicationAdapter {
 		_hudCamera = new OrthographicCamera();
 		_hudCamera.setToOrtho(false, WIDTH, HEIGHT);
 		
-		fps = new FPSLogger();
 		
 		_sceneManager = new SceneManager(this);
 	}

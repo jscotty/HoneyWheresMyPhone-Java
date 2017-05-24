@@ -21,7 +21,7 @@ import com.badlogic.gdx.physics.box2d.World;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class Entity implements Comparable<Entity> , GameEventListener {
+public class Entity implements Comparable<Entity>{
 
 	// render data
 	protected Vector2 pPosition = new Vector2(0, 0); 
@@ -225,6 +225,7 @@ public class Entity implements Comparable<Entity> , GameEventListener {
 	 * @param spriteBatch
 	 */
 	public void render(SpriteBatch spriteBatch) {
+		if(pTexture == null) return;
 		spriteBatch.draw(pTexture, getX(), getY(), pOriginX, pOriginY, getWidth(), getHeight(), pScaleX, pScaleY, pAngle);
 	}
 
@@ -240,6 +241,9 @@ public class Entity implements Comparable<Entity> , GameEventListener {
 //region properties
 	public void setTexture(SpriteType spriteType){
 		this.pTexture = Main.assets.getTexture(spriteType);
+	}
+	public void setTexture(TextureRegion texture){
+		this.pTexture = texture;
 	}
 	
 	public void setPosition(float xPosition, float yPosition){
@@ -308,13 +312,5 @@ public class Entity implements Comparable<Entity> , GameEventListener {
 	public float getAngle() {
 		return pAngle;
 	}
-//endregion
-
-//region GameEventListener methods
-	@Override
-	public void gameStart(GameEvent event) { }
-
-	@Override
-	public void gameEnd(GameEvent event) { }
 //endregion
 }

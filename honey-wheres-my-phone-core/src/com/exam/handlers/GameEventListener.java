@@ -8,6 +8,7 @@ package com.exam.handlers;
 public interface GameEventListener {
 
 	public void gameStart(GameEvent event);
+	public void gameReverse(GameEvent event);
 	public void gameEnd(GameEvent event);
 
 }

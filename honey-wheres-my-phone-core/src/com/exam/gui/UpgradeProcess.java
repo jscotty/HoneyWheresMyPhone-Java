@@ -2,6 +2,7 @@ package com.exam.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.exam.font.FontType;
+import com.exam.managers.GameManager;
 import com.exam.toolbox.SpriteType;
 
 public class UpgradeProcess {
@@ -16,12 +17,14 @@ public class UpgradeProcess {
 	private int upgradeCount = 0;
 	private int maximumUpgradeCount = 4;
 	private GuiText upgradeTypeText;
+	private int index;
 
 	//for accessor.
 	private float scaleX = 1;
 	private float scaleY = 1;
 
-	public UpgradeProcess(GUIManager manager, float xPos, float yPos, String upgradeText) {
+	public UpgradeProcess(GUIManager manager, float xPos, float yPos, String upgradeText, int index) {
+		this.index = index;
 		processIcons = new Gui[]{
 				new Gui(xPos, yPos, selectProcess, manager),
 				new Gui(xPos, yPos, emptyProcess, manager),
@@ -36,10 +39,24 @@ public class UpgradeProcess {
 		upgradeTypeText = new GuiText(xPos-OFFSET, yPos+ (processIcons[0].getHeight()), manager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
 		upgradeTypeText.setText(upgradeText);
 		upgradeTypeText.setFontSize(FONT_SIZE);
+		
+		initUpgradeProcessVisualisation();
+		
+		
+	}
+	
+	private void initUpgradeProcessVisualisation(){
+		upgradeCount =  GameManager.getUpgradeLevel(index);
+		for (int i = 0; i < upgradeCount; i++) {
+			processIcons[i].setTexture(fullProcess);
+			if(i+1 <= maximumUpgradeCount)
+				processIcons[i+1].setTexture(selectProcess);
+		}
 	}
 	
 	public void upgrade(){
 		if(upgradeCount > maximumUpgradeCount) return;
+		GameManager.addUpgrade(index);
 		processIcons[upgradeCount].setTexture(fullProcess);
 		if(upgradeCount+1 <= maximumUpgradeCount)
 			processIcons[upgradeCount+1].setTexture(selectProcess);

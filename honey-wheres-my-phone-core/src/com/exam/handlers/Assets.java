@@ -5,6 +5,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.exam.toolbox.AnimationType;
 import com.exam.toolbox.SpriteSheetReaderShoebox;
 import com.exam.toolbox.SpriteType;
 
@@ -14,29 +15,38 @@ import com.exam.toolbox.SpriteType;
  * 	   Portfolio: Justinbieshaar.com
  */
 public class Assets {
-	
-	public static boolean isFinishedLoading = false;
+
+	public static boolean isFinishedLoadingAssets = false;
 	
 	private HashMap<SpriteType, TextureRegion> _textures; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
+	private HashMap<AnimationType, TextureRegion[]> _animations; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
 
 	private int _assetsLoadedCount = 0;
+	private int _animationLoadedCount = 0;
 	
 	private int _percentage = 0;
+	private boolean loadAnimations = false;
 	
 	/**
 	 * Constructor for initialization
 	 */
 	public Assets() {
 		_textures = new HashMap<SpriteType, TextureRegion>();
+		_animations = new HashMap<AnimationType, TextureRegion[]>();
 	}
 	
 	/**
 	 * load asset.
 	 */
 	public void load(){
-		loadAsset();
+		if(loadAnimations){
+			loadAnimation();
+			_percentage = (int)(((float)_animationLoadedCount / (float)AnimationType.values().length)*100); 
+		} else {
+			loadAsset();
+			_percentage = (int)(((float)_assetsLoadedCount / (float)SpriteType.values().length)*100); 
+		}
 		
-		_percentage = (int)(((float)_assetsLoadedCount / (float)SpriteType.values().length)*100); 
 	}
 	
 	/**
@@ -45,7 +55,7 @@ public class Assets {
 	 */
 	private void loadAsset(){
 		if(_assetsLoadedCount > SpriteType.values().length-1){
-			isFinishedLoading = true;
+			loadAnimations = true;
 			return;
 		}
 		SpriteType type = SpriteType.values()[_assetsLoadedCount];
@@ -60,6 +70,22 @@ public class Assets {
 
 			_assetsLoadedCount++;
 		}
+	}
+	
+	/**
+	 * load next animation. 
+	 * Asset count: _assetsLoadedCount and maximum count of SpriteType.values().length
+	 */
+	private void loadAnimation(){
+		if(_animationLoadedCount > AnimationType.values().length-1){
+			isFinishedLoadingAssets = true;
+			return;
+		}
+		AnimationType type = AnimationType.values()[_animationLoadedCount];
+		_animations.put(type, SpriteSheetReaderShoebox.getTexturesFromAtlas(type));
+
+		_animationLoadedCount++;
+		
 	}
 	
 	/**
@@ -81,7 +107,7 @@ public class Assets {
 				_assetsLoadedCount++;
 			}
 		}
-		isFinishedLoading = true;
+		isFinishedLoadingAssets = true;
 	}
 	
 	/** 
@@ -92,12 +118,20 @@ public class Assets {
 	public TextureRegion getTexture(SpriteType type){
 		return _textures.get(type);
 	}
+
+	public TextureRegion[] getAnimation(AnimationType type){
+		return _animations.get(type);
+	}
 	
 	/**
 	 * @return percentage of loaded assets
 	 */
 	public int getPercentage() {
 		return _percentage;
+	}
+	
+	public boolean isLoadAnimations() {
+		return loadAnimations;
 	}
 
 }

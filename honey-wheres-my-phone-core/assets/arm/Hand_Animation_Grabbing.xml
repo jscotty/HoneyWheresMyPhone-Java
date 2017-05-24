@@ -1,0 +1,24 @@
+<TextureAtlas imagePath="Hand_Animation_Grabbing.png">
+	<SubTexture name="HandGrabbing_00000.png" x="755" y="0" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00001.png" x="604" y="603" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00002.png" x="604" y="402" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00003.png" x="604" y="201" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00004.png" x="604" y="0" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00005.png" x="453" y="603" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00006.png" x="453" y="402" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00007.png" x="453" y="201" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00008.png" x="453" y="0" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00009.png" x="302" y="603" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00010.png" x="755" y="201" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00011.png" x="302" y="201" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00012.png" x="302" y="0" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00013.png" x="151" y="603" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00014.png" x="151" y="402" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00015.png" x="151" y="201" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00016.png" x="151" y="0" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00017.png" x="0" y="603" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00018.png" x="0" y="402" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00019.png" x="0" y="201" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00020.png" x="0" y="0" width="150" height="200"/>
+	<SubTexture name="HandGrabbing_00021.png" x="302" y="402" width="150" height="200"/>
+</TextureAtlas>

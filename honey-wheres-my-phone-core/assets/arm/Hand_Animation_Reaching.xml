@@ -1,0 +1,24 @@
+<TextureAtlas imagePath="Hand_Animation_Reaching.png">
+	<SubTexture name="Reaching_00000.png" x="302" y="603" width="150" height="200"/>
+	<SubTexture name="Reaching_00001.png" x="755" y="201" width="150" height="200"/>
+	<SubTexture name="Reaching_00002.png" x="302" y="201" width="150" height="200"/>
+	<SubTexture name="Reaching_00003.png" x="302" y="0" width="150" height="200"/>
+	<SubTexture name="Reaching_00004.png" x="151" y="603" width="150" height="200"/>
+	<SubTexture name="Reaching_00005.png" x="151" y="402" width="150" height="200"/>
+	<SubTexture name="Reaching_00006.png" x="151" y="201" width="150" height="200"/>
+	<SubTexture name="Reaching_00007.png" x="151" y="0" width="150" height="200"/>
+	<SubTexture name="Reaching_00008.png" x="0" y="603" width="150" height="200"/>
+	<SubTexture name="Reaching_00009.png" x="0" y="402" width="150" height="200"/>
+	<SubTexture name="Reaching_00010.png" x="0" y="201" width="150" height="200"/>
+	<SubTexture name="Reaching_00011.png" x="0" y="0" width="150" height="200"/>
+	<SubTexture name="Reaching_00012.png" x="302" y="402" width="150" height="200"/>
+	<SubTexture name="Reaching_00013.png" x="755" y="0" width="150" height="200"/>
+	<SubTexture name="Reaching_00014.png" x="604" y="603" width="150" height="200"/>
+	<SubTexture name="Reaching_00015.png" x="604" y="402" width="150" height="200"/>
+	<SubTexture name="Reaching_00016.png" x="604" y="201" width="150" height="200"/>
+	<SubTexture name="Reaching_00017.png" x="604" y="0" width="150" height="200"/>
+	<SubTexture name="Reaching_00018.png" x="453" y="603" width="150" height="200"/>
+	<SubTexture name="Reaching_00019.png" x="453" y="402" width="150" height="200"/>
+	<SubTexture name="Reaching_00020.png" x="453" y="201" width="150" height="200"/>
+	<SubTexture name="Reaching_00021.png" x="453" y="0" width="150" height="200"/>
+</TextureAtlas>

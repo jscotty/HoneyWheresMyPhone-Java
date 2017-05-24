@@ -46,8 +46,12 @@ public class AssetsLoaderScene extends Scene {
 	@Override
 	public void update(float deltaTime) {
 		_assets.load();
-		if(Assets.isFinishedLoading){
+		if(Assets.isFinishedLoadingAssets){
 			_fontLoader.loadFonts();
+		}
+		if(_assets.isLoadAnimations()){
+			_loadingText = "Loading animations please wait";
+			_font.setScale(0.7f);
 		}
 		
 		if(_fontLoader.isFontsLoaded())

@@ -20,7 +20,7 @@ public class Item extends Entity {
 	private float _speed = 2f;
 	private ItemManager _itemManager;
 	private float _adjustifier = 0.1f;
-	private float _xVelocity = 1f;
+	private float _xVelocity = 0f;
 	
 	/**
 	 * Constructor for initialization.
@@ -38,21 +38,29 @@ public class Item extends Entity {
 		this._speed = speed;
 		this._itemManager = itemManager;
 		
+		if(!itemType.isMoving()) return;
 		Random random = new Random();
 		int randomNumber = random.nextInt(10);
-		if(randomNumber > 5)
+		if(randomNumber >= 5)
 			_xVelocity = -1f;
+		else
+			_xVelocity = 1f;
 	}
+	public Item(Vector2 position, EntityManager manager, float speed, ItemManager itemManager) {
+		super(position, manager);
+		this._speed = speed;
+		this._itemManager = itemManager;
+	}
+	
 	
 	@Override
 	public void update(float deltaTime) {
 		// TODO Auto-generated method stub
 		super.update(deltaTime);
 		
-		_speed += deltaTime *_adjustifier;
-		pPosition.y += _speed + (Math.cos(pPosition.y)*10);
+		pPosition.y += _speed;
 		
-		pPosition.x += _xVelocity*_speed;
+		pPosition.x += _xVelocity*(_speed/3);
 		
 		if(pPosition.x <=0 || pPosition.x >= Main.WIDTH) bounce();
 		
@@ -69,9 +77,11 @@ public class Item extends Entity {
 	/**
 	 * Reverse item direction
 	 */
-	public void reverse(){
-		_speed = -2;
-		_adjustifier = -_adjustifier;
+	public void hit(){
+	}
+	
+	public void setSpeed(float speed){
+		this._speed = speed;
 	}
 	
 	/**

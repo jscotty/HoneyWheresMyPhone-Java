@@ -1,10 +1,14 @@
 package com.exam.scenes;
 
 import com.exam.gui.GuiButton;
+import com.badlogic.gdx.math.Vector2;
+import com.exam.entity.Animation;
+import com.exam.entity.EntityManager;
 import com.exam.gui.GUIManager;
 import com.exam.gui.Gui;
 import com.exam.panels.UpgradePanel;
 import com.exam.project.Main;
+import com.exam.toolbox.AnimationType;
 import com.exam.toolbox.SpriteType;
 import com.exam.tween.AccessorReferences;
 import com.exam.tween.GuiAccessor;
@@ -35,9 +39,10 @@ public class MainMenuScene extends Scene{
 	
 	private TweenManager _tweenManager;
 	private float _startTweeningAnimationTime = 0.2f;
-	private float _tweenAnimationDelay = 0.0f;
 	
 	private UpgradePanel upgradePanel;
+	
+	private EntityManager entityManager;
 
 	/**
 	 * Constructor for initialization
@@ -48,6 +53,7 @@ public class MainMenuScene extends Scene{
 		_tweenManager = new TweenManager();
 		Tween.registerAccessor(Gui.class, new GuiAccessor());
 		
+		entityManager = new EntityManager();
 		_guiManager = new GUIManager();
 
 		_background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGROUND, _guiManager).setIndex(-2);
@@ -56,6 +62,7 @@ public class MainMenuScene extends Scene{
 		_startButton = new GuiButton(Main.WIDTH/2, 600, SpriteType.BUTTON_PLAY_IDLE, SpriteType.BUTTON_PLAY_PRESSED, pHudCamera, _guiManager);
 		_upgradeButton = new GuiButton(Main.WIDTH/2, 400, SpriteType.BUTTON_UPGRADES_IDLE, SpriteType.BUTTON_UPGRADES_PRESSED, pHudCamera, _guiManager);
 		_trophieButton = new GuiButton(Main.WIDTH/2, 200, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, pHudCamera, _guiManager);
+		
 		
 		_guiManager.sortGuis();
 		
@@ -136,6 +143,7 @@ public class MainMenuScene extends Scene{
 		upgradePanel.update(deltaTime);
 		_tweenManager.update(deltaTime);
 		_guiManager.update(deltaTime);
+		entityManager.update(deltaTime);
 	}
 
 	@Override
@@ -143,6 +151,7 @@ public class MainMenuScene extends Scene{
 		pSpriteBatch.setProjectionMatrix(pHudCamera.combined);
 		pSpriteBatch.begin();
 		_guiManager.render(pSpriteBatch);
+		entityManager.render(pSpriteBatch);
 		pSpriteBatch.end();
 		upgradePanel.render(pSpriteBatch);
 	}

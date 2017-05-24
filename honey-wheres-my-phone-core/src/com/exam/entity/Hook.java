@@ -8,8 +8,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
 import com.exam.handlers.GameEvent;
 import com.exam.handlers.GameEventHandler;
+import com.exam.handlers.GameEventListener;
 import com.exam.handlers.MyInput;
 import com.exam.project.Main;
+import com.exam.toolbox.AnimationType;
 import com.exam.toolbox.SpriteType;
 import com.exam.tween.AccessorReferences;
 
@@ -23,7 +25,7 @@ import aurelienribon.tweenengine.TweenManager;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class Hook extends Entity {
+public class Hook extends Entity implements GameEventListener{
 	
 	private TweenManager tweenManager;
 	private float _speedDevider = 5f; // for flowing movement
@@ -32,6 +34,8 @@ public class Hook extends Entity {
 	
 	private float startTweenAnimationDuration = 1f;
 	private boolean start = false;
+	private Animation armAnimation;
+	private Animation handAnimation;
 
 	/**
 	 * constructor and initalization. Casting parameters to base class
@@ -41,10 +45,14 @@ public class Hook extends Entity {
 	 * @param spriteType for receiving desired texture.
 	 * @param manager to process/register this instance.
 	 */
-	public Hook(Vector2 position, SpriteType spriteType, EntityManager manager) {
-		super(position, spriteType, manager);
+	public Hook(Vector2 position, AnimationType armAnimationType, AnimationType handAnimationType, EntityManager manager) {
+		super(position, manager);
 		tweenManager = new TweenManager();
 		_mouseX = position.x;
+
+
+		armAnimation = (Animation) new Animation(armAnimationType, true, 0.8f, position , manager).setIndex(3);
+		handAnimation = (Animation) new Animation(handAnimationType, true, 0.8f, new Vector2(0,0) , manager).setIndex(2);
 	}
 
 	/**
@@ -63,7 +71,7 @@ public class Hook extends Entity {
 	}
 	
 	private void tweenToStartPosition(){
-		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 1250).setCallback(new TweenCallback() {
+		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 1450).setCallback(new TweenCallback() {
 			
 			@Override
 			public void onEvent(int arg0, BaseTween<?> arg1) {
@@ -72,8 +80,12 @@ public class Hook extends Entity {
 		}).start(tweenManager);
 	}
 	
+	private void tweenToReversePosition(){
+		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 800).start(tweenManager);
+	}
+	
 	private void tweenToEndPosition(){
-		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 700).start(tweenManager);
+		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 2000).start(tweenManager);
 	}
 	
 	public synchronized void addHandler(GameEventHandler handler){
@@ -95,6 +107,9 @@ public class Hook extends Entity {
 		super.update(deltaTime); // update base.
 		handleInput();
 		tweenManager.update(deltaTime);
+
+		armAnimation.setPosition(pPosition.x, pPosition.y);
+		handAnimation.setPosition(pPosition.x, pPosition.y - 530);
 	}
 	
 	@Override
@@ -108,6 +123,11 @@ public class Hook extends Entity {
 	@Override
 	public void gameEnd(GameEvent event) {
 		tweenToEndPosition();
+	}
+
+	@Override
+	public void gameReverse(GameEvent event) {
+		tweenToReversePosition();
 	}
 
 }

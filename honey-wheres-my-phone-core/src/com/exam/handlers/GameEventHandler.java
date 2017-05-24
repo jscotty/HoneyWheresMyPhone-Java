@@ -33,6 +33,13 @@ public abstract class GameEventHandler {
 		}
 	}
 	
+	protected synchronized void gameReverse(){
+		GameEvent event = new GameEvent(this);
+		for (GameEventListener listener : listeners) {
+			listener.gameReverse(event);
+		}
+	}
+	
 	protected synchronized void gameEnd(){
 		GameEvent event = new GameEvent(this);
 		for (GameEventListener listener : listeners) {

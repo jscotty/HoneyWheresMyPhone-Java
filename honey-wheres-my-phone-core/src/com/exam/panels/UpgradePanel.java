@@ -8,6 +8,7 @@ import com.exam.gui.Gui;
 import com.exam.gui.GuiButton;
 import com.exam.gui.GuiText;
 import com.exam.gui.UpgradeProcess;
+import com.exam.managers.GameManager;
 import com.exam.project.Main;
 import com.exam.scenes.SceneManager;
 import com.exam.toolbox.SpriteType;
@@ -89,9 +90,9 @@ public class UpgradePanel extends Panel {
 		};
 		
 		processes = new UpgradeProcess[]{
-			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ OFFSET+ 60, "Increase depth"),
-			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ 60, "Increase head start"),
-			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)- OFFSET + 60, "Increase item value"),
+			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ OFFSET+ 60, "Increase depth", 0),
+			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)+ 60, "Increase head start", 1),
+			new UpgradeProcess(guiManager, Main.WIDTH/2.5f, (Main.HEIGHT/2)- OFFSET + 60, "Increase item value", 2),
 		};
 
 		continueButton = new GuiButton(600, 100, SpriteType.BUTTON_PLAY_SMALL_IDLE, SpriteType.BUTTON_PLAY_SMALL_PRESSED, camera, guiManager);
@@ -261,7 +262,10 @@ public class UpgradePanel extends Panel {
 		guiManager.update(deltaTime);
 		
 		if(closeButton.isClicked()) endAnimation();
-		if(continueButton.isClicked()) AnimateToGame();
+		if(continueButton.isClicked()) {
+			GameManager.reset();
+			AnimateToGame();
+		}
 		
 		if(buyButtons[UPGRADE_DEPTH_INCREASE].isClicked()){
 			processes[UPGRADE_DEPTH_INCREASE].upgrade();

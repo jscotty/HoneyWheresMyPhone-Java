@@ -1,0 +1,32 @@
+<TextureAtlas imagePath="sprites.png">
+	<SubTexture name="Prop_Phone3_00.png" x="1510" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_01.png" x="1208" y="1608" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_02.png" x="1208" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_03.png" x="1208" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_04.png" x="1208" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_05.png" x="1208" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_06.png" x="906" y="1608" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_07.png" x="906" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_08.png" x="906" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_09.png" x="906" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone3_10.png" x="906" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_00.png" x="1510" y="1608" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_01.png" x="604" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_02.png" x="604" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_03.png" x="604" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_04.png" x="604" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_05.png" x="302" y="1608" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_06.png" x="302" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_07.png" x="302" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone4_08.png" x="302" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_00.png" x="302" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_01.png" x="0" y="1608" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_02.png" x="0" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_03.png" x="0" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_04.png" x="0" y="402" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_05.png" x="0" y="0" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_06.png" x="604" y="1608" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_07.png" x="1510" y="1206" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_08.png" x="1510" y="804" width="300" height="400"/>
+	<SubTexture name="Prop_Phone5_09.png" x="1510" y="402" width="300" height="400"/>
+</TextureAtlas>

@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
 import com.exam.entity.EntityManager;
 import com.exam.handlers.GameEventHandler;
+import com.exam.managers.GameManager;
 import com.exam.project.Main;
 
 /**
@@ -21,10 +22,17 @@ import com.exam.project.Main;
  * 	   Portfolio: Justinbieshaar.com
  */
 public class ItemManager extends GameEventHandler implements ContactListener{
-	
-	public static final String USER_DATA = "Item";
+
+	public static final String ITEM_DATA = "Item";
+	public static final String PHONE_DATA = "Item";
 
 	private final int[][] ITEMROWS_TILL100 = new int[][]{
+		{1,0,0,0,0},
+		{0,1,0,0,0},
+		{0,0,1,0,0},
+		{0,0,0,1,0},
+		{0,0,0,0,1},
+		{0,0,1,0,1},
 		{1,0,0,0,0},
 		{0,1,0,0,0},
 		{0,0,1,0,0},
@@ -52,6 +60,8 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 	private boolean _reverse = false;
 	private float yPosition = -100;
 	private int backgroundLevel;
+	private int phoneLevel = 0;
+	private int currentPhoneLevel = 0;
 	
 	private List<Item> _itemsDestroyed = new ArrayList<Item>();
 	private List<Item> _itemsInField = new ArrayList<Item>();
@@ -89,14 +99,31 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 		
 		calculateSpeed();
 		
+		if(phoneLevel > currentPhoneLevel){
+			spawnPhone();
+			currentPhoneLevel++;
+		}
+		
 		if(_meters > _delay){
 			spawn();
 			_delay += 5;
+		}
+		
+
+		for (Item item : _itemsInField) {
+			item.setSpeed(_speed);
 		}
 	}
 	
 	private void calculateSpeed(){
 		_speed = _backgroundSpeed *1.5f;
+	}
+	
+	private void spawnPhone(){
+		Phone item = (Phone) new Phone(PhoneType.values()[currentPhoneLevel], new Vector2(Main.WIDTH/2, yPosition), _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 40,40, Main.WIDTH/2, yPosition, ITEM_DATA).setIndex(3);
+		
+		_delay+=10;
+		_itemsInField.add(item);
 	}
 	
 	/**
@@ -124,10 +151,10 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 				if(_reverse){ 
 					if(_itemsDestroyed.size() == 0) return;
 					itemType = _itemsDestroyed.get(_itemsDestroyed.size()-1).getItemType();
-					item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 50,50, position.x ,position.y, USER_DATA);
+					item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 40,40, position.x ,position.y, ITEM_DATA);
 				} else {
 					 itemType = _itemLevels.get(backgroundLevel).get(randomItem);
-					 item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 50,50, position.x ,position.y, USER_DATA);
+					 item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world, BodyType.DynamicBody, 40,40, position.x ,position.y, ITEM_DATA);
 				}
 				
 				_itemsInField.add(item);
@@ -151,11 +178,11 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 // region contactlistener methods
 	@Override
 	public void beginContact(Contact contact) {
-		if(contact.getFixtureA().getUserData() == USER_DATA && contact.getFixtureB().getUserData() == "" || contact.getFixtureB().getUserData() == USER_DATA && contact.getFixtureA().getUserData() == "")
-		//_reverse = true;
-		//_speed = -_speed;
+		if(contact.getFixtureA().getUserData() == ITEM_DATA && contact.getFixtureB().getUserData() == ITEM_DATA) return;
+		GameManager.isHit = true;
+		gameReverse();
 		for (Item item : _itemsInField) {
-			//item.reverse();
+			item.hit();
 		}
 	}
 
@@ -176,15 +203,10 @@ public class ItemManager extends GameEventHandler implements ContactListener{
 	}
 //endregion
 	
-	public void setMeters(float _meters) {
-		this._meters = _meters;
-	}
-	
-	public void setBackgroundSpeed(float _backgroundSpeed) {
-		this._backgroundSpeed = _backgroundSpeed;
-	}
-	
-	public void setBackgroundLevel(int backgroundLevel) {
+	public void setBackgroundData(float backgroundSpeed, int backgroundLevel, int phoneLevel, float meters){
 		this.backgroundLevel = backgroundLevel;
+		this._backgroundSpeed = backgroundSpeed;
+		this._meters = meters;
+		this.phoneLevel = phoneLevel;
 	}
 }
