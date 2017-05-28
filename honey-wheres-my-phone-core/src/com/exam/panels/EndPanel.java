@@ -64,7 +64,6 @@ private GUIManager guiManager;
 	@Override
 	public void startAnimation() {
 		isActive = true;
-		System.out.println("animate");
 		Timeline.createSequence()
 		.pushPause(0.1f)
 		

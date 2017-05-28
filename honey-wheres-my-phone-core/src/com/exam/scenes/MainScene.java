@@ -43,6 +43,7 @@ public class MainScene extends Scene implements GameEventListener{
 
 	private Hook _hook;
 	private GuiText _metersText;
+	private GuiText _cashText;
 	private ItemManager _itemManager;
 	private GuiButton _pauseButton;
 	private PausePanel _pausePanel;
@@ -74,8 +75,9 @@ public class MainScene extends Scene implements GameEventListener{
 		_pauseButton = new GuiButton(600, 1200, SpriteType.BUTTON_PAUSE_IDLE, SpriteType.BUTTON_PAUSE_PRESSED, pHudCamera, _guiManager);
 		_pausePanel = new PausePanel(pHudCamera, pSceneManager);
 		_endPanel = new EndPanel(pHudCamera, pSceneManager);
-		
+
 		_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
+		_cashText = new GuiText(50, Main.HEIGHT-50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
 		
 		_entityManager.sortEntities();
 	}
@@ -102,7 +104,8 @@ public class MainScene extends Scene implements GameEventListener{
 		backgroundManager.update(deltaTime);
 		
 		_itemManager.setBackgroundData(backgroundManager.getSpeed(), backgroundManager.getBackgroundLevel(), backgroundManager.getPhoneLevel(), backgroundManager.getMeters());
-		_metersText.setText(backgroundManager.getMeters() + "/1000");
+		_metersText.setText(backgroundManager.getMeters() + "/" + GameManager.getMaximumDepth());
+		_cashText.setText("$ " + GameManager.getMoney());
 		
 		_endPanel.update(deltaTime);
 		

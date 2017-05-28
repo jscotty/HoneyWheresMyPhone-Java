@@ -1,12 +1,15 @@
 package com.exam.entity;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.exam.project.Main;
 import com.exam.toolbox.AnimationType;
-import com.exam.toolbox.SpriteSheetReaderShoebox;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class Animation extends Entity{
 
 	private TextureRegion[] textures;

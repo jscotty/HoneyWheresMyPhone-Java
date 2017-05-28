@@ -8,6 +8,10 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.exam.entity.Entity;
 import com.exam.entity.EntityManager;
 import com.exam.project.Main;
+import com.exam.tween.AccessorReferences;
+
+import aurelienribon.tweenengine.Tween;
+import aurelienribon.tweenengine.TweenManager;
 
 /**
  * @author Justin Scott Bieshaar
@@ -16,10 +20,11 @@ import com.exam.project.Main;
  */
 public class Item extends Entity {
 	
+	private final float TWEEN_DURATION = 0.8f;
+	
 	private ItemType _itemType;
 	private float _speed = 2f;
 	private ItemManager _itemManager;
-	private float _adjustifier = 0.1f;
 	private float _xVelocity = 0f;
 	
 	/**
@@ -52,6 +57,10 @@ public class Item extends Entity {
 		this._itemManager = itemManager;
 	}
 	
+	public Item addBodyBox(World world, BodyType bodyType, float width, float height, float positionX, float positionY){
+		return (Item) super.addBodyBox(world, bodyType, width, height, positionX, positionY, this);
+	}
+	
 	
 	@Override
 	public void update(float deltaTime) {
@@ -66,18 +75,17 @@ public class Item extends Entity {
 		
 		pBody.setTransform(pPosition, 0);
 		
-		if(pPosition.y > Main.HEIGHT+200)
+		if(pPosition.y > Main.HEIGHT+200 || pPosition.y < -200)
 			_itemManager.removeItem(this);
 	}
 	
-	private void bounce(){
+	public void bounce(){
 		_xVelocity = -_xVelocity;
 	}
 	
-	/**
-	 * Reverse item direction
-	 */
-	public void hit(){
+	public void animateAway(TweenManager tweenManager){
+		Tween.to(this, AccessorReferences.POSITION, TWEEN_DURATION).target(10,Main.HEIGHT+200).start(tweenManager);
+		Tween.to(this, AccessorReferences.SCALE, TWEEN_DURATION).target(0,0).start(tweenManager);
 	}
 	
 	public void setSpeed(float speed){

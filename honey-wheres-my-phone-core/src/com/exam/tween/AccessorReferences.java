@@ -12,4 +12,5 @@ public class AccessorReferences {
     public static final int SCALE = 1;
     public static final int ROTATE = 2;
     public static final int POSITION = 3;
+    public static final int YPOSITION = 4;
 }

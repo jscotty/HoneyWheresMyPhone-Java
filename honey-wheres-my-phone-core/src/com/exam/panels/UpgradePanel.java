@@ -63,7 +63,7 @@ public class UpgradePanel extends Panel {
 		background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01, guiManager);
 		backgroundOverlay = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGOUND_PLYAY_01_OVERLAY, guiManager);
 		cashText = new GuiText(400, 1200, guiManager, FontType.SUPERCELL_MAGIC);
-		cashText.setText("$ Moneyz");
+		cashText.setText("$ 0");
 		
 		fadeBackgrounds = new Gui[]{
 			new Gui(Main.WIDTH/2, (Main.HEIGHT/2)+ OFFSET, SpriteType.BACKGROUND_FADE_01, guiManager),
@@ -260,6 +260,11 @@ public class UpgradePanel extends Panel {
 		if(!isActive) return;
 		tweenManager.update(deltaTime);
 		guiManager.update(deltaTime);
+		
+		for (int i = 0; i < valueTexts.length; i++) {
+			valueTexts[i].setText(processes[i].getCost() + "$");
+		}
+		cashText.setText("$ " + GameManager.getMoney());
 		
 		if(closeButton.isClicked()) endAnimation();
 		if(continueButton.isClicked()) {

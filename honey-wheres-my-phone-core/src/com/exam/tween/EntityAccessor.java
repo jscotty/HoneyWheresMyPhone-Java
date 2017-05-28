@@ -21,6 +21,9 @@ public class EntityAccessor  implements TweenAccessor<Entity> {
 			returnValues[0] = entity.getPosition().x;
 			returnValues[1] = entity.getPosition().y;
 		    return 2;
+		case AccessorReferences.YPOSITION:
+			returnValues[0] = entity.getPosition().y;
+		    return 1;
 		default:
 		    assert false; // stop execution!
 		    return -1;
@@ -35,10 +38,13 @@ public class EntityAccessor  implements TweenAccessor<Entity> {
 			//TODO alpha settings
 		    break;
 		case AccessorReferences.SCALE:
-			//TODO scaling settings
+			entity.setSccale(newValues[0], newValues[1]);
 		    break;
 		case AccessorReferences.POSITION:
 			entity.setPosition(newValues[0], newValues[1]);
+			break;
+		case AccessorReferences.YPOSITION:
+			entity.setPosition(entity.getPosition().x, newValues[0]);
 			break;
 		default:
 		    assert false; // stop execution!

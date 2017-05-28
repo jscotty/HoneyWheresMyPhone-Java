@@ -18,6 +18,7 @@ public class UpgradeProcess {
 	private int maximumUpgradeCount = 4;
 	private GuiText upgradeTypeText;
 	private int index;
+	private int cost = 100;
 
 	//for accessor.
 	private float scaleX = 1;
@@ -41,8 +42,6 @@ public class UpgradeProcess {
 		upgradeTypeText.setFontSize(FONT_SIZE);
 		
 		initUpgradeProcessVisualisation();
-		
-		
 	}
 	
 	private void initUpgradeProcessVisualisation(){
@@ -51,16 +50,20 @@ public class UpgradeProcess {
 			processIcons[i].setTexture(fullProcess);
 			if(i+1 <= maximumUpgradeCount)
 				processIcons[i+1].setTexture(selectProcess);
+			cost *= 2;
 		}
 	}
 	
 	public void upgrade(){
+		if(GameManager.getMoney() < cost) return;
 		if(upgradeCount > maximumUpgradeCount) return;
 		GameManager.addUpgrade(index);
 		processIcons[upgradeCount].setTexture(fullProcess);
 		if(upgradeCount+1 <= maximumUpgradeCount)
 			processIcons[upgradeCount+1].setTexture(selectProcess);
+		cost *= 2;
 		upgradeCount++;
+		GameManager.removeMoney(cost);
 	}
 	
 	public void scaleProcessIcons(float scaleX, float scaleY){
@@ -79,5 +82,9 @@ public class UpgradeProcess {
 	
 	public float getScaleY() {
 		return scaleY;
+	}
+	
+	public int getCost() {
+		return cost;
 	}
 }

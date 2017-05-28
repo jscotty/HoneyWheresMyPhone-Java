@@ -20,6 +20,11 @@ import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
 import aurelienribon.tweenengine.TweenManager;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class BackgroundManager extends GameEventHandler {
 	
 	private final float START_ANIMATION_ADD_POSITION = 300;
@@ -125,7 +130,7 @@ public class BackgroundManager extends GameEventHandler {
 		meters = (int)((float)(currentPixelsMoved / levelsSize)*MAXIMUM_METERS);
 
 		
-		if(meters > phoneLevelDistance*(phoneLevel+1)){
+		if(meters > phoneLevelDistance*(phoneLevel+1) - 15){
 			phoneLevel++;
 		}
 		if(meters > backgroundLevelDistance*(backgroundLevel+1)){
@@ -136,7 +141,7 @@ public class BackgroundManager extends GameEventHandler {
 			if(speed <= BACKWARDS_SPEED){
 				speed = BACKWARDS_SPEED;
 			}else
-				speed -= 2f;
+				speed -= 0.2f;
 		} else{
 
 			if(speed >= LEVEL_SPEED[phoneLevel]){
@@ -144,8 +149,8 @@ public class BackgroundManager extends GameEventHandler {
 			}else
 				speed += 0.01f;
 		}
-		if(meters >= 1000)
-			gameEnd();
+		if(meters >= GameManager.getMaximumDepth())
+			gameReverse();
 		scroll();
 	}
 	
@@ -160,7 +165,6 @@ public class BackgroundManager extends GameEventHandler {
 			BackgroundType backgroundType = BackgroundType.values()[activeBackgroundIndex];
 			background.changeVisualization(backgroundType);
 			backgroundCount = backgroundType.getRepeatCount();
-			System.out.println(backgroundCount);
 		} else 
 			backgroundRepeatCount++;
 		background.changeVisualization(BackgroundType.values()[activeBackgroundIndex]);
@@ -173,7 +177,7 @@ public class BackgroundManager extends GameEventHandler {
 			gameEnd();
 			return;
 		}
-		background.setPosition(Main.WIDTH/2, Main.HEIGHT*1.5f);
+		background.setPosition(Main.WIDTH/2, Main.HEIGHT + -(cachedNextBackgroundPosition.y)+(speed*2));
 		
 		if(backgroundRepeatCount <= 0){
 			backgroundCount = 0;
@@ -181,7 +185,6 @@ public class BackgroundManager extends GameEventHandler {
 			BackgroundType backgroundType = BackgroundType.values()[activeBackgroundIndex];
 			background.changeVisualization(backgroundType);
 			backgroundRepeatCount = backgroundType.getRepeatCount();
-			System.out.println(backgroundCount);
 		} else 
 			backgroundRepeatCount--;
 		background.changeVisualization(BackgroundType.values()[activeBackgroundIndex]);

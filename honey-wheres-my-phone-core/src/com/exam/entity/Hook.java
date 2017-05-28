@@ -81,11 +81,11 @@ public class Hook extends Entity implements GameEventListener{
 	}
 	
 	private void tweenToReversePosition(){
-		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 800).start(tweenManager);
+		Tween.to(this, AccessorReferences.YPOSITION, startTweenAnimationDuration).target(800).start(tweenManager);
 	}
 	
 	private void tweenToEndPosition(){
-		Tween.to(this, AccessorReferences.POSITION, startTweenAnimationDuration).target(Main.WIDTH/2, 2000).start(tweenManager);
+		Tween.to(this, AccessorReferences.YPOSITION, startTweenAnimationDuration).target(2000).start(tweenManager);
 	}
 	
 	public synchronized void addHandler(GameEventHandler handler){
@@ -109,7 +109,7 @@ public class Hook extends Entity implements GameEventListener{
 		tweenManager.update(deltaTime);
 
 		armAnimation.setPosition(pPosition.x, pPosition.y);
-		handAnimation.setPosition(pPosition.x, pPosition.y - 530);
+		handAnimation.setPosition(pPosition.x+10, pPosition.y - 530); // +10 because the sprites do not match correctly.
 	}
 	
 	@Override

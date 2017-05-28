@@ -101,7 +101,7 @@ public class PausePanel extends Panel {
 	private void handleInput(){
 		if(menuButton.isClicked()){
 			isActive = false;
-			GameManager.isPaused = false;
+			GameManager.reset();
 			sceneManager.setScene(SceneManager.MENU);
 		}
 		if(resumeButton.isClicked()) endAnimation();

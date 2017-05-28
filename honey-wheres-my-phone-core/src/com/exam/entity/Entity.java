@@ -82,7 +82,7 @@ public class Entity implements Comparable<Entity>{
 	 * Add squared body to this entity on entity position and size of entity (texture)
 	 * @return this
 	 */
-	public Entity addBodyBox(World world, BodyType bodyType, String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, Object userData) {
 		this._world = world;
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(pTexture.getRegionWidth() / Main.DEVIDER, pTexture.getRegionHeight() / Main.DEVIDER);
@@ -95,7 +95,7 @@ public class Entity implements Comparable<Entity>{
 	 * Add polygon body to this entity on entity position with a custom shape
 	 * @return this
 	 */
-	public Entity addBodyBox(World world, BodyType bodyType, float[] vertices, String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, float[] vertices, Object userData) {
 		this._world = world;
 		PolygonShape shape = new PolygonShape();
 		shape.set(vertices);
@@ -112,7 +112,7 @@ public class Entity implements Comparable<Entity>{
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(World world, BodyType bodyType, float width, float height, float positionX, float positionY, String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, float width, float height, float positionX, float positionY, Object userData) {
 		this._world = world;
 		//Manhattan distance calculation
 		this._bodyPositionDistance.x = pPosition.x - positionX;
@@ -132,7 +132,7 @@ public class Entity implements Comparable<Entity>{
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(World world, BodyType bodyType, float positionX, float positionY, String userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, float positionX, float positionY, Object userData) {
 		this._world = world;
 		//Manhattan distance calculation
 		this._bodyPositionDistance.x = pPosition.x - positionX;
@@ -152,7 +152,7 @@ public class Entity implements Comparable<Entity>{
 	 * @param positionY
 	 * @return
 	 */
-	public Entity addBodyCircle(World world, BodyType bodyType, float radius, float positionX, float positionY, String userData) {
+	public Entity addBodyCircle(World world, BodyType bodyType, float radius, float positionX, float positionY, Object userData) {
 		this._world = world;
 		//Manhattan distance calculation
 		this._bodyPositionDistance.x = pPosition.x - positionX;
@@ -171,7 +171,7 @@ public class Entity implements Comparable<Entity>{
 	 * @param x position
 	 * @param y position
 	 */
-	private void setupBody(Shape shape, BodyType bodyType, float positionX, float positionY, String userData) {
+	private void setupBody(Shape shape, BodyType bodyType, float positionX, float positionY, Object userData) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.position.set(positionX, positionY);
 		bodyDef.type = bodyType;
@@ -180,7 +180,7 @@ public class Entity implements Comparable<Entity>{
 		bodyDef.type = bodyType;
 		FixtureDef fdef = new FixtureDef();
 		fdef.shape = shape;
-		pBody.createFixture(fdef).setUserData(userData);;
+		pBody.createFixture(fdef).setUserData(userData);
 	}
 	
 	public void disableBody(){
@@ -249,6 +249,11 @@ public class Entity implements Comparable<Entity>{
 	public void setPosition(float xPosition, float yPosition){
 		this.pPosition.x = xPosition;
 		this.pPosition.y = yPosition;
+	}
+	
+	public void setSccale(float scaleX, float scaleY){
+		this.pScaleX = scaleX;
+		this.pScaleY = scaleY;
 	}
 	
 	protected Vector2 getBodyPosition() {
