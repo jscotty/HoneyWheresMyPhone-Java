@@ -18,25 +18,37 @@ public enum BackgroundType {
 	BACKGROUND_LEVEL_05(SpriteType.BACKGROUND_LEVEL_05, SpriteType.BACKGROUND_OVERLAY_LEVEL_05, 14), 
 	BACKGROUND_LEVEL_06(SpriteType.BACKGROUND_LEVEL_06, SpriteType.BACKGROUND_OVERLAY_LEVEL_06, 0);
 	
-	private SpriteType backgroundSprite;
-	private SpriteType overlaySprite;
-	private int repeatCount;
+	private SpriteType _backgroundSprite;
+	private SpriteType _overlaySprite;
+	private int _repeatCount;
 	
+	/**
+	 * Initialization.
+	 */
 	private BackgroundType(SpriteType background, SpriteType overlay, int repeatCount){
-		this.backgroundSprite = background;
-		this.overlaySprite = overlay;
-		this.repeatCount = repeatCount;
+		this._backgroundSprite = background;
+		this._overlaySprite = overlay;
+		this._repeatCount = repeatCount;
 	}
 	
+	/**
+	 * @return background SpriteType
+	 */
 	public SpriteType getBackgroundSprite() {
-		return backgroundSprite;
+		return _backgroundSprite;
 	}
 	
+	/**
+	 * @return overlay SpriteType
+	 */
 	public SpriteType getOverlaySprite() {
-		return overlaySprite;
+		return _overlaySprite;
 	}
 	
+	/**
+	 * @return amount of repeating this background type.
+	 */
 	public int getRepeatCount() {
-		return repeatCount;
+		return _repeatCount;
 	}
 }

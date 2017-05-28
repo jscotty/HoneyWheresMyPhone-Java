@@ -58,12 +58,12 @@ public class UpgradeProcess {
 		if(GameManager.getMoney() < cost) return;
 		if(upgradeCount > maximumUpgradeCount) return;
 		GameManager.addUpgrade(index);
+		GameManager.removeMoney(cost);
 		processIcons[upgradeCount].setTexture(fullProcess);
 		if(upgradeCount+1 <= maximumUpgradeCount)
 			processIcons[upgradeCount+1].setTexture(selectProcess);
 		cost *= 2;
 		upgradeCount++;
-		GameManager.removeMoney(cost);
 	}
 	
 	public void scaleProcessIcons(float scaleX, float scaleY){

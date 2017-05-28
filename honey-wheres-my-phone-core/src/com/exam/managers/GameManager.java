@@ -11,6 +11,8 @@ import com.exam.background.BackgroundManager;
  */
 public class GameManager {
 
+	//Managing save data in this class.
+	
 	public static final int DEPTH_LEVEL = 0;
 	public static final int START_DEPTH_LEVEL = 1;
 	public static final int ITEM_VALUE_LEVEL = 2;
@@ -27,10 +29,13 @@ public class GameManager {
 	public static boolean isPaused = false;
 	public static boolean isHit = false;
 	
+	private static int _money;
+	
 	private static Preferences preferences;
 	
 	public static void init(){
 		preferences = Gdx.app.getPreferences(PREFERENCE_LOCATION);
+		_money = preferences.getInteger(MONEY_LOCATION);
 		preferences.flush();
 	}
 	
@@ -48,14 +53,15 @@ public class GameManager {
 	}
 	
 	public static void addMoney(int money){
-		int moneyAmount = preferences.getInteger(MONEY_LOCATION);
-		preferences.putInteger(MONEY_LOCATION, moneyAmount + money);
+		_money += money + (money*getUpgradeLevel(ITEM_VALUE_LEVEL));
+		preferences.putInteger(MONEY_LOCATION, money);
 		preferences.flush();
 	}
 	
 	public static void removeMoney(int money){
-		int moneyAmount = preferences.getInteger(MONEY_LOCATION);
-		preferences.putInteger(MONEY_LOCATION, moneyAmount - money);
+		System.out.println(money);
+		_money -= money;
+		preferences.putInteger(MONEY_LOCATION, _money);
 		preferences.flush();
 	}
 	
@@ -68,7 +74,7 @@ public class GameManager {
 	}
 	
 	public static int getMoney(){
-		return preferences.getInteger(MONEY_LOCATION);
+		return _money;
 	}
 	
 	public static boolean isPoneCollected(int index){

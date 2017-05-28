@@ -21,8 +21,6 @@ import com.exam.toolbox.SpriteType;
  */
 public class Background extends Entity {
 	
-	private float _speed = 0f;
-	private float _maxSpeed = 0.01f;
 	private Entity _overlay;
 	private BackgroundType _backgroundType;
 	/**
@@ -40,6 +38,10 @@ public class Background extends Entity {
 		pZIndex = -2;
 	}
 	
+	/**
+	 * Move this backround in y direction by given speed.
+	 * @param movement speed
+	 */
 	public void scroll(float speed){
 		pPosition.y += speed;
 	}
@@ -50,10 +52,17 @@ public class Background extends Entity {
 		_overlay.setPosition(pPosition.x, pPosition.y);
 	}
 
+	/**
+	 * @return repeat count of current background type.
+	 */
 	public int getRepeatCount(){
 		return _backgroundType.getRepeatCount();
 	}
 	
+	/**
+	 * Change the visualization of this background by given backgroundType.
+	 * @param backgroundType
+	 */
 	public void changeVisualization(BackgroundType backgroundType){
 		this.setTexture(backgroundType.getBackgroundSprite());
 		_overlay.setTexture(backgroundType.getOverlaySprite());

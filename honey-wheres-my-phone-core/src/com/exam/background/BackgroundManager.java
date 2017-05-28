@@ -27,64 +27,67 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class BackgroundManager extends GameEventHandler {
 	
-	private final float START_ANIMATION_ADD_POSITION = 300;
-	private final float BACKWARDS_SPEED = -25f;
-	private final int MAXIMUM_METERS = 1000;
+	private final float BACKWARDS_SPEED = -25f; // if the user hits a target the game will go backwards. This is the desired speed for backward state. 
+	private final int MAXIMUM_METERS = 1000; // maximum meters to travel.
 	private final int PHONE_LEVELS = 5; // there are 5 phones in game for 5 distance upgrades
 	private final int BACKGROUND_LEVELS = 3; // there are 3 background types (bag background, rocks background and lava background)
 	
-	private final float[] LEVEL_SPEED = new float[]{5f,8f,10f,12f,14f,15f};
+	private final float[] LEVEL_SPEED = new float[]{5f,8f,10f,12f,14f,15f}; // clamp speed on each level.
 	
-	private float levelsSize = -START_ANIMATION_ADD_POSITION;
-	private float currentPixelsMoved = 0;
-	private int meters = 0;
-	private int phoneLevelDistance = 0;
-	private int phoneLevel = 0;
-	private int backgroundLevelDistance = 0;
-	private int backgroundLevel = 0;
+	private float _levelsSize = 0; // size in pixels of all backgrounds calculated.
+	private float _currentPixelsMoved = 0; // amount of pixels moved.
+	private int _meters = 0; // total meters calculated from moved pixels and level size
+	private int _phoneLevelDistance = 0; // distance of each phone level
+	private int _phoneLevel = 0; // current phone level
+	private int _backgroundLevelDistance = 0; // distance of each background level
+	private int _backgroundLevel = 0; // current background level.
 	
-	private EntityManager entityManager;
-	private Entity backgroundTop;
-	private Entity borderTop;
-	private Background[] introBackgrounds;
-	private List<Background> activeBackgrounds = new ArrayList<Background>();
-	private TweenManager tweenManager;
-	private int backgroundCount = 0;
+	private EntityManager _entityManager; // for managing backgrounds
+	private TweenManager _tweenManager;
+	
+	private Entity _backgroundTop;  // introduction asset.
+	private Entity _borderTop; // introduction asset.
+	private Background[] _activeBackgrounds; // active scrolling backgrounds
+	private int _backgroundCount = 0; // current background count for repeating.
 
-	private float speed = 2f;
-	private boolean introEnded = false;
-	private boolean backwardEnded = false;
+	private float _speed = 2f; // current speed
+	private boolean _introEnded = false; // has the introduction ended true or false?
+	private boolean _backwardEnded = false; // has backward state ended true or false?
 	
-	private float startAnimationDuration = 1f;
-	private boolean start = false;
-	private int activeBackgroundIndex = 2;
-	private Vector2 cachedNextBackgroundPosition = new Vector2(Main.WIDTH/2, -(Main.HEIGHT/2)+20);
-	private int backgroundRepeatCount = 0;
+	private float _startAnimationDuration = 1f; // duration of introduction
+	private boolean _start = false; // game start.
+	private int _activeBackgroundIndex = 2; // active background index. (using for indexing the next background in BackgroundType.class)
+	private int _backgroundRepeatCount = 0; // counting the repeat index to check if the visualization has to change.
 	
+	/**
+	 * Constructor for initialization.
+	 * @param entityManager for processing backgrounds.
+	 */
 	public BackgroundManager(EntityManager manager) {
-		this.entityManager = manager;
-		tweenManager = new TweenManager();
+		this._entityManager = manager;
+		_tweenManager = new TweenManager();
 		Tween.registerAccessor(Entity.class, new EntityAccessor());
-		backgroundTop = new Entity(new Vector2(Main.WIDTH/2,Main.HEIGHT/2), SpriteType.BACKGROUND_TOP, manager).setIndex(-4);
-		borderTop = new Entity(new Vector2(Main.WIDTH/2,Main.HEIGHT/2), SpriteType.BACKGROUND_TOP_OVERLAY, manager);
-		introBackgrounds = new Background[]{
+		_backgroundTop = new Entity(new Vector2(Main.WIDTH/2,Main.HEIGHT/2), SpriteType.BACKGROUND_TOP, manager).setIndex(-4);
+		_borderTop = new Entity(new Vector2(Main.WIDTH/2,Main.HEIGHT/2), SpriteType.BACKGROUND_TOP_OVERLAY, manager);
+		_activeBackgrounds = new Background[]{
 			new Background(new Vector2(Main.WIDTH/2, -(Main.HEIGHT/2-20)), BackgroundType.BACKGROUND_LEVEL_00,manager),
 			new Background(new Vector2(Main.WIDTH/2, (-Main.HEIGHT/2+5)*2), BackgroundType.BACKGROUND_LEVEL_01,manager)
 		};
-		activeBackgrounds.add(introBackgrounds[0]);
-		activeBackgrounds.add(introBackgrounds[1]);
-		backgroundCount = introBackgrounds[1].getRepeatCount();
+		_backgroundCount = _activeBackgrounds[1].getRepeatCount();
 		
 		calculateLevelsSize();
 	}
 	
-	private void startScrolling(){
+	/**
+	 * Starts introduction animation.
+	 */
+	private void startAnimation(){
 		Timeline.createSequence()
 		.pushPause(0.1f)
 		.beginParallel()
-		.push(Tween.to(borderTop, AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2,Main.HEIGHT*1.5f))
-		.push(Tween.to(introBackgrounds[0], AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2,Main.HEIGHT/2 + START_ANIMATION_ADD_POSITION))
-		.push(Tween.to(introBackgrounds[1], AccessorReferences.POSITION, startAnimationDuration).target(Main.WIDTH/2, -(Main.HEIGHT/2)+START_ANIMATION_ADD_POSITION).setCallback(new TweenCallback() {
+		.push(Tween.to(_borderTop, AccessorReferences.POSITION, _startAnimationDuration).target(Main.WIDTH/2,Main.HEIGHT*1.5f))
+		.push(Tween.to(_activeBackgrounds[0], AccessorReferences.POSITION, _startAnimationDuration).target(Main.WIDTH/2,Main.HEIGHT/2 + 300))
+		.push(Tween.to(_activeBackgrounds[1], AccessorReferences.POSITION, _startAnimationDuration).target(Main.WIDTH/2, -(Main.HEIGHT/2)+300).setCallback(new TweenCallback() {
 			
 			@Override
 			public void onEvent(int arg0, BaseTween<?> arg1) {
@@ -93,22 +96,29 @@ public class BackgroundManager extends GameEventHandler {
 			}
 		}))
 		.end()
-		.start(tweenManager);
+		.start(_tweenManager);
 	}
 	
+	/**
+	 * Handling input.
+	 */
 	private void handleInput(){
-		if(start) return; // stop when animation is already started!
+		if(_start) return; // stop when animation is already started!
 		if(MyInput.isMouseDown(0)){
-			start = true;
-			startScrolling();
+			_start = true;
+			startAnimation();
 		}
 	}
 	
+	/**
+	 * scrolling backgrounds by calculated speed.
+	 * Checking if background is out of range.
+	 */
 	private void scroll(){
-		for (Background background : activeBackgrounds) {
-			background.scroll(speed);
+		for (Background background : _activeBackgrounds) {
+			background.scroll(_speed);
 
-			if(GameManager.isHit){
+			if(GameManager.isHit){ 
 				if(background.getPosition().y <= -(Main.HEIGHT*0.49f)){
 					previousBackground(background);
 				}
@@ -118,111 +128,127 @@ public class BackgroundManager extends GameEventHandler {
 				}
 			}
 		}
-		
 	}
 	
+	/**
+	 * Update gets called every frame.
+	 * @param deltaTime
+	 */
 	public void update(float deltaTime){
 		handleInput();
-		tweenManager.update(deltaTime);
+		_tweenManager.update(deltaTime); 
 
-		if(!introEnded || backwardEnded)return;
-		currentPixelsMoved += speed;
-		meters = (int)((float)(currentPixelsMoved / levelsSize)*MAXIMUM_METERS);
+		if(!_introEnded || _backwardEnded)return; // no need to update meters and speed calculations if the introduction is not ended.
+		_currentPixelsMoved += _speed; // add speed to moved pixels.
+		_meters = (int)((float)(_currentPixelsMoved / _levelsSize)*MAXIMUM_METERS);
 
 		
-		if(meters > phoneLevelDistance*(phoneLevel+1) - 15){
-			phoneLevel++;
+		if(_meters > _phoneLevelDistance*(_phoneLevel+1) - 15){ // 15 is a dirty fixed number which caused the phone gets spawned when the user hits the phonelevel distance.
+			_phoneLevel++;
 		}
-		if(meters > backgroundLevelDistance*(backgroundLevel+1)){
-			backgroundLevel++;
+		if(_meters > _backgroundLevelDistance*(_backgroundLevel+1)){
+			_backgroundLevel++;
 		}
 		// speed adjustifiers. 
 		if(GameManager.isHit){
-			if(speed <= BACKWARDS_SPEED){
-				speed = BACKWARDS_SPEED;
+			if(_speed <= BACKWARDS_SPEED){
+				_speed = BACKWARDS_SPEED; // clamping speed
 			}else
-				speed -= 0.2f;
+				_speed -= 0.2f;
 		} else{
 
-			if(speed >= LEVEL_SPEED[phoneLevel]){
-				speed = LEVEL_SPEED[phoneLevel];
-			}else
-				speed += 0.01f;
+			if(_speed >= LEVEL_SPEED[_phoneLevel]){
+				_speed = LEVEL_SPEED[_phoneLevel]; // clamping speed by phone level
+			}else 
+				_speed += 0.01f;
 		}
-		if(meters >= GameManager.getMaximumDepth())
+		if(_meters >= GameManager.getMaximumDepth()) // end reached.
 			gameReverse();
 		scroll();
 	}
 	
+	/**
+	 * Reset background position and check if next visualization has to be rendered.
+	 * @param background (to reset)
+	 */
 	private void nextBackground(Background background){
-		if(activeBackgroundIndex >= BackgroundType.values().length-1) {gameEnd(); return;}
+		if(_activeBackgroundIndex >= BackgroundType.values().length-1) {
+			gameReverse();
+			return; //null pointer return this method.
+		}
 		
-		background.setPosition(Main.WIDTH/2, cachedNextBackgroundPosition.y+(speed*2));
+		background.setPosition(Main.WIDTH/2, -(Main.HEIGHT/2)+(_speed*2) + 20); // reset position
 		
-		if(backgroundRepeatCount >= backgroundCount){
-			backgroundRepeatCount = 0;
-			activeBackgroundIndex++;
-			BackgroundType backgroundType = BackgroundType.values()[activeBackgroundIndex];
-			background.changeVisualization(backgroundType);
-			backgroundCount = backgroundType.getRepeatCount();
+		if(_backgroundRepeatCount >= _backgroundCount){
+			_backgroundRepeatCount = 0;
+			_activeBackgroundIndex++;
+			BackgroundType backgroundType = BackgroundType.values()[_activeBackgroundIndex];
+			_backgroundCount = backgroundType.getRepeatCount();
 		} else 
-			backgroundRepeatCount++;
-		background.changeVisualization(BackgroundType.values()[activeBackgroundIndex]);
+			_backgroundRepeatCount++;
+		background.changeVisualization(BackgroundType.values()[_activeBackgroundIndex]); // change visualization
 	}
 
 	
+	/**
+	 * Reset background position and check if previous visualization has to be rendered.
+	 * @param background (to reset)
+	 */
 	private void previousBackground(Background background){
-		if(activeBackgroundIndex <=0) {
-			backwardEnded = true; 
+		if(_activeBackgroundIndex <=0) {
+			_backwardEnded = true; 
 			gameEnd();
-			return;
+			return; //null pointer return this method.
 		}
-		background.setPosition(Main.WIDTH/2, Main.HEIGHT + -(cachedNextBackgroundPosition.y)+(speed*2));
+		background.setPosition(Main.WIDTH/2, (Main.HEIGHT*1.5f) + (_speed*2) - 20); // reset position
 		
-		if(backgroundRepeatCount <= 0){
-			backgroundCount = 0;
-			activeBackgroundIndex--;
-			BackgroundType backgroundType = BackgroundType.values()[activeBackgroundIndex];
+		if(_backgroundRepeatCount <= 0){
+			_backgroundCount = 0;
+			_activeBackgroundIndex--;
+			BackgroundType backgroundType = BackgroundType.values()[_activeBackgroundIndex];
 			background.changeVisualization(backgroundType);
-			backgroundRepeatCount = backgroundType.getRepeatCount();
+			_backgroundRepeatCount = backgroundType.getRepeatCount();
 		} else 
-			backgroundRepeatCount--;
-		background.changeVisualization(BackgroundType.values()[activeBackgroundIndex]);
+			_backgroundRepeatCount--;
+		background.changeVisualization(BackgroundType.values()[_activeBackgroundIndex]);
 	}
 	
+	/**
+	 * Calculate level size of all backgroundTypes
+	 */
 	private void calculateLevelsSize(){
-		for (BackgroundType background : BackgroundType.values()) {
-			levelsSize += (background.getRepeatCount()+1)*Main.HEIGHT;
+		for (BackgroundType background : BackgroundType.values()) { // loop trough all backgroundType values.
+			_levelsSize += (background.getRepeatCount()+1)*Main.HEIGHT;
 		}
 		
-		levelsSize -= Main.HEIGHT*2; // Subtracting first two background sizes of intro backgrounds.
+		_levelsSize -= Main.HEIGHT*2; // Subtracting first two background sizes of intro backgrounds.
 
-		phoneLevelDistance = (int) (MAXIMUM_METERS / PHONE_LEVELS);
-		backgroundLevelDistance = (int) (MAXIMUM_METERS / BACKGROUND_LEVELS);
+		_phoneLevelDistance = (int) (MAXIMUM_METERS / PHONE_LEVELS); // 1000 / 5 = 200
+		_backgroundLevelDistance = (int) (MAXIMUM_METERS / BACKGROUND_LEVELS); // 1000 / 3 = 333
 	}
 	
 	public int getMeters() {
-		if(meters > MAXIMUM_METERS) meters = MAXIMUM_METERS;
-		if(meters < 0) meters = 0;
-		return meters;
+		if(_meters > MAXIMUM_METERS) _meters = MAXIMUM_METERS; // clamp meters
+		if(_meters < 0) _meters = 0; // clamp meters
+		return _meters;
 	}
 	
 	public float getSpeed() {
-		return speed;
+		return _speed;
 	}
 	
 	public int getBackgroundLevel() {
-		return backgroundLevel;
+		return _backgroundLevel;
 	}
 	
 	public int getPhoneLevel() {
-		return phoneLevel;
+		return _phoneLevel;
 	}
 
 	@Override
 	public void castMethod() {
-		introEnded = true;
-		entityManager.removeEntity(backgroundTop);
+		_introEnded = true;
+		_entityManager.removeEntity(_backgroundTop);
 	}
 
 	@Override
@@ -234,7 +260,7 @@ public class BackgroundManager extends GameEventHandler {
 	@Override
 	protected synchronized void gameEnd() {
 		super.gameEnd();
-		for (Background background : activeBackgrounds) {
+		for (Background background : _activeBackgrounds) {
 			background.setPosition(Main.WIDTH/2, Main.HEIGHT/2);
 			background.changeVisualization(BackgroundType.values()[0]);
 		}

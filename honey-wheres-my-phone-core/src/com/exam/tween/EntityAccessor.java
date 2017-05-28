@@ -38,7 +38,7 @@ public class EntityAccessor  implements TweenAccessor<Entity> {
 			//TODO alpha settings
 		    break;
 		case AccessorReferences.SCALE:
-			entity.setSccale(newValues[0], newValues[1]);
+			entity.setScale(newValues[0], newValues[1]);
 		    break;
 		case AccessorReferences.POSITION:
 			entity.setPosition(newValues[0], newValues[1]);

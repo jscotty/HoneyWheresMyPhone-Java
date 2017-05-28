@@ -24,16 +24,15 @@ import com.badlogic.gdx.physics.box2d.World;
 public class Entity implements Comparable<Entity>{
 
 	// render data
-	protected Vector2 pPosition = new Vector2(0, 0); 
+	protected Vector2 pPosition = new Vector2(0, 0); // position to be rendered at
 	private Vector2 _bodyPositionDistance = new Vector2(0, 0); // Calculating distance to adjust the body position
-	protected Vector2 pBodyPosition = new Vector2(0, 0);
+	protected Vector2 pBodyPosition = new Vector2(0, 0); // body position for box2D utility
 
-	protected float pOriginX = 0.5f;
-	protected float pOriginY = 0.5f;
-	protected float pScaleX = 1f;
-	protected float pScaleY = 1f;
+	protected float pOriginX = 0.5f; // entity origin X
+	protected float pOriginY = 0.5f; // entity origin Y
+	protected float pScaleX = 1f; // scale X factor
+	protected float pScaleY = 1f; // scale Y factor
 	protected float pAngle = 0f;
-	private Entity _parent;
 	private float _width = 0;
 	private float _height = 0;
 
@@ -213,10 +212,6 @@ public class Entity implements Comparable<Entity>{
 	public void update(float deltaTime) {
 		pBodyPosition.x = (pPosition.x - _bodyPositionDistance.x);
 		pBodyPosition.y = (pPosition.y - _bodyPositionDistance.y);
-		if (_parent != null) {
-			pBody.setTransform(new Vector2(_parent.getPosition().x + pPosition.x, _parent.getPosition().y + pPosition.y),
-					_parent.getAngle() + pAngle);
-		}
 	}
 
 	/**
@@ -239,19 +234,38 @@ public class Entity implements Comparable<Entity>{
 	}
 
 //region properties
+	/**
+	 * Set texture by SpriteType to change visualization.
+	 * @param spriteType
+	 */
 	public void setTexture(SpriteType spriteType){
 		this.pTexture = Main.assets.getTexture(spriteType);
 	}
+	
+	/**
+	 * Set texture to new texture region to change visualization.
+	 * @param texture
+	 */
 	public void setTexture(TextureRegion texture){
 		this.pTexture = texture;
 	}
 	
+	/**
+	 * Set render position.
+	 * @param xPosition
+	 * @param yPosition
+	 */
 	public void setPosition(float xPosition, float yPosition){
 		this.pPosition.x = xPosition;
 		this.pPosition.y = yPosition;
 	}
 	
-	public void setSccale(float scaleX, float scaleY){
+	/**
+	 * Set scale factor.
+	 * @param scaleX
+	 * @param scaleY
+	 */
+	public void setScale(float scaleX, float scaleY){
 		this.pScaleX = scaleX;
 		this.pScaleY = scaleY;
 	}
@@ -261,29 +275,23 @@ public class Entity implements Comparable<Entity>{
 	}
 
 	protected float getX() {
-		if (_parent != null)
-			return (_parent.getPosition().x + pPosition.x) - getOriginX();
-		else
-			return pPosition.x - getOriginX();
+		return pPosition.x - getOriginX();
 	}
 
 	protected float getY() {
-		if (_parent != null)
-			return (_parent.getPosition().y + pPosition.y) - getOriginY();
-		else
-			return pPosition.y - getOriginY();
+		return pPosition.y - getOriginY();
 	}
 
 	public float getWidth() {
 		if (pTexture != null)
 			return pTexture.getRegionWidth();
-		return _width;
+		return _width; // return cached width if there is no texture
 	}
 
 	public float getHeight() {
 		if (pTexture != null)
 			return pTexture.getRegionHeight();
-		return _height;
+		return _height; // return cached height if there is no texture.
 	}
 
 	public TextureRegion getTexture() {
@@ -293,11 +301,7 @@ public class Entity implements Comparable<Entity>{
 	public Vector2 getPosition() {
 		return pPosition;
 	}
-
-	public Entity getParent() {
-		return _parent;
-	}
-
+	
 	public float getOriginX() {
 		return pOriginX * getWidth();
 	}
