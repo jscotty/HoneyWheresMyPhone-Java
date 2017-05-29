@@ -4,15 +4,17 @@ import com.exam.entity.Entity;
 
 import aurelienribon.tweenengine.TweenAccessor;
 
+/**
+ * @author Justin Scott Bieshaar
+ *	   Mediacollege Amsterdam.
+ * 	   Portfolio: Justinbieshaar.com
+ */
 public class EntityAccessor  implements TweenAccessor<Entity> {
 
 	//preparing tweening
 	@Override
 	public int getValues(Entity entity, int tweenType, float[] returnValues) {
 		switch (tweenType) {
-		case AccessorReferences.ALPHA:
-			//TODO alpha settings
-		    return 1;
 		case AccessorReferences.SCALE:
 			returnValues[0] = entity.getScaleX();
 			returnValues[1] = entity.getScaleY();
@@ -34,9 +36,6 @@ public class EntityAccessor  implements TweenAccessor<Entity> {
 	@Override
 	public void setValues(Entity entity, int tweenType, float[] newValues) {
 		switch (tweenType) {
-		case AccessorReferences.ALPHA:
-			//TODO alpha settings
-		    break;
 		case AccessorReferences.SCALE:
 			entity.setScale(newValues[0], newValues[1]);
 		    break;

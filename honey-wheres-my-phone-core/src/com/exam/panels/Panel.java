@@ -10,23 +10,24 @@ import aurelienribon.tweenengine.TweenManager;
  * 	   Portfolio: Justinbieshaar.com
  */
 public abstract class Panel {
-	
-	protected TweenManager tweenManager;
-	
+
+	protected TweenManager pTweenManager;
+	protected boolean pIsActive = false;
+
 	public Panel() {
-		tweenManager = new TweenManager();
+		pTweenManager = new TweenManager();
 	}
 
 	/**
 	 * Start animation to show panel
 	 */
 	public abstract void startAnimation();
-	
+
 	/**
 	 * End animation to remove panel
 	 */
 	public abstract void endAnimation();
-	
+
 	/**
 	 * Update panel.
 	 * Updates every frame.
@@ -47,5 +48,12 @@ public abstract class Panel {
 	 * @param deltaTime
 	 */
 	public abstract void dispose();
+
+	/**
+	 * @return if this panel is active on screen.
+	 */
+	public boolean isActive() {
+		return pIsActive;
+	}
 
 }

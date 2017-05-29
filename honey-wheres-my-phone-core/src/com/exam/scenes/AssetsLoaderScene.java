@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.exam.assets.Assets;
 import com.exam.font.FontLoader;
-import com.exam.handlers.Assets;
 import com.exam.project.Main;
 
 /**
@@ -40,7 +40,6 @@ public class AssetsLoaderScene extends Scene {
 
 	@Override
 	public void handleInput() {
-
 	}
 
 	@Override
@@ -49,7 +48,7 @@ public class AssetsLoaderScene extends Scene {
 		if(Assets.isFinishedLoadingAssets){
 			_fontLoader.loadFonts();
 		}
-		if(_assets.isLoadAnimations()){
+		if(_assets.isLoadingAnimations()){
 			_loadingText = "Loading animations please wait";
 			_font.setScale(0.7f);
 		}

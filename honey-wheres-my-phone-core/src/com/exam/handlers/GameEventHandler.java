@@ -10,39 +10,59 @@ import java.util.Set;
  */
 public abstract class GameEventHandler {
 
-	private Set<GameEventListener> listeners; // set managing automatically if adding listener is already in the list.
-	
+	private Set<GameEventListener> _listeners; // set managing automatically if adding listener is already in the list.
+
 	public GameEventHandler() {
-		listeners = new HashSet<GameEventListener>();
+		_listeners = new HashSet<GameEventListener>();
 	}
-	
+
+	/**
+	 * Cast method to handlers
+	 */
 	public abstract void castMethod();
-	
-	public synchronized void addListener(GameEventListener listener){
-		listeners.add(listener);
+
+	/**
+	 * Add listener to the list.
+	 * @param listener
+	 */
+	public synchronized void addListener(GameEventListener listener) {
+		_listeners.add(listener);
 	}
-	
-	public synchronized void removeListener(GameEventListener listener){
-		listeners.remove(listener);
+
+	/**
+	 * Remove listener from the list.
+	 * @param listener
+	 */
+	public synchronized void removeListener(GameEventListener listener) {
+		_listeners.remove(listener);
 	}
-	
-	protected synchronized void gameStart(){
+
+	/**
+	 * Start the game event casting to all listeners.
+	 */
+	protected synchronized void gameStart() {
 		GameEvent event = new GameEvent(this);
-		for (GameEventListener listener : listeners) {
+		for (GameEventListener listener : _listeners) {
 			listener.gameStart(event);
 		}
 	}
-	
-	protected synchronized void gameReverse(){
+
+	/**
+	 * Reverse the game event casting to all listeners.
+	 */
+	protected synchronized void gameReverse() {
 		GameEvent event = new GameEvent(this);
-		for (GameEventListener listener : listeners) {
+		for (GameEventListener listener : _listeners) {
 			listener.gameReverse(event);
 		}
 	}
-	
-	protected synchronized void gameEnd(){
+
+	/**
+	 * End the game event casting to all listeners.
+	 */
+	protected synchronized void gameEnd() {
 		GameEvent event = new GameEvent(this);
-		for (GameEventListener listener : listeners) {
+		for (GameEventListener listener : _listeners) {
 			listener.gameEnd(event);
 		}
 	}

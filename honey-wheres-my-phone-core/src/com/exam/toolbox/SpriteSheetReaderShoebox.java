@@ -6,6 +6,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
+import com.exam.assets.AnimationType;
+import com.exam.assets.SpriteType;
 
 /**
  * @author Justin Scott Bieshaar
@@ -94,7 +96,7 @@ public class SpriteSheetReaderShoebox {
 			Texture tAtlasTexture = new Texture(atlas + ".png"); // get atlas texture
 
 			Array<Element> sub = tElement.getChildrenByName("SubTexture");
-			textures = new TextureRegion[sub.size]; // desired texture
+			textures = new TextureRegion[sub.size]; // desired texture array size
 			int index = 0;
 			for (Element child : sub) {
 				int x = 0, y = 0, width = 0, height = 0;
@@ -113,6 +115,10 @@ public class SpriteSheetReaderShoebox {
 		return textures;
 	}
 	
+	/**
+	 * @param animation type
+	 * @return array of texture regions from animation type
+	 */
 	public static TextureRegion[] getTexturesFromAtlas(AnimationType type) {
 		TextureRegion[] textures = null;
 		XmlReader tXml = new XmlReader();
@@ -125,6 +131,7 @@ public class SpriteSheetReaderShoebox {
 			int arrayIndex = 0;
 			int spriteIndex = 0;
 			if(type.getStartFrame()==0&&type.getEndFrame()==0){
+				// we can load the full sprite.
 				textures = new TextureRegion[sub.size];
 			} else {
 				textures = new TextureRegion[(type.getEndFrame() - type.getStartFrame())+1];

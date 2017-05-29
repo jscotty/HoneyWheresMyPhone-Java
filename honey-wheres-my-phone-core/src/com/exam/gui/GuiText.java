@@ -15,8 +15,8 @@ public class GuiText extends Gui{
 	
 	private BitmapFont _font;
 	
-	private String _message = "";
-	private float _size = 1;
+	private String _message = ""; //message to draw
+	private float _size = 1; // size factor of font.
 	private float _shadowXOffset;
 	private float _shadowYOffset;
 	private boolean _hasShadow = false;
@@ -31,12 +31,12 @@ public class GuiText extends Gui{
 	 * @param manager
 	 * @param fontType
 	 */
-	public GuiText(float x, float y, GUIManager manager, FontType fontType) {
+	public GuiText(float x, float y, GuiManager manager, FontType fontType) {
 		super(x, y, manager);
 		_font = FontLoader.getFont(fontType);
 	}
 
-	public GuiText(float x, float y, GUIManager manager, FontType fontType, String text) {
+	public GuiText(float x, float y, GuiManager manager, FontType fontType, String text) {
 		super(x, y, manager);
 		_font = FontLoader.getFont(fontType);
 		_message = text;
@@ -113,6 +113,9 @@ public class GuiText extends Gui{
 		_font.setScale(1); 
 	}
 
+	/**
+	 * @return font size
+	 */
 	public float getSize() {
 		return _size;
 	}

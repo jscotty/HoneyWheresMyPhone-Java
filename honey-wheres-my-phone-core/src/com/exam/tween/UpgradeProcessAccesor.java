@@ -14,11 +14,11 @@ public class UpgradeProcessAccesor implements TweenAccessor<UpgradeProcess> {
 
 	//preparing tweening
 	@Override
-	public int getValues(UpgradeProcess button, int tweenType, float[] returnValues) {
+	public int getValues(UpgradeProcess process, int tweenType, float[] returnValues) {
 		switch (tweenType) {
 		case AccessorReferences.SCALE:
-			returnValues[0] = button.getScaleX();
-			returnValues[1] = button.getScaleY();
+			returnValues[0] = process.getScaleX();
+			returnValues[1] = process.getScaleY();
 			return 2;
 		default:
 		    assert false; // stop execution!
@@ -28,10 +28,10 @@ public class UpgradeProcessAccesor implements TweenAccessor<UpgradeProcess> {
 
 	//Applies tween data
 	@Override
-	public void setValues(UpgradeProcess button, int tweenType, float[] newValues) {
+	public void setValues(UpgradeProcess process, int tweenType, float[] newValues) {
 		switch (tweenType) {
 		case AccessorReferences.SCALE:
-			button.scaleProcessIcons(newValues[0], newValues[1]);
+			process.scaleProcessIcons(newValues[0], newValues[1]);
 		    break;
 		default:
 		    assert false; // stop execution!

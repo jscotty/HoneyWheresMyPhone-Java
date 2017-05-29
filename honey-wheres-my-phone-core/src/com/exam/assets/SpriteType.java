@@ -1,4 +1,4 @@
-package com.exam.toolbox;
+package com.exam.assets;
 
 /**
  * @author Justin Scott Bieshaar
@@ -7,6 +7,8 @@ package com.exam.toolbox;
  */
 public enum SpriteType {
 
+	// Sprite sheet location , sprite name in sprite sheet
+	
     //props
     PROPS_ARM("", "props/Arm.png"),
     

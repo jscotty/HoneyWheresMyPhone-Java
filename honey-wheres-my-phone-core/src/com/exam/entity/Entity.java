@@ -10,10 +10,10 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.exam.assets.SpriteType;
 import com.exam.handlers.GameEvent;
 import com.exam.handlers.GameEventListener;
 import com.exam.project.Main;
-import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.World;
 
 /**
@@ -21,7 +21,7 @@ import com.badlogic.gdx.physics.box2d.World;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class Entity implements Comparable<Entity>{
+public class Entity implements Comparable<Entity> {
 
 	// render data
 	protected Vector2 pPosition = new Vector2(0, 0); // position to be rendered at
@@ -70,8 +70,8 @@ public class Entity implements Comparable<Entity>{
 	}
 
 	//endregion
-	
-	public Entity setIndex(int index){
+
+	public Entity setIndex(int index) {
 		pZIndex = index;
 		return this;
 	}
@@ -111,7 +111,8 @@ public class Entity implements Comparable<Entity>{
 	 * @param y position
 	 * @return this
 	 */
-	public Entity addBodyBox(World world, BodyType bodyType, float width, float height, float positionX, float positionY, Object userData) {
+	public Entity addBodyBox(World world, BodyType bodyType, float width, float height, float positionX,
+			float positionY, Object userData) {
 		this._world = world;
 		//Manhattan distance calculation
 		this._bodyPositionDistance.x = pPosition.x - positionX;
@@ -119,7 +120,6 @@ public class Entity implements Comparable<Entity>{
 
 		PolygonShape shape = new PolygonShape();
 		shape.setAsBox(width, height);
-		
 
 		setupBody(shape, bodyType, positionX, positionY, userData);
 		return this;
@@ -151,7 +151,8 @@ public class Entity implements Comparable<Entity>{
 	 * @param positionY
 	 * @return
 	 */
-	public Entity addBodyCircle(World world, BodyType bodyType, float radius, float positionX, float positionY, Object userData) {
+	public Entity addBodyCircle(World world, BodyType bodyType, float radius, float positionX, float positionY,
+			Object userData) {
 		this._world = world;
 		//Manhattan distance calculation
 		this._bodyPositionDistance.x = pPosition.x - positionX;
@@ -160,7 +161,7 @@ public class Entity implements Comparable<Entity>{
 		CircleShape shape = new CircleShape();
 		shape.setRadius(radius);
 
-		setupBody(shape, bodyType, positionX, positionY,userData);
+		setupBody(shape, bodyType, positionX, positionY, userData);
 		return this;
 	}
 
@@ -181,8 +182,8 @@ public class Entity implements Comparable<Entity>{
 		fdef.shape = shape;
 		pBody.createFixture(fdef).setUserData(userData);
 	}
-	
-	public void disableBody(){
+
+	public void disableBody() {
 		_world.destroyBody(pBody);
 	}
 	//endregion
@@ -220,8 +221,10 @@ public class Entity implements Comparable<Entity>{
 	 * @param spriteBatch
 	 */
 	public void render(SpriteBatch spriteBatch) {
-		if(pTexture == null) return;
-		spriteBatch.draw(pTexture, getX(), getY(), pOriginX, pOriginY, getWidth(), getHeight(), pScaleX, pScaleY, pAngle);
+		if (pTexture == null)
+			return;
+		spriteBatch.draw(pTexture, getX(), getY(), pOriginX, pOriginY, getWidth(), getHeight(), pScaleX, pScaleY,
+				pAngle);
 	}
 
 	@Override
@@ -233,43 +236,43 @@ public class Entity implements Comparable<Entity>{
 		}
 	}
 
-//region properties
+	//region properties
 	/**
 	 * Set texture by SpriteType to change visualization.
 	 * @param spriteType
 	 */
-	public void setTexture(SpriteType spriteType){
+	public void setTexture(SpriteType spriteType) {
 		this.pTexture = Main.assets.getTexture(spriteType);
 	}
-	
+
 	/**
 	 * Set texture to new texture region to change visualization.
 	 * @param texture
 	 */
-	public void setTexture(TextureRegion texture){
+	public void setTexture(TextureRegion texture) {
 		this.pTexture = texture;
 	}
-	
+
 	/**
 	 * Set render position.
 	 * @param xPosition
 	 * @param yPosition
 	 */
-	public void setPosition(float xPosition, float yPosition){
+	public void setPosition(float xPosition, float yPosition) {
 		this.pPosition.x = xPosition;
 		this.pPosition.y = yPosition;
 	}
-	
+
 	/**
 	 * Set scale factor.
 	 * @param scaleX
 	 * @param scaleY
 	 */
-	public void setScale(float scaleX, float scaleY){
+	public void setScale(float scaleX, float scaleY) {
 		this.pScaleX = scaleX;
 		this.pScaleY = scaleY;
 	}
-	
+
 	protected Vector2 getBodyPosition() {
 		return pBodyPosition;
 	}
@@ -301,7 +304,7 @@ public class Entity implements Comparable<Entity>{
 	public Vector2 getPosition() {
 		return pPosition;
 	}
-	
+
 	public float getOriginX() {
 		return pOriginX * getWidth();
 	}
@@ -321,5 +324,5 @@ public class Entity implements Comparable<Entity>{
 	public float getAngle() {
 		return pAngle;
 	}
-//endregion
+	//endregion
 }

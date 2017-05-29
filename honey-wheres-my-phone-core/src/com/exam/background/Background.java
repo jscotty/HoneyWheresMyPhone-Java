@@ -9,10 +9,10 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.World;
+import com.exam.assets.SpriteType;
 import com.exam.entity.Entity;
 import com.exam.entity.EntityManager;
 import com.exam.project.Main;
-import com.exam.toolbox.SpriteType;
 
 /**
  * @author Justin Scott Bieshaar
@@ -20,9 +20,10 @@ import com.exam.toolbox.SpriteType;
  * 	   Portfolio: Justinbieshaar.com
  */
 public class Background extends Entity {
-	
+
 	private Entity _overlay;
 	private BackgroundType _backgroundType;
+
 	/**
 	 * Constructor for initializing.
 	 * @param world for body 
@@ -37,12 +38,12 @@ public class Background extends Entity {
 		_overlay = new Entity(position, backgroundType.getOverlaySprite(), manager).setIndex(10);
 		pZIndex = -2;
 	}
-	
+
 	/**
 	 * Move this backround in y direction by given speed.
 	 * @param movement speed
 	 */
-	public void scroll(float speed){
+	public void scroll(float speed) {
 		pPosition.y += speed;
 	}
 
@@ -55,15 +56,15 @@ public class Background extends Entity {
 	/**
 	 * @return repeat count of current background type.
 	 */
-	public int getRepeatCount(){
+	public int getRepeatCount() {
 		return _backgroundType.getRepeatCount();
 	}
-	
+
 	/**
 	 * Change the visualization of this background by given backgroundType.
 	 * @param backgroundType
 	 */
-	public void changeVisualization(BackgroundType backgroundType){
+	public void changeVisualization(BackgroundType backgroundType) {
 		this.setTexture(backgroundType.getBackgroundSprite());
 		_overlay.setTexture(backgroundType.getOverlaySprite());
 		_backgroundType = backgroundType;

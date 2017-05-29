@@ -12,78 +12,112 @@ import com.exam.background.BackgroundManager;
 public class GameManager {
 
 	//Managing save data in this class.
-	
+
 	public static final int DEPTH_LEVEL = 0;
 	public static final int START_DEPTH_LEVEL = 1;
 	public static final int ITEM_VALUE_LEVEL = 2;
-	
-	private static final String PREFERENCE_LOCATION = "gameData";
+
+	// locations
+	private static final String PREFERENCE_LOCATION = "gameData"; // preference location name.
 	private static final String MONEY_LOCATION = "Money";
-	private static final String[] PHONES_COLLECTED_LOCATION = new String[]{
-			"Phone1", "Phone2", "Phone3", "Phone4", "Phone5"
-	};
-	private static final String[] UPGRADE_LOCATIONS = new String[]{
-			"Depth", "Start Depth", "Item Value"
-	};
+	private static final String[] PHONES_COLLECTED_LOCATION = new String[] { "Phone1", "Phone2", "Phone3", "Phone4",
+			"Phone5" };
+	private static final String[] UPGRADE_LOCATIONS = new String[] { "Depth", "Start Depth", "Item Value" };
 
 	public static boolean isPaused = false;
 	public static boolean isHit = false;
-	
+
 	private static int _money;
-	
-	private static Preferences preferences;
-	
-	public static void init(){
-		preferences = Gdx.app.getPreferences(PREFERENCE_LOCATION);
-		_money = preferences.getInteger(MONEY_LOCATION);
-		preferences.flush();
+
+	private static Preferences _preferences; // all data is stored in this class.
+
+	/**
+	 * Initialize save data
+	 */
+	public static void init() {
+		_preferences = Gdx.app.getPreferences(PREFERENCE_LOCATION);
+		_money = _preferences.getInteger(MONEY_LOCATION);
+		_preferences.flush();
 	}
-	
-	public static void addUpgrade(int index){
-		int currentUpgrade = preferences.getInteger(UPGRADE_LOCATIONS[index]);
-		
+
+	/**
+	 * Save and set upgrade data
+	 * @param index (0 = depth, 1 = start depth, 2 = item value)
+	 */
+	public static void addUpgrade(int index) {
+		int currentUpgrade = _preferences.getInteger(UPGRADE_LOCATIONS[index]);
+
 		currentUpgrade++;
-		preferences.putInteger(UPGRADE_LOCATIONS[index], currentUpgrade);
-		preferences.flush();
+		_preferences.putInteger(UPGRADE_LOCATIONS[index], currentUpgrade);
+		_preferences.flush();
 	}
-	
-	public static void collectedPhone(int index){
-		preferences.putBoolean(PHONES_COLLECTED_LOCATION[index], true);
-		preferences.flush();
+
+	/**
+	 * Save and set if phone is collected.
+	 * @param index
+	 */
+	public static void collectedPhone(int index) {
+		_preferences.putBoolean(PHONES_COLLECTED_LOCATION[index], true);
+		_preferences.flush();
 	}
-	
-	public static void addMoney(int money){
-		_money += money + (money*getUpgradeLevel(ITEM_VALUE_LEVEL));
-		preferences.putInteger(MONEY_LOCATION, money);
-		preferences.flush();
+
+	/**
+	 * Save and set added money
+	 * @param money
+	 */
+	public static void addMoney(int money) {
+		_money += money + (money * getUpgradeLevel(ITEM_VALUE_LEVEL));
+		_preferences.putInteger(MONEY_LOCATION, _money);
+		_preferences.flush();
 	}
-	
-	public static void removeMoney(int money){
+
+	/**
+	 * Save and removes amount of given money
+	 * @param money
+	 */
+	public static void removeMoney(int money) {
 		System.out.println(money);
 		_money -= money;
-		preferences.putInteger(MONEY_LOCATION, _money);
-		preferences.flush();
+		_preferences.putInteger(MONEY_LOCATION, _money);
+		_preferences.flush();
 	}
-	
-	public static int getUpgradeLevel(int index){
-		return preferences.getInteger(UPGRADE_LOCATIONS[index]);
+
+	/**
+	 * @param index of upgrade
+	 * @return saved upgrade level
+	 */
+	public static int getUpgradeLevel(int index) {
+		return _preferences.getInteger(UPGRADE_LOCATIONS[index]);
 	}
-	
-	public static int getMaximumDepth(){
-		return 200 * (preferences.getInteger(UPGRADE_LOCATIONS[DEPTH_LEVEL])+1); // dirty fix..
+
+	/**
+	 * @return maximum depth upgrade level.
+	 */
+	public static int getMaximumDepth() {
+		return 200 * (_preferences.getInteger(UPGRADE_LOCATIONS[DEPTH_LEVEL]) + 1); // dirty fix..
 	}
-	
-	public static int getMoney(){
+
+	/**
+	 * @return current amount of money.
+	 */
+	public static int getMoney() {
 		return _money;
 	}
-	
-	public static boolean isPoneCollected(int index){
-		return preferences.getBoolean(PHONES_COLLECTED_LOCATION[index]);
+
+	/**
+	 * @param index
+	 * @return Saved data if phone is already collected
+	 */
+	public static boolean isPoneCollected(int index) {
+		return _preferences.getBoolean(PHONES_COLLECTED_LOCATION[index]);
 	}
-	
-	public static void reset(){
+
+	/**
+	 * Reset game state.
+	 */
+	public static void reset() {
 		isPaused = false;
 		isHit = false;
 	}
-	
+
 }

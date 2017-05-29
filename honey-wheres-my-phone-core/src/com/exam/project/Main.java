@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.exam.handlers.Assets;
+import com.exam.assets.Assets;
 import com.exam.handlers.MyInput;
 import com.exam.handlers.MyInputProcessor;
 import com.exam.managers.GameManager;
@@ -68,14 +68,23 @@ public class Main extends ApplicationAdapter {
 		// When closing application
 	}
 
+	/**
+	 * @return sprite batch for rendering
+	 */
 	public SpriteBatch getBatch() {
 		return _batch;
 	}
 
+	/**
+	 * @return main camera for entities
+	 */
 	public OrthographicCamera getCamera() {
 		return _camera;
 	}
 
+	/**
+	 * @return hud camera for guis.
+	 */
 	public OrthographicCamera getHudCamera() {
 		return _hudCamera;
 	}

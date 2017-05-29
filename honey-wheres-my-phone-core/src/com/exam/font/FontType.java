@@ -7,13 +7,13 @@ package com.exam.font;
  */
 public enum FontType {
 	SUPERCELL_MAGIC("font/supercell-magic");
-	
+
 	private String _fontName;
-	
-	private FontType(String fontName){
+
+	private FontType(String fontName) {
 		this._fontName = fontName;
 	}
-	
+
 	/**
 	 * Get font path name, can be used for .fnt and .png
 	 * @return font path name.

@@ -1,6 +1,6 @@
 package com.exam.items;
 
-import com.exam.toolbox.SpriteType;
+import com.exam.assets.SpriteType;
 
 /**
  * @author Justin Scott Bieshaar
@@ -8,6 +8,7 @@ import com.exam.toolbox.SpriteType;
  * 	   Portfolio: Justinbieshaar.com
  */
 public enum ItemType {
+	// SpriteType, background level to spawn at, item value, boolean if item has to move or not.
 	LIGHTER(SpriteType.PROPS_LIGHTER, 1, 1, false),
 	CONDOM(SpriteType.PROPS_CONDOM, 1, 3, false),
 	ID_CARD(SpriteType.PROPS_ID_CARD, 1, 1, true),
@@ -28,7 +29,7 @@ public enum ItemType {
 	NOTE(SpriteType.PROPS_NOTE, 2, 8, false),
 	UNDERWEAR(SpriteType.PROPS_UNDERWEAR, 2, 12, true),
 	TICKETS(SpriteType.PROPS_TICKETS, 2, 10, false),
-	BLUSH(SpriteType.PROPS_BLUSH, 3, 15,false),
+	BLUSH(SpriteType.PROPS_BLUSH, 3, 15, false),
 	FESTIVAL_COINS(SpriteType.PROPS_FESTIVAL_COINS, 3, 15, true),
 	FOHN(SpriteType.PROPS_FOHN, 3, 18, false),
 	TICKET(SpriteType.PROPS_TICKET, 3, 16, true),
@@ -46,8 +47,10 @@ public enum ItemType {
 
 	/**
 	 * Enumeration constructor
-	 * @param sprite type
-	 * @param score value
+	 * @param sprite type.
+	 * @param background level to spawn at.
+	 * @param score value.
+	 * @param moving or not moving.
 	 */
 	private ItemType(SpriteType sprite, int level, float score, boolean moving) {
 		this._sprite = sprite;
@@ -64,16 +67,22 @@ public enum ItemType {
 	}
 
 	/**
-	 * @return score value of this item type
+	 * @return item value of this item type.
 	 */
 	public float getScore() {
 		return _score;
 	}
-	
+
+	/**
+	 * @return Background level this item type has to spawn at.
+	 */
 	public int getLevel() {
 		return _level;
 	}
-	
+
+	/**
+	 * @return if item type has to move or not.
+	 */
 	public boolean isMoving() {
 		return _moving;
 	}

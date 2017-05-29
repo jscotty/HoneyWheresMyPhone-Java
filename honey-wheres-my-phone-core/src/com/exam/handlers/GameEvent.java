@@ -5,15 +5,15 @@ package com.exam.handlers;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class GameEvent {
+public class GameEvent { //basic event
 
-	private GameEventHandler source;
-	
+	private GameEventHandler _source;
+
 	public GameEvent(GameEventHandler source) {
-		this.source = source;
+		this._source = source;
 	}
-	
+
 	public GameEventHandler getSource() {
-		return source;
+		return _source;
 	}
 }

@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  *	   Mediacollege Amsterdam.
  * 	   Portfolio: Justinbieshaar.com
  */
-public class GUIManager {
+public class GuiManager {
 
 	private List<Gui> _guis = new ArrayList<Gui>();
 	

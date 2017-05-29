@@ -8,12 +8,14 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.exam.assets.AnimationType;
+import com.exam.assets.SpriteType;
 import com.exam.background.Background;
 import com.exam.background.BackgroundManager;
 import com.exam.entity.EntityManager;
 import com.exam.entity.Hook;
 import com.exam.font.FontType;
-import com.exam.gui.GUIManager;
+import com.exam.gui.GuiManager;
 import com.exam.gui.GuiButton;
 import com.exam.gui.GuiText;
 import com.exam.handlers.GameEvent;
@@ -25,8 +27,6 @@ import com.exam.panels.EndPanel;
 import com.exam.panels.PausePanel;
 import com.exam.panels.UpgradePanel;
 import com.exam.project.Main;
-import com.exam.toolbox.AnimationType;
-import com.exam.toolbox.SpriteType;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 /**
@@ -37,9 +37,8 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 public class MainScene extends Scene implements GameEventListener{
 	
 	private World _world;
-	private Box2DDebugRenderer _debugRenderer;
 	private EntityManager _entityManager;
-	private GUIManager _guiManager;
+	private GuiManager _guiManager;
 
 	private Hook _hook;
 	private GuiText _metersText;
@@ -58,9 +57,8 @@ public class MainScene extends Scene implements GameEventListener{
 	protected MainScene(SceneManager manager) {
 		super(manager);
 		_world = new World(new Vector2(0f,-10f), true);
-		_debugRenderer = new Box2DDebugRenderer();
 		_entityManager = new EntityManager();
-		_guiManager = new GUIManager();
+		_guiManager = new GuiManager();
 		_itemManager = new ItemManager(_world, _entityManager);
 		_world.setContactListener(_itemManager);
 		
@@ -115,12 +113,12 @@ public class MainScene extends Scene implements GameEventListener{
 	public void render() {
 		pSpriteBatch.setProjectionMatrix(pCamera.combined);
 		pSpriteBatch.begin();
-		_entityManager.render(pSpriteBatch);
+		_entityManager.render(pSpriteBatch); // let the entity manager render all entities.
 		pSpriteBatch.end();
 		
 		pSpriteBatch.setProjectionMatrix(pHudCamera.combined);
 		pSpriteBatch.begin();
-		_guiManager.render(pSpriteBatch);
+		_guiManager.render(pSpriteBatch); // let the gui manager render all guis.
 		pSpriteBatch.end();
 
 		_pausePanel.render(pSpriteBatch);

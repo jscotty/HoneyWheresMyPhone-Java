@@ -1,13 +1,11 @@
-package com.exam.handlers;
+package com.exam.assets;
 
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.exam.toolbox.AnimationType;
 import com.exam.toolbox.SpriteSheetReaderShoebox;
-import com.exam.toolbox.SpriteType;
 
 /**
  * @author Justin Scott Bieshaar
@@ -36,7 +34,7 @@ public class Assets {
 	}
 	
 	/**
-	 * load asset.
+	 * load asset and animations.
 	 */
 	public void load(){
 		if(loadAnimations){
@@ -130,7 +128,11 @@ public class Assets {
 		return _percentage;
 	}
 	
-	public boolean isLoadAnimations() {
+	/**
+	 * Used for loading screen text message.
+	 * @return if is loading animations
+	 */
+	public boolean isLoadingAnimations() {
 		return loadAnimations;
 	}
 

@@ -2,14 +2,14 @@ package com.exam.scenes;
 
 import com.exam.gui.GuiButton;
 import com.badlogic.gdx.math.Vector2;
+import com.exam.assets.AnimationType;
+import com.exam.assets.SpriteType;
 import com.exam.entity.Animation;
 import com.exam.entity.EntityManager;
-import com.exam.gui.GUIManager;
+import com.exam.gui.GuiManager;
 import com.exam.gui.Gui;
 import com.exam.panels.UpgradePanel;
 import com.exam.project.Main;
-import com.exam.toolbox.AnimationType;
-import com.exam.toolbox.SpriteType;
 import com.exam.tween.AccessorReferences;
 import com.exam.tween.GuiAccessor;
 
@@ -26,7 +26,7 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class MainMenuScene extends Scene{
 	
-	private GUIManager _guiManager;
+	private GuiManager _guiManager;
 	
 	// not sure why I got this warning.. because I register them inside the given guiManager in the constructor.
 	
@@ -54,7 +54,7 @@ public class MainMenuScene extends Scene{
 		Tween.registerAccessor(Gui.class, new GuiAccessor());
 		
 		entityManager = new EntityManager();
-		_guiManager = new GUIManager();
+		_guiManager = new GuiManager();
 
 		_background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGROUND, _guiManager).setIndex(-2);
 		_logo = new Gui(Main.WIDTH/2, 950, SpriteType.LOGO_01, _guiManager);
