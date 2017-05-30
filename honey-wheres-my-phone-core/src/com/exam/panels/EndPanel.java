@@ -2,7 +2,6 @@ package com.exam.panels;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.exam.gui.GuiManager;
 import com.exam.assets.SpriteType;
 import com.exam.gui.Gui;
 import com.exam.gui.GuiButton;
@@ -23,8 +22,6 @@ import aurelienribon.tweenengine.TweenCallback;
  * 	   Portfolio: Justinbieshaar.com
  */
 public class EndPanel extends Panel {
-
-	private GuiManager guiManager;
 
 	//Visualization
 	private Gui _background;
@@ -49,24 +46,23 @@ public class EndPanel extends Panel {
 		super();
 		this._sceneManager = sceneManager;
 		Tween.registerAccessor(Gui.class, new GuiAccessor());
-		guiManager = new GuiManager();
 
 		//initialize, process and register guis.
-		_background = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGROUND_FADE_02, guiManager).setIndex(10);
+		_background = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGROUND_FADE_02, pGuiManager).setIndex(10);
 		_gamePausedText = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2 + _background.getHeight() / 2,
-				SpriteType.GAME_ENDED_TEXT, guiManager).setIndex(10);
+				SpriteType.GAME_ENDED_TEXT, pGuiManager).setIndex(10);
 
 		_resumeButton = (GuiButton) new GuiButton(Main.WIDTH / 2 + 200,
 				Main.HEIGHT / 2 - _background.getHeight() / 2 + 20, SpriteType.BUTTON_REPLAY_IDLE,
-				SpriteType.BUTTON_REPLAY_PRESSED, camera, guiManager).setIndex(11);
+				SpriteType.BUTTON_REPLAY_PRESSED, camera, pGuiManager).setIndex(11);
 		_upgradeButton = (GuiButton) new GuiButton(Main.WIDTH / 2, Main.HEIGHT / 2 - _background.getHeight() / 2,
-				SpriteType.BUTTON_UPGRADES_IDLE_SMALL, SpriteType.BUTTON_UPGRADES_PRESSED_SMALL, camera, guiManager)
+				SpriteType.BUTTON_UPGRADES_IDLE_SMALL, SpriteType.BUTTON_UPGRADES_PRESSED_SMALL, camera, pGuiManager)
 						.setIndex(11);
 		_menuButton = (GuiButton) new GuiButton(Main.WIDTH / 2 - 200,
 				Main.HEIGHT / 2 - _background.getHeight() / 2 + 20, SpriteType.BUTTON_HOME_IDLE,
-				SpriteType.BUTTON_HOME_PRESSED, camera, guiManager).setIndex(11);
+				SpriteType.BUTTON_HOME_PRESSED, camera, pGuiManager).setIndex(11);
 		_trophiesButton = (GuiButton) new GuiButton(600, 1200, SpriteType.BUTTON_TROPHIES_IDLE_SMALL,
-				SpriteType.BUTTON_TROPHIES_PRESSED_SMALL, camera, guiManager).setIndex(11);
+				SpriteType.BUTTON_TROPHIES_PRESSED_SMALL, camera, pGuiManager).setIndex(11);
 
 		_upgradePanel = new UpgradePanel(camera, sceneManager);
 
@@ -152,7 +148,7 @@ public class EndPanel extends Panel {
 		if (!_upgradePanel.isActive())
 			handleInput();
 		pTweenManager.update(deltaTime);
-		guiManager.update(deltaTime);
+		pGuiManager.update(deltaTime);
 		_upgradePanel.update(deltaTime);
 	}
 
@@ -161,7 +157,7 @@ public class EndPanel extends Panel {
 		if (!pIsActive)
 			return;
 		spriteBatch.begin();
-		guiManager.render(spriteBatch);
+		pGuiManager.render(spriteBatch);
 		spriteBatch.end();
 		_upgradePanel.render(spriteBatch);
 	}

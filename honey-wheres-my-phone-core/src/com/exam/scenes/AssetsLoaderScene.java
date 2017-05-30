@@ -15,13 +15,17 @@ import com.exam.project.Main;
  * 	   Portfolio: Justinbieshaar.com
  */
 public class AssetsLoaderScene extends Scene {
+
+	private final String LOADING_ANIMATIONS_MESSAGE = "Loading animations please wait";
+	private final String LOADING_AUDIO_MESSAGE = "Loading sounds please wait";
+	private final String LOADING_ASSETS_MESSAGE = "loading assets please wait";
 	
 	private Assets _assets;
 	private FontLoader _fontLoader;
 	private BitmapFont _font;
 	private TextureRegion _background;
 	private String _loadingText = "loading assets please wait";
-	private String _loadingDrawText = "loading assets please wait";
+	private String _loadingDrawText = LOADING_ASSETS_MESSAGE;
 	private float _dotTimer = 0;
 
 	/**
@@ -49,8 +53,12 @@ public class AssetsLoaderScene extends Scene {
 			_fontLoader.loadFonts();
 		}
 		if(_assets.isLoadingAnimations()){
-			_loadingText = "Loading animations please wait";
+			_loadingText = LOADING_ANIMATIONS_MESSAGE;
 			_font.setScale(0.7f);
+		}
+		if(_assets.isLoadingAudio()){
+			_loadingText = LOADING_AUDIO_MESSAGE;
+			_font.setScale(0.8f);
 		}
 		
 		if(_fontLoader.isFontsLoaded())

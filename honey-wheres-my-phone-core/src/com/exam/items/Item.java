@@ -5,8 +5,10 @@ import java.util.Random;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.exam.assets.AudioType;
 import com.exam.entity.Entity;
 import com.exam.entity.EntityManager;
+import com.exam.managers.SoundManager;
 import com.exam.project.Main;
 import com.exam.tween.AccessorReferences;
 
@@ -101,6 +103,7 @@ public class Item extends Entity {
 	}
 
 	public void animateAway(TweenManager tweenManager) {
+		SoundManager.playAudio(AudioType.COLLECT_ITEM);;
 		Tween.to(this, AccessorReferences.POSITION, TWEEN_DURATION).target(10, Main.HEIGHT + 210).start(tweenManager);
 		Tween.to(this, AccessorReferences.SCALE, TWEEN_DURATION).target(0, 0).start(tweenManager);
 	}

@@ -3,6 +3,7 @@ package com.exam.panels;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.exam.gui.GuiManager;
+import com.exam.gui.GuiToggleButton;
 import com.exam.assets.SpriteType;
 import com.exam.gui.Gui;
 import com.exam.gui.GuiButton;
@@ -24,14 +25,12 @@ import aurelienribon.tweenengine.TweenCallback;
  */
 public class PausePanel extends Panel {
 
-	private GuiManager _guiManager; // to process and register guis.
-
 	// Visualization
 	private Gui _background;
 	private Gui _gamePausedText;
 	private GuiButton _resumeButton;
 	private GuiButton _menuButton;
-	private GuiButton _muteButton;
+	private GuiToggleButton _muteButton;
 
 	private float _animationTime = 0.2f;
 
@@ -41,17 +40,16 @@ public class PausePanel extends Panel {
 		super();
 		this._sceneManager = sceneManager;
 		Tween.registerAccessor(Gui.class, new GuiAccessor());
-		_guiManager = new GuiManager();
-		_background = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGROUND_FADE_02, _guiManager);
+		_background = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGROUND_FADE_02, pGuiManager);
 		_gamePausedText = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2 + _background.getHeight() / 2,
-				SpriteType.GAME_PAUSED_TEXT, _guiManager);
+				SpriteType.GAME_PAUSED_TEXT, pGuiManager);
 
 		_resumeButton = new GuiButton(Main.WIDTH / 2, Main.HEIGHT / 2 + 90, SpriteType.BUTTON_RESUME_IDLE,
-				SpriteType.BUTTON_RESUME_PRESSED, camera, _guiManager);
+				SpriteType.BUTTON_RESUME_PRESSED, camera, pGuiManager);
 		_menuButton = new GuiButton(Main.WIDTH / 2, Main.HEIGHT / 2 - 90, SpriteType.BUTTON_MENU_IDLE,
-				SpriteType.BUTTON_MENU_PRESSED, camera, _guiManager);
-		_muteButton = new GuiButton(600, 1200, SpriteType.BUTTON_AUDIO_ON_IDLE, SpriteType.BUTTON_AUDIO_ON_PRESSED,
-				camera, _guiManager);
+				SpriteType.BUTTON_MENU_PRESSED, camera, pGuiManager);
+		_muteButton = new GuiToggleButton(600, 1200, SpriteType.BUTTON_AUDIO_ON_IDLE, SpriteType.BUTTON_AUDIO_ON_PRESSED,SpriteType.BUTTON_AUDIO_OFF_IDLE, SpriteType.BUTTON_AUDIO_OFF_PRESSED,
+				camera, pGuiManager);
 
 		Timeline.createSequence()
 				//set tweens
@@ -121,7 +119,7 @@ public class PausePanel extends Panel {
 			return; // no need to update if we are not active.
 		handleInput();
 		pTweenManager.update(deltaTime);
-		_guiManager.update(deltaTime);
+		pGuiManager.update(deltaTime);
 	}
 
 	@Override
@@ -129,7 +127,7 @@ public class PausePanel extends Panel {
 		if (!pIsActive)
 			return; // no need to render if we are not active.
 		spriteBatch.begin();
-		_guiManager.render(spriteBatch);
+		pGuiManager.render(spriteBatch);
 		spriteBatch.end();
 	}
 

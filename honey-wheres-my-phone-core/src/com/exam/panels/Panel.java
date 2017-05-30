@@ -1,6 +1,7 @@
 package com.exam.panels;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.exam.gui.GuiManager;
 
 import aurelienribon.tweenengine.TweenManager;
 
@@ -11,11 +12,13 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public abstract class Panel {
 
+	protected GuiManager pGuiManager; // to register and process guis
 	protected TweenManager pTweenManager;
 	protected boolean pIsActive = false;
 
 	public Panel() {
 		pTweenManager = new TweenManager();
+		pGuiManager = new GuiManager();
 	}
 
 	/**

@@ -38,8 +38,6 @@ public class UpgradePanel extends Panel {
 	private final int UPGRADE_BOOST = 1;
 	private final int UPGRADE_MONEY_INCREASE = 2;
 
-	private GuiManager _guiManager;
-
 	// Visualization
 	private Gui _background;
 	private Gui _backgroundOverlay;
@@ -61,51 +59,50 @@ public class UpgradePanel extends Panel {
 	public UpgradePanel(OrthographicCamera camera, SceneManager sceneManager) {
 		super();
 		this._sceneManager = sceneManager;
-		_guiManager = new GuiManager();
 		Tween.registerAccessor(Gui.class, new GuiAccessor());
 		Tween.registerAccessor(UpgradeProcess.class, new UpgradeProcessAccesor());
 		Tween.registerAccessor(GuiText.class, new GuiTextAccessor());
 
-		_background = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGOUND_PLYAY_01, _guiManager);
-		_backgroundOverlay = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGOUND_PLYAY_01_OVERLAY, _guiManager);
-		_cashText = new GuiText(400, 1200, _guiManager, FontType.SUPERCELL_MAGIC);
+		_background = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGOUND_PLYAY_01, pGuiManager);
+		_backgroundOverlay = new Gui(Main.WIDTH / 2, Main.HEIGHT / 2, SpriteType.BACKGOUND_PLYAY_01_OVERLAY, pGuiManager);
+		_cashText = new GuiText(400, 1200, pGuiManager, FontType.SUPERCELL_MAGIC);
 		_cashText.setText("$ 0");
 
 		//initializing processing and registering gui arrays
 		_fadeBackgrounds = new Gui[] {
-			new Gui(Main.WIDTH / 2, (Main.HEIGHT / 2) + OFFSET, SpriteType.BACKGROUND_FADE_01, _guiManager),
-			new Gui(Main.WIDTH / 2, Main.HEIGHT / 2.0f, SpriteType.BACKGROUND_FADE_01, _guiManager),
-			new Gui(Main.WIDTH / 2, (Main.HEIGHT / 2) - OFFSET, SpriteType.BACKGROUND_FADE_01, _guiManager) 
+			new Gui(Main.WIDTH / 2, (Main.HEIGHT / 2) + OFFSET, SpriteType.BACKGROUND_FADE_01, pGuiManager),
+			new Gui(Main.WIDTH / 2, Main.HEIGHT / 2.0f, SpriteType.BACKGROUND_FADE_01, pGuiManager),
+			new Gui(Main.WIDTH / 2, (Main.HEIGHT / 2) - OFFSET, SpriteType.BACKGROUND_FADE_01, pGuiManager) 
 		};
 
 		_icons = new Gui[] { 
-			new Gui(140, (Main.HEIGHT / 2) + OFFSET, SpriteType.UPGRADE_ARM_LENGTH, _guiManager),
-			new Gui(140, Main.HEIGHT / 2.0f, SpriteType.UPGRADE_STARTDEPTH_INCREASER, _guiManager),
-			new Gui(140, (Main.HEIGHT / 2) - OFFSET, SpriteType.UPGRADE_ITEMVALUE_INCREASER, _guiManager) 
+			new Gui(140, (Main.HEIGHT / 2) + OFFSET, SpriteType.UPGRADE_ARM_LENGTH, pGuiManager),
+			new Gui(140, Main.HEIGHT / 2.0f, SpriteType.UPGRADE_STARTDEPTH_INCREASER, pGuiManager),
+			new Gui(140, (Main.HEIGHT / 2) - OFFSET, SpriteType.UPGRADE_ITEMVALUE_INCREASER, pGuiManager) 
 		};
 
 		_valueTexts = new GuiText[] {
-			new GuiText(275, (Main.HEIGHT / 2) + OFFSET - 10, _guiManager, FontType.SUPERCELL_MAGIC, "100$"),
-			new GuiText(275, (Main.HEIGHT / 2) - 10, _guiManager, FontType.SUPERCELL_MAGIC, "100$"),
-			new GuiText(275, (Main.HEIGHT / 2) - OFFSET - 10, _guiManager, FontType.SUPERCELL_MAGIC, "100$") 
+			new GuiText(275, (Main.HEIGHT / 2) + OFFSET - 10, pGuiManager, FontType.SUPERCELL_MAGIC, "100$"),
+			new GuiText(275, (Main.HEIGHT / 2) - 10, pGuiManager, FontType.SUPERCELL_MAGIC, "100$"),
+			new GuiText(275, (Main.HEIGHT / 2) - OFFSET - 10, pGuiManager, FontType.SUPERCELL_MAGIC, "100$") 
 		};
 
 		_buyButtons = new GuiButton[] {
-			new GuiButton(600, (Main.HEIGHT / 2) + OFFSET - 50, SpriteType.BUTTON_BUY_IDLE, SpriteType.BUTTON_BUY_PRESSED, camera, _guiManager),
-			new GuiButton(600, (Main.HEIGHT / 2) - 50, SpriteType.BUTTON_BUY_IDLE, SpriteType.BUTTON_BUY_PRESSED, camera, _guiManager),
-			new GuiButton(600, (Main.HEIGHT / 2) - OFFSET - 50, SpriteType.BUTTON_BUY_IDLE, SpriteType.BUTTON_BUY_PRESSED, camera, _guiManager)
+			new GuiButton(600, (Main.HEIGHT / 2) + OFFSET - 50, SpriteType.BUTTON_BUY_IDLE, SpriteType.BUTTON_BUY_PRESSED, camera, pGuiManager),
+			new GuiButton(600, (Main.HEIGHT / 2) - 50, SpriteType.BUTTON_BUY_IDLE, SpriteType.BUTTON_BUY_PRESSED, camera, pGuiManager),
+			new GuiButton(600, (Main.HEIGHT / 2) - OFFSET - 50, SpriteType.BUTTON_BUY_IDLE, SpriteType.BUTTON_BUY_PRESSED, camera, pGuiManager)
 		};
 
 		_processes = new UpgradeProcess[] {
-			new UpgradeProcess(_guiManager, Main.WIDTH / 2.5f, (Main.HEIGHT / 2) + OFFSET + 60, "Increase depth", 0),
-			new UpgradeProcess(_guiManager, Main.WIDTH / 2.5f, (Main.HEIGHT / 2) + 60, "Increase head start", 1),
-			new UpgradeProcess(_guiManager, Main.WIDTH / 2.5f, (Main.HEIGHT / 2) - OFFSET + 60, "Increase item value", 2)
+			new UpgradeProcess(pGuiManager, Main.WIDTH / 2.5f, (Main.HEIGHT / 2) + OFFSET + 60, "Increase depth", 0),
+			new UpgradeProcess(pGuiManager, Main.WIDTH / 2.5f, (Main.HEIGHT / 2) + 60, "Increase head start", 1),
+			new UpgradeProcess(pGuiManager, Main.WIDTH / 2.5f, (Main.HEIGHT / 2) - OFFSET + 60, "Increase item value", 2)
 		};
 
 		_continueButton = new GuiButton(600, 100, SpriteType.BUTTON_PLAY_SMALL_IDLE,
-			SpriteType.BUTTON_PLAY_SMALL_PRESSED, camera, _guiManager);
+			SpriteType.BUTTON_PLAY_SMALL_PRESSED, camera, pGuiManager);
 		_closeButton = new GuiButton(100, 1200, SpriteType.BUTTON_QUIT_IDLE, SpriteType.BUTTON_QUIT_PRESSED, camera,
-			_guiManager);
+			pGuiManager);
 
 		//set tweens
 		Timeline.createSequence().beginParallel().push(Tween.set(_background, AccessorReferences.SCALE).target(0, 0))
@@ -288,7 +285,7 @@ public class UpgradePanel extends Panel {
 			return;
 		handleInput();
 		pTweenManager.update(deltaTime);
-		_guiManager.update(deltaTime);
+		pGuiManager.update(deltaTime);
 
 		for (int i = 0; i < _valueTexts.length; i++) {
 			_valueTexts[i].setText(_processes[i].getCost() + "$");
@@ -301,7 +298,7 @@ public class UpgradePanel extends Panel {
 		if (!pIsActive)
 			return;
 		spriteBatch.begin();
-		_guiManager.render(spriteBatch); // we'll let the manager render everything.
+		pGuiManager.render(spriteBatch); // we'll let the manager render everything.
 		spriteBatch.end();
 	}
 

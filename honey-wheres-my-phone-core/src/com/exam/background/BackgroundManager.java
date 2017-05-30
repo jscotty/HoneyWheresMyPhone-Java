@@ -119,16 +119,28 @@ public class BackgroundManager extends GameEventHandler {
 	 * Checking if background is out of range.
 	 */
 	private void scroll() {
-		for (Background background : _activeBackgrounds) {
-			background.scroll(_speed);
-
+		for (int i = 0; i < _activeBackgrounds.length; i++) {
+			_activeBackgrounds[i].scroll(_speed);
+			int nextIndex = i+1;
+			if(nextIndex > _activeBackgrounds.length-1)
+				nextIndex = 0; // reset next index if it is bigger than the size of the background array
+			
+			float yOffset = (_activeBackgrounds[i].getPosition().y - _activeBackgrounds[nextIndex].getPosition().y)- Main.HEIGHT; // calculating y offset
+			if(GameManager.isHit){
+				if(yOffset > 0) // if there is a gap found.
+					_activeBackgrounds[i].scroll(yOffset); // adding/subtracting offset to background to always tile properly
+			} else {
+				if(yOffset > 0) // if there is a gap found.
+					_activeBackgrounds[i].scroll(-yOffset); // adding/subtracting offset to background to always tile properly
+			}
+			
 			if (GameManager.isHit) {
-				if (background.getPosition().y <= -(Main.HEIGHT * 0.49f)) {
-					previousBackground(background);
+				if (_activeBackgrounds[i].getPosition().y <= -(Main.HEIGHT * 0.49f)) {
+					previousBackground(_activeBackgrounds[i]);
 				}
 			} else {
-				if (background.getPosition().y >= Main.HEIGHT * 1.49f) {
-					nextBackground(background);
+				if (_activeBackgrounds[i].getPosition().y >= Main.HEIGHT * 1.49f) {
+					nextBackground(_activeBackgrounds[i]);
 				}
 			}
 		}

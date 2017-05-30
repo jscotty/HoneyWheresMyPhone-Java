@@ -4,8 +4,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
+import com.exam.assets.AudioType;
 import com.exam.assets.SpriteType;
 import com.exam.handlers.MyInput;
+import com.exam.managers.SoundManager;
 import com.exam.project.Main;
 
 /**
@@ -24,7 +26,7 @@ public class GuiButton extends Gui {
 	private Vector3 _mousePosition; // vector3 to use camera.unproject for pressed behavior
 	private OrthographicCamera _camera;
 
-	private boolean _clicked;
+	protected boolean pIsClicked;
 	private boolean _isAlreadyPressed = false;
 
 	/**
@@ -63,14 +65,15 @@ public class GuiButton extends Gui {
 			_mousePosition.y += Main.HEIGHT;
 			_mousePosition.y /= 2;
 			if (MyInput.isMousePressed(0) && onHover()) {
-				_clicked = true;
+				pIsClicked = true;
+				SoundManager.playAudio(AudioType.BUTTON_CLICK);
 			} else if (MyInput.isMouseDown(0) && onHover()) {
 				if (_renderTexture != _textureDown)
 					_renderTexture = _textureDown;
 			} else {
 				if (_renderTexture != _textureUp)
 					_renderTexture = _textureUp;
-				_clicked = false;
+				pIsClicked = false;
 			}
 		}
 
@@ -97,12 +100,21 @@ public class GuiButton extends Gui {
 		spriteBatch.setColor(1, 1, 1, 1);
 
 	}
+	
+	/**
+	 * @param textureUp
+	 * @param textureDown
+	 */
+	protected void setTextureTypes(SpriteType textureUp, SpriteType textureDown){
+		this._textureUp = Main.assets.getTexture(textureUp);
+		this._textureDown = Main.assets.getTexture(textureDown);
+	}
 
 	/**
 	 * @return if button is been clicked.
 	 */
 	public boolean isClicked() {
-		return _clicked;
+		return pIsClicked;
 	}
 
 }

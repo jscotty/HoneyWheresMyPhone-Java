@@ -9,6 +9,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.exam.assets.AnimationType;
+import com.exam.assets.AudioType;
 import com.exam.assets.SpriteType;
 import com.exam.background.Background;
 import com.exam.background.BackgroundManager;
@@ -23,6 +24,7 @@ import com.exam.handlers.GameEventListener;
 import com.exam.handlers.MyInput;
 import com.exam.items.ItemManager;
 import com.exam.managers.GameManager;
+import com.exam.managers.SoundManager;
 import com.exam.panels.EndPanel;
 import com.exam.panels.PausePanel;
 import com.exam.panels.UpgradePanel;
@@ -76,6 +78,8 @@ public class MainScene extends Scene implements GameEventListener{
 
 		_metersText = new GuiText(50, 50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
 		_cashText = new GuiText(50, Main.HEIGHT-50, _guiManager, FontType.SUPERCELL_MAGIC).addShadow(-5, new Color(0,0,0,1));
+		
+		SoundManager.playAudio(AudioType.GAME_AUDIO);
 		
 		_entityManager.sortEntities();
 	}

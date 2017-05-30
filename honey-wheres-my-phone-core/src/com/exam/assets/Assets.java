@@ -3,6 +3,8 @@ package com.exam.assets;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.exam.toolbox.SpriteSheetReaderShoebox;
@@ -18,12 +20,16 @@ public class Assets {
 	
 	private HashMap<SpriteType, TextureRegion> _textures; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
 	private HashMap<AnimationType, TextureRegion[]> _animations; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
+	private HashMap<AudioType, Sound> _soundFiles; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
+	private HashMap<AudioType, Music> _musicFiles; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
 
 	private int _assetsLoadedCount = 0;
 	private int _animationLoadedCount = 0;
+	private int _audioLoadedCount = 0;
 	
 	private int _percentage = 0;
-	private boolean loadAnimations = false;
+	private boolean _loadAnimations = false;
+	private boolean _loadAudio = false;
 	
 	/**
 	 * Constructor for initialization
@@ -31,16 +37,21 @@ public class Assets {
 	public Assets() {
 		_textures = new HashMap<SpriteType, TextureRegion>();
 		_animations = new HashMap<AnimationType, TextureRegion[]>();
+		_soundFiles = new HashMap<AudioType, Sound>();
+		_musicFiles = new HashMap<AudioType, Music>();
 	}
 	
 	/**
 	 * load asset and animations.
 	 */
 	public void load(){
-		if(loadAnimations){
+		if(_loadAnimations){
 			loadAnimation();
 			_percentage = (int)(((float)_animationLoadedCount / (float)AnimationType.values().length)*100); 
-		} else {
+		} else if(_loadAudio) {
+			loadAudio();
+			_percentage = (int)(((float)_audioLoadedCount / (float)AudioType.values().length)*100); 
+		} else{
 			loadAsset();
 			_percentage = (int)(((float)_assetsLoadedCount / (float)SpriteType.values().length)*100); 
 		}
@@ -53,7 +64,7 @@ public class Assets {
 	 */
 	private void loadAsset(){
 		if(_assetsLoadedCount > SpriteType.values().length-1){
-			loadAnimations = true;
+			_loadAnimations = true;
 			return;
 		}
 		SpriteType type = SpriteType.values()[_assetsLoadedCount];
@@ -76,7 +87,8 @@ public class Assets {
 	 */
 	private void loadAnimation(){
 		if(_animationLoadedCount > AnimationType.values().length-1){
-			isFinishedLoadingAssets = true;
+			_loadAudio = true;
+			_loadAnimations = false;
 			return;
 		}
 		AnimationType type = AnimationType.values()[_animationLoadedCount];
@@ -86,8 +98,23 @@ public class Assets {
 		
 	}
 	
+	private void loadAudio(){
+		if(_audioLoadedCount > AudioType.values().length-1){
+			isFinishedLoadingAssets = true;
+			_loadAudio = false;
+			return;
+		}
+		AudioType type = AudioType.values()[_audioLoadedCount];
+		if(type.isLooping())
+			_musicFiles.put(type, Gdx.audio.newMusic(Gdx.files.internal(type.getAudioPath())));
+		else
+			_soundFiles.put(type, Gdx.audio.newSound(Gdx.files.internal(type.getAudioPath())));
+
+		_audioLoadedCount++;
+	}
+	
 	/**
-	 * Loads all assets
+	 * Loads all assets in one frame
 	 */
 	@SuppressWarnings("unused")
 	private void loadAllAssets(){
@@ -117,8 +144,20 @@ public class Assets {
 		return _textures.get(type);
 	}
 
+	/**
+	 * @param type
+	 * @return Array of textureRegions to render an animation from.
+	 */
 	public TextureRegion[] getAnimation(AnimationType type){
 		return _animations.get(type);
+	}
+	
+	public Sound getAudio(AudioType type){
+		return _soundFiles.get(type);
+	}
+	
+	public Music getMusic(AudioType type){
+		return _musicFiles.get(type);
 	}
 	
 	/**
@@ -133,7 +172,11 @@ public class Assets {
 	 * @return if is loading animations
 	 */
 	public boolean isLoadingAnimations() {
-		return loadAnimations;
+		return _loadAnimations;
+	}
+	
+	public boolean isLoadingAudio() {
+		return _loadAudio;
 	}
 
 }

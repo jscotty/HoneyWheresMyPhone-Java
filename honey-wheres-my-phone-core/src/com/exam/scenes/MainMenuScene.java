@@ -3,10 +3,14 @@ package com.exam.scenes;
 import com.exam.gui.GuiButton;
 import com.badlogic.gdx.math.Vector2;
 import com.exam.assets.AnimationType;
+import com.exam.assets.AudioType;
 import com.exam.assets.SpriteType;
 import com.exam.entity.Animation;
 import com.exam.entity.EntityManager;
 import com.exam.gui.GuiManager;
+import com.exam.gui.GuiToggleButton;
+import com.exam.managers.GameManager;
+import com.exam.managers.SoundManager;
 import com.exam.gui.Gui;
 import com.exam.panels.UpgradePanel;
 import com.exam.project.Main;
@@ -36,6 +40,8 @@ public class MainMenuScene extends Scene{
 	private GuiButton _startButton;
 	private GuiButton _trophieButton;
 	private GuiButton _upgradeButton;
+
+	private GuiToggleButton _muteButton;
 	
 	private TweenManager _tweenManager;
 	private float _startTweeningAnimationTime = 0.2f;
@@ -62,11 +68,15 @@ public class MainMenuScene extends Scene{
 		_startButton = new GuiButton(Main.WIDTH/2, 600, SpriteType.BUTTON_PLAY_IDLE, SpriteType.BUTTON_PLAY_PRESSED, pHudCamera, _guiManager);
 		_upgradeButton = new GuiButton(Main.WIDTH/2, 400, SpriteType.BUTTON_UPGRADES_IDLE, SpriteType.BUTTON_UPGRADES_PRESSED, pHudCamera, _guiManager);
 		_trophieButton = new GuiButton(Main.WIDTH/2, 200, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, pHudCamera, _guiManager);
+		_muteButton = new GuiToggleButton(600, 1200, SpriteType.BUTTON_AUDIO_ON_IDLE, SpriteType.BUTTON_AUDIO_ON_PRESSED,SpriteType.BUTTON_AUDIO_OFF_IDLE, SpriteType.BUTTON_AUDIO_OFF_PRESSED,
+			pCamera, _guiManager);
 		
 		
 		_guiManager.sortGuis();
 		
 		upgradePanel = new UpgradePanel(pHudCamera, pSceneManager);
+		
+		SoundManager.playAudio(AudioType.MAIN_MENU);
 		startAnimation();
 	}
 	
@@ -118,6 +128,7 @@ public class MainMenuScene extends Scene{
 					
 					@Override
 					public void onEvent(int arg0, BaseTween<?> arg1) {
+						SoundManager.stopAudio(AudioType.MAIN_MENU);
 						pSceneManager.setScene(scene); // load scene after this tween.
 						
 					}
@@ -135,6 +146,11 @@ public class MainMenuScene extends Scene{
 		
 		if(_upgradeButton.isClicked())
 			upgradePanel.startAnimation();
+		
+		if(_muteButton.isClicked()){
+			SoundManager.muteToggle();
+			GameManager.toggleMute();
+		}
 	}
 
 	@Override

@@ -26,6 +26,7 @@ public class GameManager {
 
 	public static boolean isPaused = false;
 	public static boolean isHit = false;
+	public static boolean isMuted = false;
 
 	private static int _money;
 
@@ -81,6 +82,10 @@ public class GameManager {
 		_preferences.putInteger(MONEY_LOCATION, _money);
 		_preferences.flush();
 	}
+	
+	public static void toggleMute(){
+		isMuted = !isMuted;
+	}
 
 	/**
 	 * @param index of upgrade
@@ -118,6 +123,7 @@ public class GameManager {
 	public static void reset() {
 		isPaused = false;
 		isHit = false;
+		SoundManager.resetAudio();
 	}
 
 }

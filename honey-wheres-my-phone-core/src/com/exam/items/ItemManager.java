@@ -121,6 +121,10 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 	 * Spawns a phone and adds delay.
 	 */
 	private void spawnPhone() {
+		if(GameManager.isPoneCollected(currentPhoneLevel)){
+			spawn();
+			return; // phone is already captured, no need to capture it again.
+		}
 		Phone item = (Phone) new Phone(PhoneType.values()[currentPhoneLevel], new Vector2(Main.WIDTH / 2, yPosition),
 				_entityManager, _speed, this)
 						.addBodyBox(_world, BodyType.DynamicBody, 40, 40, Main.WIDTH / 2, yPosition).setIndex(3);
@@ -145,7 +149,6 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 		short[] row = ITEMROWS[index];
 		for (int i = 0; i < row.length; i++) {
 			float xPosition = (((Main.WIDTH - 80) / (row.length - 1)) * (i)) + 40;
-			System.out.println(xPosition);
 			if (row[i] == 1) {
 				Vector2 position;
 				int randomItem = _random.nextInt(_itemLevels.get(backgroundLevel).size());
@@ -196,13 +199,27 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 		GameManager.isHit = true;
 		yPosition = Main.HEIGHT + -(yPosition);
 		if (contact.getFixtureA().getUserData().getClass() == Item.class) {
+			//item collected
 			Item item = (Item) contact.getFixtureA().getUserData();
 			item.animateAway(_tweenManager);
 			GameManager.addMoney((int) item.getScore());
 		} else if (contact.getFixtureB().getUserData().getClass() == Item.class) {
+			//item collected
 			Item item = (Item) contact.getFixtureB().getUserData();
 			item.animateAway(_tweenManager);
 			GameManager.addMoney((int) item.getScore());
+		}
+		
+		if(contact.getFixtureA().getUserData().getClass() == Phone.class){
+			//phone collected fixture A
+			Phone phone = (Phone) contact.getFixtureA().getUserData();
+			GameManager.collectedPhone(phone.getIndex());
+			phone.animateAway(_tweenManager);
+		} else if(contact.getFixtureB().getUserData().getClass() == Phone.class){
+			//phone collected fixture B
+			Phone phone = (Phone) contact.getFixtureB().getUserData();
+			GameManager.collectedPhone(phone.getIndex());
+			phone.animateAway(_tweenManager);
 		}
 		gameReverse();
 	}

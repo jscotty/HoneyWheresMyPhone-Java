@@ -20,8 +20,7 @@ public class Animation extends Entity {
 	private float _time; // current time.
 	private boolean _isFinished = false; // if loop is false check if the last frame is being rendered.
 
-	public Animation(AnimationType animationType, boolean loop, float duration, Vector2 position,
-			EntityManager manager) {
+	public Animation(AnimationType animationType, boolean loop, float duration, Vector2 position, EntityManager manager) {
 		super(position, manager);
 		this._loop = loop;
 		_textures = Main.assets.getAnimation(animationType);
