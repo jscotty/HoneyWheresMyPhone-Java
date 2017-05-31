@@ -16,6 +16,10 @@ public enum PhoneType {
 
 	private AnimationType _animationType;
 
+	/**
+	 * Enumeration constructor
+	 * @param animationType
+	 */
 	private PhoneType(AnimationType animationType) {
 		this._animationType = animationType;
 	}

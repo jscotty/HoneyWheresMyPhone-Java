@@ -49,20 +49,20 @@ public class AssetsLoaderScene extends Scene {
 	@Override
 	public void update(float deltaTime) {
 		_assets.load();
-		if(Assets.isFinishedLoadingAssets){
-			_fontLoader.loadFonts();
-		}
 		if(_assets.isLoadingAnimations()){
 			_loadingText = LOADING_ANIMATIONS_MESSAGE;
 			_font.setScale(0.7f);
-		}
-		if(_assets.isLoadingAudio()){
+		} else if(_assets.isLoadingAudio()){
 			_loadingText = LOADING_AUDIO_MESSAGE;
 			_font.setScale(0.8f);
 		}
-		
+
+		if(Assets.isFinishedLoadingAssets){
+			_fontLoader.loadFonts();
+		}
 		if(_fontLoader.isFontsLoaded())
 			pSceneManager.setScene(SceneManager.MENU);
+		
 
 		_loadingDrawText = _loadingText;
 		for (int i = 0; i < (int)_dotTimer; i++) {

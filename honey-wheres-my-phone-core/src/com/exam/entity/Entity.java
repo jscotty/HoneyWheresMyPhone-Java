@@ -11,8 +11,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.exam.assets.SpriteType;
-import com.exam.handlers.GameEvent;
-import com.exam.handlers.GameEventListener;
 import com.exam.project.Main;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -273,14 +271,23 @@ public class Entity implements Comparable<Entity> {
 		this.pScaleY = scaleY;
 	}
 
+	/**
+	 * @return position of box2D body
+	 */
 	protected Vector2 getBodyPosition() {
 		return pBodyPosition;
 	}
 
+	/**
+	 * @return calculated x position
+	 */
 	protected float getX() {
 		return pPosition.x - getOriginX();
 	}
 
+	/**
+	 * @return calculated y position
+	 */
 	protected float getY() {
 		return pPosition.y - getOriginY();
 	}
@@ -297,30 +304,51 @@ public class Entity implements Comparable<Entity> {
 		return _height; // return cached height if there is no texture.
 	}
 
+	/**
+	 * @return render texture of this instance
+	 */
 	public TextureRegion getTexture() {
 		return pTexture;
 	}
 
+	/**
+	 * @return render position of this instance
+	 */
 	public Vector2 getPosition() {
 		return pPosition;
 	}
 
+	/**
+	 * @return origin x factor of this instance
+	 */
 	public float getOriginX() {
 		return pOriginX * getWidth();
 	}
 
+	/**
+	 * @return origin y factor of this instance
+	 */
 	public float getOriginY() {
 		return pOriginY * getHeight();
 	}
 
+	/**
+	 * @return scale X factor of this instance
+	 */
 	public float getScaleX() {
 		return pScaleX;
 	}
 
+	/**
+	 * @return scale Y factor of this instance
+	 */
 	public float getScaleY() {
 		return pScaleY;
 	}
 
+	/**
+	 * @return angle of this instance
+	 */
 	public float getAngle() {
 		return pAngle;
 	}

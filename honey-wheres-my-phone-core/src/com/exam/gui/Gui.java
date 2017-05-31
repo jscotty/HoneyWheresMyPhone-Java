@@ -104,10 +104,16 @@ public class Gui implements Comparable<Gui> {
 		this._texture = Main.assets.getTexture(spriteType);
 	}
 
+	/**
+	 * @return scale X factor
+	 */
 	public float getScaleX() {
 		return pScaleX;
 	}
 
+	/**
+	 * @return scale Y factor
+	 */
 	public float getScaleY() {
 		return pScaleY;
 	}
@@ -133,26 +139,46 @@ public class Gui implements Comparable<Gui> {
 		this.pScaleY = scaleY;
 	}
 
+	/**
+	 * @return gui alpha value
+	 */
 	public float getAlpha() {
 		return pAlpha;
 	}
 
+	/**
+	 * set alpha to given value
+	 * @param alpha value
+	 */
 	public void setAlpha(float alpha) {
 		this.pAlpha = alpha;
 	}
 
+	/**
+	 * set x position of this instance
+	 * @param x position
+	 */
 	public void setXPosition(float x) {
 		pPosition.x = x;
 	}
 
+	/**
+	 * @return render position of this instance
+	 */
 	public Vector2 getPosition() {
 		return pPosition;
 	}
 
+	/**
+	 * @return width of current render texture
+	 */
 	public float getWidth() {
 		return _texture.getRegionWidth();
 	}
 
+	/**
+	 * @return height of current render texture
+	 */
 	public float getHeight() {
 		return _texture.getRegionHeight();
 	}

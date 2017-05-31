@@ -15,6 +15,7 @@ public class MyInput {
 	private static float mouseXCoordinate; // mouse or finger X coordinate on the screen.
 	private static float mouseYCoordinate; // mouse or finger Y coordinate on the screen.
 
+	// array identifiers
 	public static final int NUM_MOUSE_BUTTONS = 3;
 	public static final int MOUSE_BUTTON_LEFT = 0;
 	public static final int MOUSE_BUTTON_RIGHT = 1;

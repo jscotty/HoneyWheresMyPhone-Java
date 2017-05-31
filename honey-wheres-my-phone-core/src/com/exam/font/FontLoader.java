@@ -12,14 +12,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
  */
 public class FontLoader {
 
-	private static HashMap<FontType, BitmapFont> fonts;
-	private boolean _fontsLoaded = false;
+	private static HashMap<FontType, BitmapFont> _fonts; // store fonts at
+	private boolean _fontsLoaded = false; // check if all fonts are loaded
 
 	/**
 	 * Constructor for initialization
 	 */
 	public FontLoader() {
-		fonts = new HashMap<FontType, BitmapFont>();
+		_fonts = new HashMap<FontType, BitmapFont>();
 	}
 
 	/**
@@ -27,7 +27,7 @@ public class FontLoader {
 	 */
 	public void loadFonts() {
 		for (FontType font : FontType.values()) {
-			fonts.put(font, new BitmapFont(Gdx.files.internal(font.getFontPathName() + ".fnt"),
+			_fonts.put(font, new BitmapFont(Gdx.files.internal(font.getFontPathName() + ".fnt"),
 					Gdx.files.internal(font.getFontPathName() + ".png"), false));
 		}
 		_fontsLoaded = true;
@@ -39,7 +39,7 @@ public class FontLoader {
 	 * @return desired BitmapFont.
 	 */
 	public static BitmapFont getFont(FontType fontType) {
-		return fonts.get(fontType);
+		return _fonts.get(fontType);
 	}
 
 	/**

@@ -2,7 +2,6 @@ package com.exam.entity;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,8 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class EntityManager {
 
-	private List<Entity> _entities;
-	private List<Entity> _entitiesToRemove;
+	private List<Entity> _entities; // list of entities to draw and update
+	private List<Entity> _entitiesToRemove; // list of entities that have to be removed after all entities are updated to prevent null pointers in a for loop.
 
 	public EntityManager() {
 		_entities = new ArrayList<Entity>();
@@ -24,7 +23,7 @@ public class EntityManager {
 
 	/**
 	 * process entity to be rendered and update.
-	 * @param entity
+	 * @param entity to process
 	 */
 	public void processEntity(Entity entity) {
 		_entities.add(entity);
@@ -41,7 +40,7 @@ public class EntityManager {
 
 	/**
 	 * Remove parameter entity from list.
-	 * @param entity
+	 * @param entity to remove
 	 */
 	public void removeEntity(Entity entity) {
 		_entitiesToRemove.add(entity);
@@ -50,15 +49,15 @@ public class EntityManager {
 	/**
 	 * Update all processed entities.
 	 * Updates every frame.
-	 * @param deltaTime
+	 * @param deltaTime time between every frame
 	 */
 	public void update(float deltaTime) {
 		for (Entity entity : _entities) {
 			entity.update(deltaTime);
 		}
 
-		if (_entitiesToRemove.size() == 0)
-			return;
+		if (_entitiesToRemove.size() == 0) 
+			return; // no items to remove.
 
 		for (Entity entity : _entitiesToRemove) {
 			_entities.remove(entity);
@@ -69,7 +68,7 @@ public class EntityManager {
 	/**
 	 * Render all processed entities
 	 * Renders every frame.
-	 * @param spriteBatch
+	 * @param spriteBatch to call draw function
 	 */
 	public void render(SpriteBatch spriteBatch) {
 		for (Entity entity : _entities) {

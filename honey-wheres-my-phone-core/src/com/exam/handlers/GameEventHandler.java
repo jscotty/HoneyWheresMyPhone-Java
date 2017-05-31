@@ -12,6 +12,9 @@ public abstract class GameEventHandler {
 
 	private Set<GameEventListener> _listeners; // set managing automatically if adding listener is already in the list.
 
+	/**
+	 * Constructor for initialization
+	 */
 	public GameEventHandler() {
 		_listeners = new HashSet<GameEventListener>();
 	}

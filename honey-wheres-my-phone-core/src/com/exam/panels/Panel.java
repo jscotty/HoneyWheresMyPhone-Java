@@ -13,7 +13,7 @@ import aurelienribon.tweenengine.TweenManager;
 public abstract class Panel {
 
 	protected GuiManager pGuiManager; // to register and process guis
-	protected TweenManager pTweenManager;
+	protected TweenManager pTweenManager; // to update and calculate animations
 	protected boolean pIsActive = false;
 
 	public Panel() {

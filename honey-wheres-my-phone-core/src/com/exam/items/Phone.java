@@ -4,7 +4,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.exam.entity.Animation;
-import com.exam.entity.Entity;
 import com.exam.entity.EntityManager;
 import com.exam.managers.GameManager;
 
@@ -17,7 +16,6 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class Phone extends Item {
 
-	private Animation _phoneAnimation;
 	private int _phoneIndex = 0;
 
 	/**
@@ -30,7 +28,7 @@ public class Phone extends Item {
 	 */
 	public Phone(PhoneType phoneType, Vector2 position, EntityManager manager, float speed, ItemManager itemManager) {
 		super(position, manager, speed, itemManager);
-		_phoneAnimation = new Animation(phoneType.getAnimationType(), true, 1f, position, manager); // progressing/registering animation to entityManager.
+		Animation phoneAnimation = new Animation(phoneType.getAnimationType(), true, 1f, position, manager); // progressing/registering animation to entityManager.
 		
 		boolean phoneIndexFound = false;
 		for (PhoneType phone : PhoneType.values()) {

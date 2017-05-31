@@ -82,6 +82,7 @@ public class SpriteSheetReaderShoebox {
 				}
 			}
 		} catch (Exception e) {
+			System.out.println("Failed to read xml file or find given name." + atlas);
 			System.out.println(e.getStackTrace());
 		}
 		return tDesiredTexture;
@@ -110,6 +111,7 @@ public class SpriteSheetReaderShoebox {
 				index++;
 			}
 		} catch (Exception e) {
+			System.out.println("Could not load animation from: " +atlas);
 			System.out.println(e.getStackTrace());
 		}
 		return textures;
@@ -138,7 +140,6 @@ public class SpriteSheetReaderShoebox {
 			}
 			for (Element child : sub) {
 				int x = 0, y = 0, width = 0, height = 0;
-				//sprite name found, generate textureRegion
 				x = Integer.parseInt(child.getAttribute("x"));
 				y = Integer.parseInt(child.getAttribute("y"));
 				width = Integer.parseInt(child.getAttribute("width"));

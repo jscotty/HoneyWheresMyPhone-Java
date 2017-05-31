@@ -147,7 +147,7 @@ public enum SpriteType {
     private String _spriteName;
 
     /**
-     * Enum constructor
+     * Enumeration constructor
      * @param atlas path
      * @param sprite name
      */

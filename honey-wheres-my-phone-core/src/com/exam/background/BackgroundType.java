@@ -22,8 +22,12 @@ public enum BackgroundType {
 	private SpriteType _overlaySprite;
 	private int _repeatCount;
 
+	
 	/**
-	 * Initialization.
+	 * Enumeration constructor
+	 * @param background sprite type
+	 * @param overlay sprite type
+	 * @param repeatCount, amount 
 	 */
 	private BackgroundType(SpriteType background, SpriteType overlay, int repeatCount) {
 		this._backgroundSprite = background;

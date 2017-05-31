@@ -30,10 +30,25 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 
 	private final int DELAY = 5; // delay meters of when items should be spawned
 
-	private final short[][] ITEMROWS = new short[][] { { 1, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 }, { 0, 0, 1, 0, 0 },
-			{ 0, 0, 0, 1, 0 }, { 0, 0, 0, 0, 1 }, { 0, 0, 1, 0, 1 }, { 1, 0, 0, 0, 0 }, { 0, 1, 0, 0, 0 },
-			{ 0, 0, 1, 0, 0 }, { 0, 0, 0, 1, 0 }, { 0, 0, 0, 0, 1 }, { 0, 0, 1, 0, 1 }, { 0, 0, 1, 1, 0 },
-			{ 1, 1, 0, 0, 1 }, { 0, 0, 1, 1, 1 }, { 1, 0, 0, 1, 0 }, { 0, 0, 1, 1, 0 } }; // all possible rows of how the items will spawn
+	private final short[][] ITEMROWS = new short[][] { 
+		{ 1, 0, 0, 0, 0 }, 
+		{ 0, 1, 0, 0, 0 }, 
+		{ 0, 0, 1, 0, 0 },
+		{ 0, 0, 0, 1, 0 }, 
+		{ 0, 0, 0, 0, 1 }, 
+		{ 0, 0, 1, 0, 1 }, 
+		{ 1, 0, 0, 0, 0 }, 
+		{ 0, 1, 0, 0, 0 },
+		{ 0, 0, 1, 0, 0 }, 
+		{ 0, 0, 0, 1, 0 }, 
+		{ 0, 0, 0, 0, 1 }, 
+		{ 0, 0, 1, 0, 1 }, 
+		{ 0, 0, 1, 1, 0 },
+		{ 1, 1, 0, 0, 1 }, 
+		{ 0, 0, 1, 1, 1 }, 
+		{ 1, 0, 0, 1, 0 }, 
+		{ 0, 0, 1, 1, 0 } 
+	}; // all possible rows of how the items will spawn
 
 	private World _world;
 	private EntityManager _entityManager;
@@ -44,10 +59,10 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 	private float _delay = 5f; //current delay
 	private float _meters;
 	private boolean _start = false;
-	private float yPosition = -100;
-	private int backgroundLevel;
-	private int phoneLevel = 0;
-	private int currentPhoneLevel = 0;
+	private float _yPosition = -100;
+	private int _backgroundLevel;
+	private int _phoneLevel = 0;
+	private int _currentPhoneLevel = 0;
 
 	private List<ItemType> _itemsDestroyed = new ArrayList<ItemType>();
 	private List<Item> _itemsInField = new ArrayList<Item>();
@@ -88,13 +103,13 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 		_tweenManager.update(deltaTime);
 		calculateSpeed();
 
-		if (phoneLevel > currentPhoneLevel) {
+		if (_phoneLevel > _currentPhoneLevel) {
 			spawnPhone();
-			currentPhoneLevel++;
+			_currentPhoneLevel++;
 		}
 
 		if (GameManager.isHit) {
-			if (_meters <= _delay) {
+			if (_meters < _delay) {
 				spawn();
 				_delay -= DELAY; // Subtracting delay for next item spawn.
 			}
@@ -121,13 +136,13 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 	 * Spawns a phone and adds delay.
 	 */
 	private void spawnPhone() {
-		if(GameManager.isPoneCollected(currentPhoneLevel)){
+		if(GameManager.isPoneCollected(_currentPhoneLevel)){
 			spawn();
 			return; // phone is already captured, no need to capture it again.
 		}
-		Phone item = (Phone) new Phone(PhoneType.values()[currentPhoneLevel], new Vector2(Main.WIDTH / 2, yPosition),
+		Phone item = (Phone) new Phone(PhoneType.values()[_currentPhoneLevel], new Vector2(Main.WIDTH / 2, _yPosition),
 				_entityManager, _speed, this)
-						.addBodyBox(_world, BodyType.DynamicBody, 40, 40, Main.WIDTH / 2, yPosition).setIndex(3);
+						.addBodyBox(_world, BodyType.DynamicBody, 40, 40, Main.WIDTH / 2, _yPosition).setIndex(3);
 
 		_delay += DELAY * 2; // prevent items in same and next row.
 		_itemsInField.add(item);
@@ -151,18 +166,18 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 			float xPosition = (((Main.WIDTH - 80) / (row.length - 1)) * (i)) + 40;
 			if (row[i] == 1) {
 				Vector2 position;
-				int randomItem = _random.nextInt(_itemLevels.get(backgroundLevel).size());
+				int randomItem = _random.nextInt(_itemLevels.get(_backgroundLevel).size());
 				ItemType itemType;
 				Item item = null;
 				if (GameManager.isHit) {
 					//reverse mode
 					position = new Vector2(xPosition, Main.HEIGHT + 100);
-					itemType = _itemLevels.get(backgroundLevel).get(randomItem);
+					itemType = _itemLevels.get(_backgroundLevel).get(randomItem);
 					item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world,
 							BodyType.DynamicBody, 40, 40, position.x, position.y);
 				} else {
-					position = new Vector2(xPosition, yPosition);
-					itemType = _itemLevels.get(backgroundLevel).get(randomItem);
+					position = new Vector2(xPosition, _yPosition);
+					itemType = _itemLevels.get(_backgroundLevel).get(randomItem);
 					item = (Item) new Item(itemType, position, _entityManager, _speed, this).addBodyBox(_world,
 							BodyType.DynamicBody, 40, 40, position.x, position.y);
 				}
@@ -187,6 +202,7 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 	// region contactlistener methods
 	@Override
 	public void beginContact(Contact contact) {
+		// contact made
 		if (contact.getFixtureA().getUserData().getClass() == Item.class
 				&& contact.getFixtureB().getUserData().getClass() == Item.class) {
 			Item fixtureA = (Item) contact.getFixtureA().getUserData();
@@ -197,7 +213,7 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 		}
 
 		GameManager.isHit = true;
-		yPosition = Main.HEIGHT + -(yPosition);
+		_yPosition = Main.HEIGHT + -(_yPosition);
 		if (contact.getFixtureA().getUserData().getClass() == Item.class) {
 			//item collected
 			Item item = (Item) contact.getFixtureA().getUserData();
@@ -245,9 +261,9 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 	//endregion
 
 	public void setBackgroundData(float backgroundSpeed, int backgroundLevel, int phoneLevel, float meters) {
-		this.backgroundLevel = backgroundLevel;
+		this._backgroundLevel = backgroundLevel;
 		this._backgroundSpeed = backgroundSpeed;
 		this._meters = meters;
-		this.phoneLevel = phoneLevel;
+		this._phoneLevel = phoneLevel;
 	}
 }

@@ -12,7 +12,7 @@ import com.exam.project.Main;
  */
 public class Animation extends Entity {
 
-	private TextureRegion[] _textures;
+	private TextureRegion[] _textures; // all frames stored in an array
 	private int _frameIndex = 0; // current animation frame
 	private boolean _loop = false; // if the animation has to repeat
 	private float _keyTimeDuration; // duration of every key frame to be rendered

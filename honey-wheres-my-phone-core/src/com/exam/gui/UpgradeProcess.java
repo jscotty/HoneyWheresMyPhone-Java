@@ -15,15 +15,15 @@ public class UpgradeProcess {
 	private final float OFFSET = 10;
 	private final float FONT_SIZE = 0.6f;
 	
-	private SpriteType _emptyProcess = SpriteType.UPGRADE_PROCESS_EMPTY;
-	private SpriteType _fullProcess = SpriteType.UPGRADE_PROCESS_FULL;
-	private SpriteType _selectProcess = SpriteType.UPGRADE_PROCESS_SELECT;
-	private Gui[] _processIcons;
-	private int _upgradeCount = 0;
-	private int _maximumUpgradeCount = 4;
-	private GuiText _upgradeTypeText;
-	private int _index;
-	private int _cost = 100;
+	private SpriteType _emptyProcess = SpriteType.UPGRADE_PROCESS_EMPTY; // process not purchasable sprite type
+	private SpriteType _fullProcess = SpriteType.UPGRADE_PROCESS_FULL; // process already purchased sprite type
+	private SpriteType _selectProcess = SpriteType.UPGRADE_PROCESS_SELECT; // next purchase sprite type
+	private Gui[] _processIcons; // icons of upgrade types
+	private int _upgradeCount = 0; // amount of upgrades purchased
+	private int _maximumUpgradeCount = 4; // maximum amount of purchase
+	private GuiText _upgradeTypeText; // text for identification what upgrade it is.
+	private int _index; // index of process
+	private int _cost = 100; // cost value of this process
 
 	//for accessor.
 	private float _scaleX = 1;

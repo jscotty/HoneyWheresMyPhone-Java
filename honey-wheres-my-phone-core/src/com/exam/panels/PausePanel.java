@@ -2,12 +2,12 @@ package com.exam.panels;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.exam.gui.GuiManager;
 import com.exam.gui.GuiToggleButton;
 import com.exam.assets.SpriteType;
 import com.exam.gui.Gui;
 import com.exam.gui.GuiButton;
 import com.exam.managers.GameManager;
+import com.exam.managers.SoundManager;
 import com.exam.project.Main;
 import com.exam.scenes.SceneManager;
 import com.exam.tween.AccessorReferences;
@@ -50,6 +50,8 @@ public class PausePanel extends Panel {
 				SpriteType.BUTTON_MENU_PRESSED, camera, pGuiManager);
 		_muteButton = new GuiToggleButton(600, 1200, SpriteType.BUTTON_AUDIO_ON_IDLE, SpriteType.BUTTON_AUDIO_ON_PRESSED,SpriteType.BUTTON_AUDIO_OFF_IDLE, SpriteType.BUTTON_AUDIO_OFF_PRESSED,
 				camera, pGuiManager);
+		if(SoundManager.isMuted)
+			_muteButton.toggle();
 
 		Timeline.createSequence()
 				//set tweens
@@ -64,17 +66,17 @@ public class PausePanel extends Panel {
 	public void startAnimation() {
 		pIsActive = true;
 		GameManager.isPaused = true;
-		Timeline.createSequence().pushPause(0.1f)
-
-				.beginParallel().push(Tween.to(_background, AccessorReferences.SCALE, _animationTime).target(1, 1))
-				.end() // next tween
-
-				.beginParallel() // tween all at once.
-				.push(Tween.to(_gamePausedText, AccessorReferences.SCALE, _animationTime).target(1, 1))
-				.push(Tween.to(_resumeButton, AccessorReferences.SCALE, _animationTime).target(1, 1))
-				.push(Tween.to(_menuButton, AccessorReferences.SCALE, _animationTime).target(1, 1))
-				.push(Tween.to(_muteButton, AccessorReferences.SCALE, _animationTime).target(1, 1)).end()
-				.start(pTweenManager);
+		Timeline.createSequence()
+			.pushPause(0.1f)
+			.beginParallel().push(Tween.to(_background, AccessorReferences.SCALE, _animationTime).target(1, 1))
+			.end() // next tween
+			.beginParallel() // tween all at once.
+			.push(Tween.to(_gamePausedText, AccessorReferences.SCALE, _animationTime).target(1, 1))
+			.push(Tween.to(_resumeButton, AccessorReferences.SCALE, _animationTime).target(1, 1))
+			.push(Tween.to(_menuButton, AccessorReferences.SCALE, _animationTime).target(1, 1))
+			.push(Tween.to(_muteButton, AccessorReferences.SCALE, _animationTime).target(1, 1))
+			.end()
+		.start(pTweenManager);
 	}
 
 	@Override
@@ -111,6 +113,8 @@ public class PausePanel extends Panel {
 		}
 		if (_resumeButton.isClicked())
 			endAnimation();
+		if(_muteButton.isClicked())
+			SoundManager.muteToggle();
 	}
 
 	@Override

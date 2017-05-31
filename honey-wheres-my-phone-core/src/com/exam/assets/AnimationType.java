@@ -9,7 +9,7 @@ public enum AnimationType {
 	
 	// path to animation sprite sheet, begin sprite of animation , end sprite of animation
 	// NOTE: start and end frame are used to crop out an animation from a sprite sheet with multiple animations.
-	// use 0 start and 0 end frame to let the program know it has to use the full sprite sheet.
+	// use 0 start and 0 end frame to let the program know it has to use the full sprite sheet animation.
 	
 	//phones
 	PHONE_LEVEL_1("phones/Prop_PhoneAnimatons1",0,13),
@@ -28,6 +28,13 @@ public enum AnimationType {
 	private int _startFrame;
 	private int _endFrame;
 	
+	/**
+	 * Enumeration constructor
+	 * use 0 start and 0 end frame to let the program know it has to use the full sprite sheet animation.
+	 * @param path to animation sheet and image
+	 * @param startFrame index of animation
+	 * @param endFrame index of animation
+	 */
 	private AnimationType(String animationPath, int startFrame, int endFrame){
 		this._animationPath = animationPath;
 		this._startFrame = startFrame;

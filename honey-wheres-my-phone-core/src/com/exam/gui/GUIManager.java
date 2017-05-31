@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
  */
 public class GuiManager {
 
-	private List<Gui> _guis = new ArrayList<Gui>();
+	private List<Gui> _guis = new ArrayList<Gui>(); // list of guis to update and render
 	
 	/**
 	 * Process gui for updating and rendering

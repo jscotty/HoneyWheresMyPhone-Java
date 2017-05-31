@@ -23,13 +23,15 @@ public class Assets {
 	private HashMap<AudioType, Sound> _soundFiles; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
 	private HashMap<AudioType, Music> _musicFiles; // HashMap is like a Dictionary in C# and is powerful by it searching by Object element.
 
+	//index
 	private int _assetsLoadedCount = 0;
 	private int _animationLoadedCount = 0;
 	private int _audioLoadedCount = 0;
 	
-	private int _percentage = 0;
+	private int _percentage = 0; // 0-100%
 	private boolean _loadAnimations = false;
 	private boolean _loadAudio = false;
+	private int _totalAmountOfAssets = 0;
 	
 	/**
 	 * Constructor for initialization
@@ -39,6 +41,7 @@ public class Assets {
 		_animations = new HashMap<AnimationType, TextureRegion[]>();
 		_soundFiles = new HashMap<AudioType, Sound>();
 		_musicFiles = new HashMap<AudioType, Music>();
+		_totalAmountOfAssets = AudioType.values().length + SpriteType.values().length + AnimationType.values().length;
 	}
 	
 	/**
@@ -47,14 +50,12 @@ public class Assets {
 	public void load(){
 		if(_loadAnimations){
 			loadAnimation();
-			_percentage = (int)(((float)_animationLoadedCount / (float)AnimationType.values().length)*100); 
 		} else if(_loadAudio) {
 			loadAudio();
-			_percentage = (int)(((float)_audioLoadedCount / (float)AudioType.values().length)*100); 
 		} else{
 			loadAsset();
-			_percentage = (int)(((float)_assetsLoadedCount / (float)SpriteType.values().length)*100); 
 		}
+		_percentage = (int)(((float)(_animationLoadedCount + _audioLoadedCount + _assetsLoadedCount) / (float)_totalAmountOfAssets)*100); //total percentage
 		
 	}
 	
@@ -98,6 +99,11 @@ public class Assets {
 		
 	}
 	
+	/**
+	 * Load next audio file.
+	 * Check if audio is loopable, if audio type is loopable we'll list it in a music list
+	 * otherwise we list it in a sound list.
+	 */
 	private void loadAudio(){
 		if(_audioLoadedCount > AudioType.values().length-1){
 			isFinishedLoadingAssets = true;
@@ -152,11 +158,23 @@ public class Assets {
 		return _animations.get(type);
 	}
 	
+	/**
+	 * @param audio type to search for.
+	 * @return audio file used for effects
+	 */
 	public Sound getAudio(AudioType type){
+		if(type.isLooping())
+			return null;
 		return _soundFiles.get(type);
 	}
 	
+	/**
+	 * @param audio type to search for.
+	 * @return loopable audio file
+	 */
 	public Music getMusic(AudioType type){
+		if(!type.isLooping())
+			return null;
 		return _musicFiles.get(type);
 	}
 	
@@ -175,6 +193,10 @@ public class Assets {
 		return _loadAnimations;
 	}
 	
+	/**
+	 * Used for loading screen text message
+	 * @return If process is loading audio
+	 */
 	public boolean isLoadingAudio() {
 		return _loadAudio;
 	}

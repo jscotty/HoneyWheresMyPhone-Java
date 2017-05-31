@@ -1,15 +1,10 @@
 package com.exam.scenes;
 
 import com.exam.gui.GuiButton;
-import com.badlogic.gdx.math.Vector2;
-import com.exam.assets.AnimationType;
 import com.exam.assets.AudioType;
 import com.exam.assets.SpriteType;
-import com.exam.entity.Animation;
-import com.exam.entity.EntityManager;
 import com.exam.gui.GuiManager;
 import com.exam.gui.GuiToggleButton;
-import com.exam.managers.GameManager;
 import com.exam.managers.SoundManager;
 import com.exam.gui.Gui;
 import com.exam.panels.UpgradePanel;
@@ -32,8 +27,7 @@ public class MainMenuScene extends Scene{
 	
 	private GuiManager _guiManager;
 	
-	// not sure why I got this warning.. because I register them inside the given guiManager in the constructor.
-	
+	// not sure why I got this warning.. because I register them inside the given guiManager in the constructor which does all the magic...
 	private Gui _background;
 	private Gui _logo;
 	
@@ -46,9 +40,8 @@ public class MainMenuScene extends Scene{
 	private TweenManager _tweenManager;
 	private float _startTweeningAnimationTime = 0.2f;
 	
-	private UpgradePanel upgradePanel;
+	private UpgradePanel _upgradePanel;
 	
-	private EntityManager entityManager;
 
 	/**
 	 * Constructor for initialization
@@ -59,7 +52,6 @@ public class MainMenuScene extends Scene{
 		_tweenManager = new TweenManager();
 		Tween.registerAccessor(Gui.class, new GuiAccessor());
 		
-		entityManager = new EntityManager();
 		_guiManager = new GuiManager();
 
 		_background = new Gui(Main.WIDTH/2, Main.HEIGHT/2, SpriteType.BACKGROUND, _guiManager).setIndex(-2);
@@ -70,11 +62,13 @@ public class MainMenuScene extends Scene{
 		_trophieButton = new GuiButton(Main.WIDTH/2, 200, SpriteType.BUTTON_TROPHIES_IDLE, SpriteType.BUTTON_TROPHIES_PRESSED, pHudCamera, _guiManager);
 		_muteButton = new GuiToggleButton(600, 1200, SpriteType.BUTTON_AUDIO_ON_IDLE, SpriteType.BUTTON_AUDIO_ON_PRESSED,SpriteType.BUTTON_AUDIO_OFF_IDLE, SpriteType.BUTTON_AUDIO_OFF_PRESSED,
 			pCamera, _guiManager);
+		if(SoundManager.isMuted)
+			_muteButton.toggle();
 		
 		
 		_guiManager.sortGuis();
 		
-		upgradePanel = new UpgradePanel(pHudCamera, pSceneManager);
+		_upgradePanel = new UpgradePanel(pHudCamera, pSceneManager);
 		
 		SoundManager.playAudio(AudioType.MAIN_MENU);
 		startAnimation();
@@ -92,13 +86,34 @@ public class MainMenuScene extends Scene{
 		// wait half second before starting animation
 		.pushPause(0.5f)
 		// scale up and down all tweens after each other.
-		.push(Tween.to(_startButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f))
+		.push(Tween.to(_startButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f).setCallback(new TweenCallback() {
+			
+			@Override
+			public void onEvent(int arg0, BaseTween<?> arg1) {
+				SoundManager.playAudio(AudioType.BUTTON_CLICK); // play sound if button has showed up
+				
+			}
+		}))
 		.push(Tween.to(_startButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1,1))
 		
-		.push(Tween.to(_upgradeButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f))
+		.push(Tween.to(_upgradeButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f).setCallback(new TweenCallback() {
+			
+			@Override
+			public void onEvent(int arg0, BaseTween<?> arg1) {
+				SoundManager.playAudio(AudioType.BUTTON_CLICK); // play sound if button has showed up
+				
+			}
+		}))
 		.push(Tween.to(_upgradeButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1,1))
 		
-		.push(Tween.to(_trophieButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f))
+		.push(Tween.to(_trophieButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1.4f,1.8f).setCallback(new TweenCallback() {
+			
+			@Override
+			public void onEvent(int arg0, BaseTween<?> arg1) {
+				SoundManager.playAudio(AudioType.BUTTON_CLICK); // play sound if button has showed up
+				
+			}
+		}))
 		.push(Tween.to(_trophieButton, AccessorReferences.SCALE, _startTweeningAnimationTime).target(1,1))
 		.start(_tweenManager);
 	}
@@ -139,27 +154,25 @@ public class MainMenuScene extends Scene{
 
 	@Override
 	public void handleInput() {
-		if(upgradePanel.isActive()) return;
+		if(_upgradePanel.isActive()) return;
 		if(_startButton.isClicked()){
 			endAnimation(SceneManager.PLAY);
 		}
 		
 		if(_upgradeButton.isClicked())
-			upgradePanel.startAnimation();
+			_upgradePanel.startAnimation();
 		
 		if(_muteButton.isClicked()){
 			SoundManager.muteToggle();
-			GameManager.toggleMute();
 		}
 	}
 
 	@Override
 	public void update(float deltaTime) {
 		handleInput();
-		upgradePanel.update(deltaTime);
+		_upgradePanel.update(deltaTime);
 		_tweenManager.update(deltaTime);
 		_guiManager.update(deltaTime);
-		entityManager.update(deltaTime);
 	}
 
 	@Override
@@ -167,9 +180,8 @@ public class MainMenuScene extends Scene{
 		pSpriteBatch.setProjectionMatrix(pHudCamera.combined);
 		pSpriteBatch.begin();
 		_guiManager.render(pSpriteBatch);
-		entityManager.render(pSpriteBatch);
 		pSpriteBatch.end();
-		upgradePanel.render(pSpriteBatch);
+		_upgradePanel.render(pSpriteBatch);
 	}
 
 	@Override

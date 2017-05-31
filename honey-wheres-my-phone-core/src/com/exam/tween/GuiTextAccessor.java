@@ -1,6 +1,5 @@
 package com.exam.tween;
 
-import com.exam.gui.Gui;
 import com.exam.gui.GuiText;
 
 import aurelienribon.tweenengine.TweenAccessor;

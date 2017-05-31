@@ -7,12 +7,15 @@ package com.exam.handlers;
  */
 public class GameEvent { //basic event
 
-	private GameEventHandler _source;
+	private GameEventHandler _source; // to send source of handler to the listener
 
 	public GameEvent(GameEventHandler source) {
 		this._source = source;
 	}
 
+	/**
+	 * @return source of callback.
+	 */
 	public GameEventHandler getSource() {
 		return _source;
 	}

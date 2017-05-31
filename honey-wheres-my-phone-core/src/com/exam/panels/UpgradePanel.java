@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.exam.assets.SpriteType;
 import com.exam.font.FontType;
-import com.exam.gui.GuiManager;
 import com.exam.gui.Gui;
 import com.exam.gui.GuiButton;
 import com.exam.gui.GuiText;
@@ -21,8 +20,6 @@ import aurelienribon.tweenengine.BaseTween;
 import aurelienribon.tweenengine.Timeline;
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenCallback;
-import aurelienribon.tweenengine.TweenManager;
-import aurelienribon.tweenengine.equations.Quint;
 
 /**
  * @author Justin Scott Bieshaar

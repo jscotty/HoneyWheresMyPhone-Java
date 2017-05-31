@@ -1,18 +1,8 @@
 package com.exam.background;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.badlogic.gdx.graphics.Texture.TextureWrap;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
-import com.badlogic.gdx.physics.box2d.World;
-import com.exam.assets.SpriteType;
 import com.exam.entity.Entity;
 import com.exam.entity.EntityManager;
-import com.exam.project.Main;
 
 /**
  * @author Justin Scott Bieshaar
@@ -21,8 +11,8 @@ import com.exam.project.Main;
  */
 public class Background extends Entity {
 
-	private Entity _overlay;
-	private BackgroundType _backgroundType;
+	private Entity _overlay; // every background has an overlay to draw
+	private BackgroundType _backgroundType; // for returning additional information
 
 	/**
 	 * Constructor for initializing.
@@ -40,7 +30,7 @@ public class Background extends Entity {
 	}
 
 	/**
-	 * Move this backround in y direction by given speed.
+	 * Move this background in y direction by given speed.
 	 * @param movement speed
 	 */
 	public void scroll(float speed) {

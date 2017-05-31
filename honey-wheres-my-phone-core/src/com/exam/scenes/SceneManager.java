@@ -12,7 +12,7 @@ public class SceneManager {
 
     private Main _main;
     
-    private Stack<Scene> _scenes;
+    private Stack<Scene> _scenes; // current scene to render and update
 
     public static final int LOADER = -1;
     public static final int MENU = 0;

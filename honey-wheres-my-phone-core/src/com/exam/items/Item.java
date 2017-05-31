@@ -11,9 +11,11 @@ import com.exam.entity.EntityManager;
 import com.exam.managers.SoundManager;
 import com.exam.project.Main;
 import com.exam.tween.AccessorReferences;
+import com.exam.tween.EntityAccessor;
 
 import aurelienribon.tweenengine.Tween;
 import aurelienribon.tweenengine.TweenManager;
+import aurelienribon.tweenengine.equations.Quad;
 
 /**
  * @author Justin Scott Bieshaar
@@ -22,11 +24,11 @@ import aurelienribon.tweenengine.TweenManager;
  */
 public class Item extends Entity {
 
-	private final float TWEEN_DURATION = 0.8f;
+	private final float TWEEN_DURATION = 0.8f; // duration of animation in seconds
 
 	private ItemType _itemType;
-	private float _speed = 2f;
-	private ItemManager _itemManager;
+	private float _speed = 2f; // current speed
+	private ItemManager _itemManager; // to register and process this instance
 	private float _xVelocity = 0f;
 
 	/**
@@ -62,7 +64,7 @@ public class Item extends Entity {
 	}
 
 	/**
-	 * adds a box2D body to this item
+	 * adds a box2D body to this item with as userdata this instance
 	 * @param world
 	 * @param bodyType
 	 * @param width
@@ -106,6 +108,12 @@ public class Item extends Entity {
 		SoundManager.playAudio(AudioType.COLLECT_ITEM);;
 		Tween.to(this, AccessorReferences.POSITION, TWEEN_DURATION).target(10, Main.HEIGHT + 210).start(tweenManager);
 		Tween.to(this, AccessorReferences.SCALE, TWEEN_DURATION).target(0, 0).start(tweenManager);
+		
+		Tween.registerAccessor(Entity.class, new EntityAccessor());
+		float duration = 0.5f;
+		Tween.to(this, AccessorReferences.POSITION, duration).target(100,300).ease(Quad.IN).start(tweenManager);
+		
+		
 	}
 
 	/**

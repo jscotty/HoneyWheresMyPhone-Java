@@ -13,7 +13,7 @@ import com.exam.font.FontType;
  */
 public class GuiText extends Gui{
 	
-	private BitmapFont _font;
+	private BitmapFont _font; // font to draw text with
 	
 	private String _message = ""; //message to draw
 	private float _size = 1; // size factor of font.
@@ -28,14 +28,22 @@ public class GuiText extends Gui{
 	 * Constructor for initialization
 	 * @param x position
 	 * @param y position
-	 * @param manager
-	 * @param fontType
+	 * @param manager to process and register this instance
+	 * @param fontType to get font style from
 	 */
 	public GuiText(float x, float y, GuiManager manager, FontType fontType) {
 		super(x, y, manager);
 		_font = FontLoader.getFont(fontType);
 	}
 
+	/**
+	 * Constructor for initialization
+	 * @param x position
+	 * @param y position
+	 * @param manager to process and register this instance
+	 * @param fontType to get font style from
+	 * @param text to directly add a text to draw
+	 */
 	public GuiText(float x, float y, GuiManager manager, FontType fontType, String text) {
 		super(x, y, manager);
 		_font = FontLoader.getFont(fontType);

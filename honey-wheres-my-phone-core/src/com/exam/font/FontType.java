@@ -8,8 +8,12 @@ package com.exam.font;
 public enum FontType {
 	SUPERCELL_MAGIC("font/supercell-magic");
 
-	private String _fontName;
+	private String _fontName; // path to font .fnt and .png file
 
+	/**
+	 * 
+	 * @param font path
+	 */
 	private FontType(String fontName) {
 		this._fontName = fontName;
 	}

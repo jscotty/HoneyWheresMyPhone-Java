@@ -2,7 +2,6 @@ package com.exam.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.exam.background.BackgroundManager;
 
 /**
  * @author Justin Scott Bieshaar
@@ -13,6 +12,7 @@ public class GameManager {
 
 	//Managing save data in this class.
 
+	// array locations
 	public static final int DEPTH_LEVEL = 0;
 	public static final int START_DEPTH_LEVEL = 1;
 	public static final int ITEM_VALUE_LEVEL = 2;
@@ -81,10 +81,6 @@ public class GameManager {
 		_money -= money;
 		_preferences.putInteger(MONEY_LOCATION, _money);
 		_preferences.flush();
-	}
-	
-	public static void toggleMute(){
-		isMuted = !isMuted;
 	}
 
 	/**
