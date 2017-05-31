@@ -137,7 +137,6 @@ public class ItemManager extends GameEventHandler implements ContactListener {
 	 */
 	private void spawnPhone() {
 		if(GameManager.isPoneCollected(_currentPhoneLevel)){
-			spawn();
 			return; // phone is already captured, no need to capture it again.
 		}
 		Phone item = (Phone) new Phone(PhoneType.values()[_currentPhoneLevel], new Vector2(Main.WIDTH / 2, _yPosition),

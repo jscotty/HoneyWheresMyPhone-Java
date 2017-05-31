@@ -42,7 +42,7 @@ public class MainScene extends Scene implements GameEventListener{
 	private PausePanel _pausePanel;
 	private EndPanel _endPanel;
 	
-	private BackgroundManager backgroundManager;
+	private BackgroundManager _backgroundManager;
 
 	/**
 	 * Constructor for initialization.
@@ -56,13 +56,13 @@ public class MainScene extends Scene implements GameEventListener{
 		_itemManager = new ItemManager(_world, _entityManager);
 		_world.setContactListener(_itemManager);
 		
-		backgroundManager = new BackgroundManager(_entityManager);
+		_backgroundManager = new BackgroundManager(_entityManager);
 		
 		_hook = (Hook) new Hook(new Vector2(200, 2000), AnimationType.ARM_WIGGLE, AnimationType.HAND_REACHING, _entityManager).addBodyCircle(_world, BodyType.KinematicBody, 45, 195, 1475, "");
-		_hook.addHandler(backgroundManager);
+		_hook.addHandler(_backgroundManager);
 		_hook.addHandler(_itemManager);
-		backgroundManager.addListener(_hook);
-		backgroundManager.addListener(this);
+		_backgroundManager.addListener(_hook);
+		_backgroundManager.addListener(this);
 		_itemManager.addListener(_hook);
 		_pauseButton = new GuiButton(600, 1200, SpriteType.BUTTON_PAUSE_IDLE, SpriteType.BUTTON_PAUSE_PRESSED, pHudCamera, _guiManager);
 		_pausePanel = new PausePanel(pHudCamera, pSceneManager);
@@ -95,10 +95,10 @@ public class MainScene extends Scene implements GameEventListener{
 		_entityManager.update(deltaTime);
 		_guiManager.update(deltaTime);
 		_itemManager.update(deltaTime);
-		backgroundManager.update(deltaTime);
+		_backgroundManager.update(deltaTime);
 		
-		_itemManager.setBackgroundData(backgroundManager.getSpeed(), backgroundManager.getBackgroundLevel(), backgroundManager.getPhoneLevel(), backgroundManager.getMeters());
-		_metersText.setText(backgroundManager.getMeters() + "/" + GameManager.getMaximumDepth());
+		_itemManager.setBackgroundData(_backgroundManager.getSpeed(), _backgroundManager.getBackgroundLevel(), _backgroundManager.getPhoneLevel(), _backgroundManager.getMeters());
+		_metersText.setText(_backgroundManager.getMeters() + "/" + GameManager.getMaximumDepth());
 		_cashText.setText("$ " + GameManager.getMoney());
 		
 		_endPanel.update(deltaTime);
