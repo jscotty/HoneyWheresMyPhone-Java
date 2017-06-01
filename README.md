@@ -5,7 +5,7 @@ Welcome to Honey where's my phone java version github.
 
 <h3>Project information:</h3> 
 <b>LibGDX </b>- Eclipse Neon.3 <br>
-<b>Language:</b> Engels <br>
+<b>Language:</b> English <br>
 <b>Prgramming language:</b> Java<br>
 <br>
 Code formatter can be downloaded at http://justinbieshaar.com/download/codeFormatter.xml or https://ufile.io/ee6pr <br>
